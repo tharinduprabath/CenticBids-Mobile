@@ -8,7 +8,7 @@ class PageStateSwitcher extends StatelessWidget {
   PageStateSwitcher(
       {Key? key,
       required this.child,
-      this.animationDuration = AppConstants.animation_duration ~/ 2})
+      this.animationDuration = AppConstants.animation_duration})
       : super(key: key);
 
   final Tween<double> tween = Tween<double>(begin: 0.0, end: 1.0);

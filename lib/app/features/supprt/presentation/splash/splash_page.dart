@@ -1,4 +1,5 @@
 import 'package:centic_bids/app/core/app_images.dart';
+import 'package:centic_bids/app/core/design_system/centic_bids_button.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
 import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
 import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
@@ -38,13 +39,77 @@ class SplashPage extends StatelessWidget {
 class _Loaded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AspectRatio(
-          aspectRatio: 1.0,
-          child: Image.asset(
-            AppImages.logo_transparent,
-            width: 0.7.sw,
-          )),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Center(
+            child: AspectRatio(
+                aspectRatio: 1.0,
+                child: Image.asset(
+                  AppImages.logo_transparent,
+                  width: 0.7.sw,
+                )),
+          ),
+          CenticBidsButton(text: "Primary"),
+          CenticBidsButton.outline(text: "Primary Outline"),
+          CenticBidsButton.text(text: "Primary Text"),
+          CenticBidsButton.icon(
+            icon: Icons.add_a_photo_outlined,
+          ),
+          CenticBidsButton(
+            text: "Secondary",
+            buttonType: CenticBidsButtonType.secondary,
+          ),
+          CenticBidsButton.outline(
+            text: "Secondary Outline",
+            buttonType: CenticBidsButtonType.secondary,
+          ),
+          CenticBidsButton.text(
+            text: "Secondary Text",
+            buttonType: CenticBidsButtonType.secondary,
+          ),
+          CenticBidsButton.icon(
+            icon: Icons.add_a_photo_outlined,
+            buttonType: CenticBidsButtonType.secondary,
+          ),
+          CenticBidsButton(
+            text: "Destructive",
+            buttonType: CenticBidsButtonType.destructive,
+          ),
+          CenticBidsButton.outline(
+            text: "Destructive Outline",
+            buttonType: CenticBidsButtonType.destructive,
+          ),
+          CenticBidsButton.text(
+            text: "Destructive Text",
+            buttonType: CenticBidsButtonType.destructive,
+          ),
+          CenticBidsButton.icon(
+            icon: Icons.add_a_photo_outlined,
+            buttonType: CenticBidsButtonType.destructive,
+          ),
+          CenticBidsButton(
+            text: "Destructive",
+            isDisabled: true,
+            buttonType: CenticBidsButtonType.destructive,
+          ),
+          CenticBidsButton.outline(
+            text: "Destructive Outline",
+            isDisabled: true,
+            buttonType: CenticBidsButtonType.destructive,
+          ),
+          CenticBidsButton.text(
+            text: "Destructive Text",
+            isDisabled: true,
+            buttonType: CenticBidsButtonType.destructive,
+          ),
+          CenticBidsButton.icon(
+            icon: Icons.add_a_photo_outlined,
+            isDisabled: true,
+            buttonType: CenticBidsButtonType.destructive,
+          ),
+        ],
+      ),
     );
   }
 }
