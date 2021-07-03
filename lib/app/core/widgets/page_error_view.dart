@@ -1,5 +1,5 @@
-import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/app_constants.dart';
+import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,25 +20,11 @@ class PageErrorView extends StatelessWidget {
               SizedBox(
                 height: 24.h,
               ),
-              Text(
-                "Whoops!",
-                style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.main_text_color),
-              ),
+              CenticBidsText.headingOne("Whoops!"),
               SizedBox(
                 height: 12.h,
               ),
-              Text(
-                errorMsg,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.secondary_text_color,
-                ),
-              ),
+              CenticBidsText.caption(errorMsg),
             ],
           ),
         ),
