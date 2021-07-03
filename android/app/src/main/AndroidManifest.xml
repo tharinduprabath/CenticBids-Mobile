@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ascentic_assignment.centic_bids">
    <application
-        android:label="centic_bids"
+        android:label="CenticBids"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
