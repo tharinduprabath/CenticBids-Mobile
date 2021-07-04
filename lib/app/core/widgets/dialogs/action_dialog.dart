@@ -60,7 +60,7 @@ class ActionDialog extends StatelessWidget {
     return AlertDialog(
       contentPadding: const EdgeInsets.all(0),
       shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(AppConstants.radius.r / 2))),
       content: Padding(
         padding: EdgeInsets.all(
           AppConstants.margin.r * 2,
@@ -69,11 +69,14 @@ class ActionDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildIcon(),
-            CenticBidsText.headingOne(heading),
+            VerticalSpace(),
+            CenticBidsText.headingOne(heading, align: TextAlign.center,),
             VerticalSpace(),
             CenticBidsText.subheading(
               text,
+              align: TextAlign.center,
             ),
+            VerticalSpace(),
             VerticalSpace(),
             neutralButtonText == null
                 ? _buildSingleButton()
@@ -95,31 +98,22 @@ class ActionDialog extends StatelessWidget {
   }
 
   Widget _buildDoubleButton() {
-    return SizedBox(
-      width: 300,
-      child: Row(
-        children: [
-          Expanded(
-            child: CenticBidsButton(
-              onTap: action,
-              text: actionButtonText,
-              buttonType: useDestructiveNeutralButton
-                  ? CenticBidsButtonType.destructive
-                  : CenticBidsButtonType.primary,
-            ),
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
-          Expanded(
-            child: CenticBidsButton(
-              onTap: neutral,
-              text: neutralButtonText!,
-              buttonType: CenticBidsButtonType.secondary,
-            ),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        CenticBidsButton(
+          onTap: action,
+          text: actionButtonText,
+          buttonType: useDestructiveNeutralButton
+              ? CenticBidsButtonType.destructive
+              : CenticBidsButtonType.primary,
+        ),
+        VerticalSpace(),
+        CenticBidsButton(
+          onTap: neutral,
+          text: neutralButtonText!,
+          buttonType: CenticBidsButtonType.secondary,
+        ),
+      ],
     );
   }
 
@@ -142,36 +136,3 @@ class ActionDialog extends StatelessWidget {
             : SizedBox();
   }
 }
-
-// class _DialogButton extends StatelessWidget {
-//   final void Function()? onTap;
-//   final String? text;
-//   final bool isAction;
-//
-//   const _DialogButton(
-//       {Key? key, required this.onTap, required this.text, this.isAction = true})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         width: double.maxFinite,
-//         height: 32.h,
-//         decoration: BoxDecoration(
-//             color:
-//                 isAction ? AppColors.black.withOpacity(0.9) : AppColors.white,
-//             border: isAction
-//                 ? null
-//                 : Border.all(
-//                     color: AppColors.black.withOpacity(0.9), width: 1)),
-//         child: InkWell(
-//             onTap: onTap,
-//             child: Center(
-//                 child: Text(
-//               text ?? "",
-//               textAlign: TextAlign.center,
-//               style: TextStyle(
-//                   color: isAction ? AppColors.white : AppColors.black),
-//             ))));
-//   }
-// }

@@ -14,7 +14,7 @@ class ErrorCircle extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       child: Icon(
-        Icons.close_rounded,
+        Icons.warning_amber_rounded,
         color: isDisabled
             ? AppColors.secondary_text_color
             : AppColors.accent_color,

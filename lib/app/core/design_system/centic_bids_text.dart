@@ -6,25 +6,32 @@ import 'text_styles.dart';
 class CenticBidsText extends StatelessWidget {
   final String text;
   final TextStyle style;
+  final TextAlign? align;
 
-  CenticBidsText.headingOne(this.text) : style = TextStyles.heading1;
+  CenticBidsText.headingOne(this.text, {this.align})
+      : style = TextStyles.heading1;
 
-  CenticBidsText.headingTwo(this.text) : style = TextStyles.heading2;
+  CenticBidsText.headingTwo(this.text, {this.align})
+      : style = TextStyles.heading2;
 
-  CenticBidsText.headingThree(this.text) : style = TextStyles.heading3;
+  CenticBidsText.headingThree(this.text, {this.align})
+      : style = TextStyles.heading3;
 
-  CenticBidsText.subheading(this.text) : style = TextStyles.subheading;
+  CenticBidsText.subheading(this.text, {this.align})
+      : style = TextStyles.subheading;
 
-  CenticBidsText.body(this.text, {Color color = AppColors.main_text_color})
+  CenticBidsText.body(this.text,
+      {Color color = AppColors.main_text_color, this.align})
       : style = TextStyles.body.copyWith(color: color);
 
-  CenticBidsText.caption(this.text) : style = TextStyles.caption;
+  CenticBidsText.caption(this.text, {this.align}) : style = TextStyles.caption;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       style: style,
+      textAlign: align ?? TextAlign.start,
     );
   }
 }

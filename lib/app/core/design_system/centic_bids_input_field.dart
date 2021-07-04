@@ -42,6 +42,8 @@ class _CenticBidsInputFieldState extends State<CenticBidsInputField> {
     });
   }
 
+  final double iconSize = 20.r;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -54,12 +56,17 @@ class _CenticBidsInputFieldState extends State<CenticBidsInputField> {
         if (widget.onSaved != null) widget.onSaved!(value!);
       },
       decoration: InputDecoration(
+        isDense: true,
         hintText: widget.placeholder,
+        contentPadding: const EdgeInsets.all(0),
         hintStyle:
             TextStyles.body.copyWith(color: AppColors.secondary_text_color),
-        contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
         prefixIcon: widget.leadingIcon != null
-            ? Icon(widget.leadingIcon, color: AppColors.main_text_color)
+            ? Icon(
+                widget.leadingIcon,
+                color: AppColors.main_text_color,
+                size: iconSize,
+              )
             : null,
         suffixIcon: widget.isPassword
             ? IconButton(
@@ -68,6 +75,7 @@ class _CenticBidsInputFieldState extends State<CenticBidsInputField> {
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
                   color: AppColors.main_text_color,
+                  size: iconSize,
                 ),
                 onPressed: _changePasswordVisible,
               )
@@ -76,6 +84,7 @@ class _CenticBidsInputFieldState extends State<CenticBidsInputField> {
                     icon: Icon(
                       widget.trailingIcon,
                       color: AppColors.main_text_color,
+                      size: iconSize,
                     ),
                     onPressed: widget.trailingOnTap,
                   )

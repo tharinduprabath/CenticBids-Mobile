@@ -63,14 +63,22 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
       (failure) {
         _dialogService.show(
           dialog: ActionDialog.error(
-              heading: AppStrings.dialog_default_heading_error_text,
-              text: failure.code.getMessage(),
-              actionButtonText: AppStrings.dialog_default_action_button_text,
-              action: () => _dialogService.close()),
+            heading: AppStrings.dialog_default_heading_error_text,
+            text: failure.code.getMessage(),
+            actionButtonText: AppStrings.dialog_default_action_button_text,
+            action: () => _dialogService.close(),
+          ),
         );
       },
       (success) {
-        _dialogService.close();
+        // _dialogService.close();
+        _dialogService.show(
+          dialog: ActionDialog.success(
+              heading: AppStrings.dialog_default_heading_success_text,
+              text: "Register Success",
+              actionButtonText: AppStrings.dialog_default_action_button_text,
+              action: () => _dialogService.close()),
+        );
       },
     );
   }
