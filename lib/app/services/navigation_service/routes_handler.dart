@@ -17,6 +17,11 @@ abstract class RoutesHandler {
           screen: SplashPage(),
         );
 
+      case Routes.login_registration_page:
+        return _routeBuilder(
+          screen: LoginRegistrationPage(),
+        );
+
       default:
         return _routeBuilder(
           screen: Scaffold(

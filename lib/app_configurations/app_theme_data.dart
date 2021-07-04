@@ -20,6 +20,10 @@ abstract class AppThemeData {
           TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
         },
       ),
+      textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppColors.primary_color,
+          selectionHandleColor: AppColors.primary_color,
+          selectionColor: AppColors.primary_color.withOpacity(0.3)),
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
   }

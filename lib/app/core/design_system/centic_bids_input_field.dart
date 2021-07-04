@@ -4,17 +4,14 @@ import 'package:centic_bids/app/core/design_system/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CenticBidsInputField extends StatelessWidget {
+class CenticBidsInputField extends StatefulWidget {
   final TextEditingController? controller;
   final String placeholder;
-  final IconData? leadingIcon;
-  final IconData? trailingIcon;
+  final IconData? leadingIcon, trailingIcon;
   final bool isPassword;
   final void Function()? trailingOnTap;
-
-  final _border = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(AppConstants.radius.r),
-  );
+  final String? Function(String?)? validator;
+  final void Function(String)? onSaved;
 
   CenticBidsInputField({
     Key? key,
@@ -23,43 +20,77 @@ class CenticBidsInputField extends StatelessWidget {
     this.leadingIcon,
     this.trailingIcon,
     this.trailingOnTap,
+    this.validator,
+    this.onSaved,
     this.isPassword = false,
   }) : super(key: key);
 
   @override
+  _CenticBidsInputFieldState createState() => _CenticBidsInputFieldState();
+}
+
+class _CenticBidsInputFieldState extends State<CenticBidsInputField> {
+  final _border = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(AppConstants.radius.r),
+  );
+
+  bool _isPasswordVisible = true;
+
+  void _changePasswordVisible() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
+      controller: widget.controller,
       style: TextStyles.body,
-      obscureText: isPassword,
+      obscureText: widget.isPassword ? _isPasswordVisible : false,
+      validator: widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onSaved: (value) {
+        if (widget.onSaved != null) widget.onSaved!(value!);
+      },
       decoration: InputDecoration(
-        hintText: placeholder,
+        hintText: widget.placeholder,
         hintStyle:
             TextStyles.body.copyWith(color: AppColors.secondary_text_color),
         contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
-        prefixIcon: leadingIcon != null
-            ? Icon(leadingIcon, color: AppColors.main_text_color)
+        prefixIcon: widget.leadingIcon != null
+            ? Icon(widget.leadingIcon, color: AppColors.main_text_color)
             : null,
-        suffixIcon: trailingIcon != null
+        suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
-                  trailingIcon,
+                  _isPasswordVisible
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
                   color: AppColors.main_text_color,
                 ),
-                onPressed: trailingOnTap,
+                onPressed: _changePasswordVisible,
               )
-            : null,
+            : widget.trailingIcon != null
+                ? IconButton(
+                    icon: Icon(
+                      widget.trailingIcon,
+                      color: AppColors.main_text_color,
+                    ),
+                    onPressed: widget.trailingOnTap,
+                  )
+                : null,
         border: _border.copyWith(
-          borderSide: BorderSide(color: AppColors.outline_color),
+          borderSide: BorderSide(color: AppColors.outline_color, width: 2),
         ),
         errorBorder: _border.copyWith(
-          borderSide: BorderSide(color: AppColors.accent_color),
+          borderSide: BorderSide(color: AppColors.accent_color, width: 2),
         ),
         focusedBorder: _border.copyWith(
-          borderSide: BorderSide(color: AppColors.primary_color),
+          borderSide: BorderSide(color: AppColors.primary_color, width: 2),
         ),
         enabledBorder: _border.copyWith(
-          borderSide: BorderSide(color: AppColors.outline_color),
+          borderSide: BorderSide(color: AppColors.outline_color, width: 2),
         ),
       ),
     );

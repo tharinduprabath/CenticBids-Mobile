@@ -23,7 +23,7 @@ class CenticBidsApp extends StatelessWidget {
           );
         },
         onGenerateRoute: RoutesHandler.generateRoute,
-        initialRoute: Routes.splash_page,
+        initialRoute: Routes.login_registration_page,
         navigatorKey: navigationService.navigatorKey,
         themeMode: ThemeMode.light,
         theme: AppThemeData.themeDataLight(context),

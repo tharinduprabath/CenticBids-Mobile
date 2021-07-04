@@ -101,31 +101,42 @@ class CenticBidsButton extends StatelessWidget {
                     : AppColors.accent_color
                 : AppColors.main_text_color;
 
+    final double? width = _buttonVariant == CenticBidsButtonVariant.text ||
+            _buttonVariant == CenticBidsButtonVariant.icon
+        ? null
+        : double.maxFinite;
+
     return InkWell(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: AppConstants.animation_duration),
-        width: double.infinity,
+        width: width,
         height: 50.h,
-        alignment: Alignment.center,
+        alignment: width == null ? null : Alignment.center,
         decoration: BoxDecoration(
             color: fillColor,
             borderRadius: BorderRadius.circular(AppConstants.radius.r),
             border: _buttonVariant == CenticBidsButtonVariant.outline
                 ? Border.all(
                     color: outlineColor,
-                    width: 1,
+                    width: 2,
                   )
                 : Border.fromBorderSide(BorderSide.none)),
-        child: _buttonVariant == CenticBidsButtonVariant.icon
-            ? Icon(
-                _icon,
-                color: childColor,
-              )
-            : CenticBidsText.body(
-                _text!,
-                color: childColor,
-              ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buttonVariant == CenticBidsButtonVariant.icon
+                ? Icon(
+                    _icon,
+                    color: childColor,
+                  )
+                : CenticBidsText.body(
+                    _text!,
+                    color: childColor,
+                  ),
+          ],
+        ),
       ),
     );
   }

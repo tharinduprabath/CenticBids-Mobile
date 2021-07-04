@@ -22,7 +22,7 @@ abstract class TextStyles {
   );
 
   static TextStyle subheading = TextStyle(
-    fontSize: 17.sp,
+    fontSize: 15.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.secondary_text_color,
   );
