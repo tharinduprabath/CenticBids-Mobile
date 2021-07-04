@@ -17,10 +17,10 @@ class CenticBidsApp extends StatelessWidget {
         debugShowCheckedModeBanner: true,
         title: AppStrings.app_name,
         builder: (context, widget) {
-          if (widget == null) return SizedBox();
+          // if (widget == null) return SizedBox();
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: widget,
+            child: widget!,
           );
         },
         onGenerateRoute: RoutesHandler.generateRoute,
