@@ -23,9 +23,9 @@ class LoginView extends ViewModelWidget<LoginRegistrationPageViewModel> {
           key: model.signInFormKey,
           child: Column(
             children: [
-              CenticBidsText.headingOne("Welcome Back!"),
-              VerticalSpace(),
-              CenticBidsText.subheading("Please enter your account here"),
+              // CenticBidsText.headingOne("Welcome Back!"),
+              // VerticalSpace(),
+              // CenticBidsText.subheading("Please enter your account here"),
               VerticalSpace(),
               VerticalSpace(),
               CenticBidsInputField(
@@ -51,7 +51,10 @@ class LoginView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                 child: CenticBidsButton.text(text: "Forgot password?"),
               ),
               VerticalSpace(),
-              CenticBidsButton(text: "Login"),
+              CenticBidsButton(
+                text: "Login",
+                onTap: model.signIn,
+              ),
               VerticalSpace(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

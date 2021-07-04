@@ -26,9 +26,9 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
           key: model.signUpFormKey,
           child: Column(
             children: [
-              CenticBidsText.headingOne("Welcome!"),
-              VerticalSpace(),
-              CenticBidsText.subheading("Please enter your account here"),
+              // CenticBidsText.headingOne("Welcome!"),
+              // VerticalSpace(),
+              // CenticBidsText.subheading("Please enter your account here"),
               VerticalSpace(),
               VerticalSpace(),
               Row(

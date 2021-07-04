@@ -11,9 +11,11 @@ enum FirebaseErrorCodes {
   user_not_found,
   uid_already_exists,
   email_already_exists,
+  email_already_in_use,
   insufficient_permission,
   invalid_email,
   invalid_password,
+  wrong_password,
 }
 
 extension OnFirebase on FirebaseErrorCodes {
@@ -27,12 +29,16 @@ extension OnFirebase on FirebaseErrorCodes {
         return ErrorCode.e_1520;
       case FirebaseErrorCodes.email_already_exists:
         return ErrorCode.e_1530;
+      case FirebaseErrorCodes.email_already_in_use:
+        return ErrorCode.e_1530;
       case FirebaseErrorCodes.insufficient_permission:
         return ErrorCode.e_1540;
       case FirebaseErrorCodes.invalid_email:
         return ErrorCode.e_1550;
       case FirebaseErrorCodes.invalid_password:
         return ErrorCode.e_1560;
+      case FirebaseErrorCodes.wrong_password:
+        return ErrorCode.e_1590;
     }
   }
 }

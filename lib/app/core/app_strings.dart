@@ -69,9 +69,11 @@ extension ErrorCodeExtension on ErrorCode {
       case ErrorCode.e_1540:
         return "insufficient_permission_auth_failure";
       case ErrorCode.e_1550:
-        return "invalid_email_auth_failure";
+        return "Seems like you have entered bad email address.";
       case ErrorCode.e_1560:
-        return "invalid_password_auth_failure";
+        return "Seems like you have entered bad password.";
+      case ErrorCode.e_1590:
+        return "Seems like you have entered wrong password or email.";
     }
   }
 }

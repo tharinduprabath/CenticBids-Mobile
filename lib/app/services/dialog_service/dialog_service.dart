@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:centic_bids/app/services/navigation_service/navigation_service.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +20,9 @@ class DialogService {
         barrierDismissible: canDismissible,
         builder: (context) {
           _dialogContext = context;
-          _forceCloseNotifier.value = false;
+          Timer.run(() {
+            _forceCloseNotifier.value = false;
+          });
           return ValueListenableBuilder(
             valueListenable: _forceCloseNotifier,
             builder: (context, bool forceClose, child) => WillPopScope(
@@ -36,7 +40,9 @@ class DialogService {
   }
 
   void close() {
-    _forceCloseNotifier.value = true;
+    Timer.run(() {
+      _forceCloseNotifier.value = true;
+    });
     if (_dialogContext != null) Navigator.of(_dialogContext!).pop();
   }
 }
