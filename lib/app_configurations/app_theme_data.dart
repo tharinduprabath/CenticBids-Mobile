@@ -2,7 +2,6 @@ import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppThemeData {
-
   // Light theme
   static ThemeData themeDataLight(context) =>
       _themeDataBase(context).copyWith();

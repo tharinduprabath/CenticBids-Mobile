@@ -106,7 +106,7 @@ class CenticBidsButton extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: AppConstants.animation_duration),
         width: double.infinity,
-        height: 56.h,
+        height: 50.h,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: fillColor,
