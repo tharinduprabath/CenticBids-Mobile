@@ -11,4 +11,6 @@ abstract class Routes {
   static const String home_page = "home_page";
   static const String auction_page = "auction_page";
   static const String my_bids_page = "my_bids_page";
+
+  static const String initial_page = home_page;
 }

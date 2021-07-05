@@ -10,19 +10,23 @@ import 'package:centic_bids/app/features/auth/domain/usecases/sign_in_usecase.da
     as signInUsecase;
 import 'package:centic_bids/app/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:centic_bids/app/services/dialog_service/dialog_service.dart';
+import 'package:centic_bids/app/services/navigation_service/navigation_service.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
 import 'package:flutter/material.dart';
 
 class LoginRegistrationPageViewModel extends BaseStateViewModel {
   final RegisterUsecase _registerUsecase;
+  final NavigationService _navigationService;
   final SignInUsecase _signInUsecase;
   final DialogService _dialogService;
 
   LoginRegistrationPageViewModel(
       {required RegisterUsecase registerUsecase,
       required SignInUsecase signInUsecase,
+      required NavigationService navigationService,
       required DialogService dialogService})
       : this._registerUsecase = registerUsecase,
+        this._navigationService = navigationService,
         this._signInUsecase = signInUsecase,
         this._dialogService = dialogService,
         super(initialState: PageStateLoaded());
@@ -80,14 +84,14 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
         );
       },
       (success) {
-        // _dialogService.close();
-        _dialogService.show(
-          dialog: ActionDialog.success(
-              heading: AppStrings.dialog_default_heading_success_text,
-              text: "Register Success",
-              actionButtonText: AppStrings.dialog_default_action_button_text,
-              action: () => _dialogService.close()),
-        );
+        _navigationService.restart();
+        // _dialogService.show(
+        //   dialog: ActionDialog.success(
+        //       heading: AppStrings.dialog_default_heading_success_text,
+        //       text: "Register Success",
+        //       actionButtonText: AppStrings.dialog_default_action_button_text,
+        //       action: () => _dialogService.close()),
+        // );
       },
     );
   }
@@ -121,14 +125,7 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
         );
       },
       (success) {
-        // _dialogService.close();
-        _dialogService.show(
-          dialog: ActionDialog.success(
-              heading: AppStrings.dialog_default_heading_success_text,
-              text: "Login Success",
-              actionButtonText: AppStrings.dialog_default_action_button_text,
-              action: () => _dialogService.close()),
-        );
+        _navigationService.restart();
       },
     );
   }

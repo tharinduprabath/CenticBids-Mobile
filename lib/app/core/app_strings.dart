@@ -20,7 +20,7 @@ abstract class AppStrings {
       "OPEN SETTINGS";
 
   static const String dialog_logout_confirm_msg_neutral_button_text = "No";
-  static const String dialog_logout_confirm_msg_heading = "Log out?";
+  static const String dialog_logout_confirm_msg_heading = "Logout";
   static const String dialog_logout_confirm_msg = "Do you wish to log out now?";
   static const String dialog_logout_confirm_msg_action_button_text = "Yes";
 

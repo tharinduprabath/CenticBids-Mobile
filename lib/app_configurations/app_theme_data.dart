@@ -24,6 +24,12 @@ abstract class AppThemeData {
           cursorColor: AppColors.primary_color,
           selectionHandleColor: AppColors.primary_color,
           selectionColor: AppColors.primary_color.withOpacity(0.3)),
+      appBarTheme: AppBarTheme(
+        color: AppColors.white,
+        elevation: 2,
+        iconTheme: IconThemeData(color: AppColors.main_text_color)
+      ),
+      scaffoldBackgroundColor: AppColors.white,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
   }

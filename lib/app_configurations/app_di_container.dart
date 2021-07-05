@@ -10,6 +10,8 @@ import 'package:centic_bids/app/features/auth/data/datasources/auth_remote_datas
 import 'package:centic_bids/app/features/auth/data/datasources/auth_remote_datasource/auth_remote_datasource_impl.dart';
 import 'package:centic_bids/app/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:centic_bids/app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:centic_bids/app/features/auth/domain/usecases/get_local_user.dart';
+import 'package:centic_bids/app/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/register_usecase.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:centic_bids/app/features/auth/presentation/login_registration/login_registration_page_view_model.dart';
@@ -36,6 +38,7 @@ class AppDIContainer {
         () => AuthRemoteDataSourceImpl(
               firebaseAuth: FirebaseAuth.instance,
               firebaseFirestore: FirebaseFirestore.instance,
+              navigationService: sl(),
             ));
     sl.registerLazySingleton<AuctionRemoteDataSource>(
         () => AuctionRemoteDataSourceImpl(
@@ -60,6 +63,12 @@ class AppDIContainer {
     sl.registerLazySingleton<SignInUsecase>(() => SignInUsecase(
           repository: sl(),
         ));
+    sl.registerLazySingleton<GetLocalUserUsecase>(() => GetLocalUserUsecase(
+          repository: sl(),
+        ));
+    sl.registerLazySingleton<LogoutUsecase>(() => LogoutUsecase(
+          repository: sl(),
+        ));
 
     sl.registerLazySingleton<GetOngoingAuctionsUsecase>(
         () => GetOngoingAuctionsUsecase(
@@ -71,13 +80,17 @@ class AppDIContainer {
     sl.registerFactory<LoginRegistrationPageViewModel>(
         () => LoginRegistrationPageViewModel(
               registerUsecase: sl(),
+              navigationService: sl(),
               signInUsecase: sl(),
               dialogService: sl(),
             ));
 
     sl.registerFactory<HomePageViewModel>(() => HomePageViewModel(
           getOngoingAuctionsUsecase: sl(),
+          getLocalUserUsecase: sl(),
+          logoutUsecase: sl(),
           dialogService: sl(),
+          navigationService: sl(),
         ));
     sl.registerFactory<AuctionPageViewModel>(() => AuctionPageViewModel(
           dialogService: sl(),

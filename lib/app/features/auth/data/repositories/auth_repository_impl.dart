@@ -1,6 +1,7 @@
 import 'package:centic_bids/app/features/auth/data/datasources/auth_remote_datasource/auth_remote_data_source.dart';
 import 'package:centic_bids/app/features/auth/data/models/user_register_request_model.dart';
 import 'package:centic_bids/app/features/auth/data/models/user_sign_in_request_model.dart';
+import 'package:centic_bids/app/features/auth/domain/entities/user_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_register_request_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_sign_in_request_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/repositories/auth_repository.dart';
@@ -53,6 +54,33 @@ class AuthRepositoryImpl implements AuthRepository {
       } else {
         throw NetworkException(ErrorCode.e_1200);
       }
+    } on ServerException catch (ex) {
+      return Left(ServerFailure(ex.code));
+    } on NetworkException catch (ex) {
+      return Left(NetworkFailure(ex.code));
+    } on UnknownException catch (ex) {
+      return Left(UnknownFailure(ex.code));
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, Success>> logout() async {
+    try {
+      return Right(await authRemoteDataSource.logout());
+    } on ServerException catch (ex) {
+      return Left(ServerFailure(ex.code));
+    } on NetworkException catch (ex) {
+      return Left(NetworkFailure(ex.code));
+    } on UnknownException catch (ex) {
+      return Left(UnknownFailure(ex.code));
+    }
+  }
+
+  @override
+  Either<Failure, UserEntity?> getLocalUser() {
+    try {
+      return Right(authRemoteDataSource.getLocalUser());
     } on ServerException catch (ex) {
       return Left(ServerFailure(ex.code));
     } on NetworkException catch (ex) {

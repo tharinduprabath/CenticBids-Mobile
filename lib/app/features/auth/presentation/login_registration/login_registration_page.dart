@@ -14,7 +14,17 @@ import 'package:stacked/stacked.dart';
 
 import 'login_registration_page_view_model.dart';
 
+class LoginRegistrationPageArgs {
+  final bool isSignInFirst;
+
+  const LoginRegistrationPageArgs({this.isSignInFirst = true});
+}
+
 class LoginRegistrationPage extends StatelessWidget {
+  final LoginRegistrationPageArgs args;
+
+  const LoginRegistrationPage({Key? key, required this.args}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginRegistrationPageViewModel>.reactive(
@@ -31,7 +41,13 @@ class LoginRegistrationPage extends StatelessWidget {
           );
         return DefaultTabController(
           length: 2,
+          initialIndex: args.isSignInFirst ? 0 : 1,
           child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: true,
+              elevation: 0,
+            ),
+            backgroundColor: AppColors.form_color,
             body: PageStateSwitcher(
               child: stateUI,
             ),
@@ -74,13 +90,13 @@ class _Loaded extends ViewModelWidget<LoginRegistrationPageViewModel> {
           labelColor: AppColors.primary_color,
           unselectedLabelColor: AppColors.secondary_text_color,
           indicator: BoxDecoration(
-            color: AppColors.form_color,
+            color: AppColors.white,
           ),
         ),
         Expanded(
             flex: 6,
             child: Container(
-                color: AppColors.form_color,
+                color: AppColors.white,
                 child:
                     TabBarView(children: [LoginView(), RegistrationView()]))),
       ],

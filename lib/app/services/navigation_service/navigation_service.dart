@@ -13,8 +13,7 @@ part 'routes_handler.dart';
 class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  Future<T?> push<T extends Object?>(String route,
-      {Object? args}) async {
+  Future<T?> push<T extends Object?>(String route, {Object? args}) async {
     return navigatorKey.currentState?.pushNamed(route, arguments: args);
   }
 
@@ -28,5 +27,10 @@ class NavigationService {
 
   void popAll() {
     navigatorKey.currentState?.popUntil((r) => false);
+  }
+
+  void restart() {
+    popAll();
+    push(Routes.initial_page);
   }
 }

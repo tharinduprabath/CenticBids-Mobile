@@ -35,7 +35,7 @@ abstract class TextStyles {
 
   static TextStyle caption = TextStyle(
     fontSize: 12.sp,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     color: AppColors.secondary_text_color,
   );
 }

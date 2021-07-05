@@ -19,7 +19,9 @@ abstract class RoutesHandler {
 
       case Routes.login_registration_page:
         return _routeBuilder(
-          screen: LoginRegistrationPage(),
+          screen: LoginRegistrationPage(
+            args: settings.arguments as LoginRegistrationPageArgs,
+          ),
         );
 
       case Routes.home_page:

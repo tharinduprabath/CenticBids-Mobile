@@ -1,4 +1,5 @@
 import 'package:centic_bids/app/centic_bids_app.dart';
+import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +26,9 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.transparent
+  ));
 
   /// run app
   runApp(Provider<AppInfo>.value(
