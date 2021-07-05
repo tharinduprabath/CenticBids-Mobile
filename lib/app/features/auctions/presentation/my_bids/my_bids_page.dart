@@ -1,3 +1,4 @@
+import 'package:centic_bids/app/core/widgets/centic_bids_app_bar.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
 import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
 import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
@@ -25,6 +26,7 @@ class MyBidsPage extends StatelessWidget {
             errorMsg: (model.state as PageStateError).message,
           );
         return Scaffold(
+          appBar: CenticBidsAppBar(title: "My Bids",),
           body: PageStateSwitcher(
             child: stateUI,
           ),

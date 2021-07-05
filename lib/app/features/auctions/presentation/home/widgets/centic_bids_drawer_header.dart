@@ -13,34 +13,35 @@ class CenticBidsDrawerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DrawerHeader(
-      decoration: BoxDecoration(
-        color: AppColors.form_color.withOpacity(1),
-      ),
-        child: Row(
-      children: [
-        Expanded(
-          child: CircleAvatar(
-            radius: 30.r,
-            backgroundColor: AppColors.outline_color,
-            child: Icon(
-              Icons.account_circle,
-              color: AppColors.main_text_color,
-              size: 30.r * 2,
-            ),
-          ),
-          flex: 1,
+        decoration: BoxDecoration(
+          color: AppColors.form_color.withOpacity(1),
         ),
-        Expanded(
-            flex: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CenticBidsText.headingOne(title),
-                CenticBidsText.subheading("Welcome to ${AppStrings.app_name}"),
-              ],
-            )),
-      ],
-    ));
+        child: Row(
+          children: [
+            Expanded(
+              child: CircleAvatar(
+                radius: 30.r,
+                backgroundColor: AppColors.outline_color,
+                child: Icon(
+                  Icons.account_circle,
+                  color: AppColors.main_text_color,
+                  size: 30.r * 2,
+                ),
+              ),
+              flex: 1,
+            ),
+            Expanded(
+                flex: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CenticBidsText.headingOne(title),
+                    CenticBidsText.subheading(
+                        "Welcome to ${AppStrings.app_name}"),
+                  ],
+                )),
+          ],
+        ));
   }
 }

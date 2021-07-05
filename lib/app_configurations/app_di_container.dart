@@ -94,6 +94,7 @@ class AppDIContainer {
         ));
     sl.registerFactory<AuctionPageViewModel>(() => AuctionPageViewModel(
           dialogService: sl(),
+          navigationService: sl(),
         ));
     sl.registerFactory<MyBidsPageViewModel>(() => MyBidsPageViewModel(
           dialogService: sl(),

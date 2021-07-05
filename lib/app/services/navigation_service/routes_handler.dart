@@ -4,10 +4,12 @@ abstract class RoutesHandler {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     _routeBuilder({
       required Widget screen,
+      bool isFullscreenDialog = false,
     }) {
       return CupertinoPageRoute(
         builder: (_) => screen,
         settings: settings,
+        fullscreenDialog: isFullscreenDialog,
       );
     }
 
@@ -22,6 +24,7 @@ abstract class RoutesHandler {
           screen: LoginRegistrationPage(
             args: settings.arguments as LoginRegistrationPageArgs,
           ),
+          isFullscreenDialog: true,
         );
 
       case Routes.home_page:
@@ -31,7 +34,9 @@ abstract class RoutesHandler {
 
       case Routes.auction_page:
         return _routeBuilder(
-          screen: AuctionPage(),
+          screen: AuctionPage(
+            args: settings.arguments as AuctionPageArgs,
+          ),
         );
 
       case Routes.my_bids_page:

@@ -131,11 +131,14 @@ class CenticBidsButton extends StatelessWidget {
                     _icon,
                     color: childColor,
                   )
-                : CenticBidsText.body(
-                    _text!,
-                    color: childColor,
-                    align: TextAlign.center,
-                  ),
+                : Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
+                  child: CenticBidsText.body(
+                      _text!,
+                      color: childColor,
+                      align: TextAlign.center,
+                    ),
+                ),
           ],
         ),
       ),

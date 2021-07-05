@@ -12,53 +12,55 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuctionListItem extends StatelessWidget {
   final AuctionEntity auctionEntity;
+  final void Function()? onTap;
 
-  const AuctionListItem({Key? key, required this.auctionEntity})
-      : super(key: key);
+  const AuctionListItem({
+    Key? key,
+    required this.auctionEntity,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final double size = 150.h;
-    return Container(
-      height: size,
-      child: Row(
-        children: [
-          Container(
-            width: size,
-            height: size,
-            child: FadeNetworkImage(
-              imageNetworkUrl: auctionEntity.imageList.first,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: size,
+        child: Row(
+          children: [
+            Container(
+              width: size,
+              height: size,
+              child: FadeNetworkImage(
+                imageNetworkUrl: auctionEntity.imageList.first,
+              ),
             ),
-          ),
-          HorizontalSpace(),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CenticBidsText.headingTwo(auctionEntity.title),
-                Chip(
-                  backgroundColor: AppColors.form_color,
-                  label: CenticBidsText.body(
-                      "${auctionEntity.bidList.length} Bids"),
-                ),
-                CenticBidsText.headingOne(
-                    "${TextFormatter.toCurrency(auctionEntity.basePrice)}"),
-                VerticalSpace(),
-                Row(
-                  children: [
-                    AuctionCountdownTimer(endDate: auctionEntity.endDate),
-                    HorizontalSpace(size: 5.w,),
-                    Icon(
-                      Icons.timer_rounded,
-                      size: AppConstants.iconSize / 1.5,
-                      color: AppColors.secondary_text_color,
-                    )
-                  ],
-                ),
-              ],
+            HorizontalSpace(),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CenticBidsText.headingTwo(auctionEntity.title),
+                  Chip(
+                    backgroundColor: AppColors.form_color,
+                    label: CenticBidsText.body(
+                        "${auctionEntity.bidList.length} Bids"),
+                  ),
+                  CenticBidsText.headingOne(
+                      "${TextFormatter.toCurrency(auctionEntity.basePrice)}"),
+                  VerticalSpace(),
+                  Row(
+                    children: [
+                      AuctionCountdownTimer(endDate: auctionEntity.endDate),
+
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

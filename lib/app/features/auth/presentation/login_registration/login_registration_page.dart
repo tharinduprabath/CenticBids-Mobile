@@ -1,6 +1,7 @@
 import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/app_images.dart';
 import 'package:centic_bids/app/core/design_system/text_styles.dart';
+import 'package:centic_bids/app/core/widgets/centic_bids_app_bar.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
 import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
 import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
@@ -43,9 +44,8 @@ class LoginRegistrationPage extends StatelessWidget {
           length: 2,
           initialIndex: args.isSignInFirst ? 0 : 1,
           child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: true,
-              elevation: 0,
+            appBar: CenticBidsAppBar(
+              title: "Please enter your account here",
             ),
             backgroundColor: AppColors.form_color,
             body: PageStateSwitcher(
@@ -74,11 +74,12 @@ class _Loaded extends ViewModelWidget<LoginRegistrationPageViewModel> {
     return Column(
       children: [
         Expanded(
-          flex: 3,
+          flex: 2,
           child: Container(
             width: double.maxFinite,
             height: double.maxFinite,
             color: AppColors.primary_color.withOpacity(0.25),
+            alignment: Alignment.centerLeft,
             child: Image.asset(
               AppImages.logo_transparent,
             ),

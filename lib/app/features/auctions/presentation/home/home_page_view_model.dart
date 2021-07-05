@@ -3,6 +3,7 @@ import 'package:centic_bids/app/core/widgets/dialogs/action_dialog.dart';
 import 'package:centic_bids/app/core/widgets/dialogs/busy_dialog.dart';
 import 'package:centic_bids/app/features/auctions/domain/entities/auction_entity.dart';
 import 'package:centic_bids/app/features/auctions/domain/usecases/get_ongoing_auctions_usecase.dart';
+import 'package:centic_bids/app/features/auctions/presentation/auction/auction_page.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/get_local_user.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/logout_usecase.dart';
@@ -122,5 +123,10 @@ class HomePageViewModel extends BaseStateViewModel {
 
   void goToMyBidsPage() {
     _navigationService.push(Routes.my_bids_page);
+  }
+
+  void goToAuctionPage({required AuctionEntity auctionEntity}) {
+    _navigationService.push(Routes.auction_page,
+        args: AuctionPageArgs(auctionEntity: auctionEntity));
   }
 }

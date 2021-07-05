@@ -18,7 +18,7 @@ class AppBarBottomWithHeading extends StatelessWidget
       child: Container(
         padding: EdgeInsets.all(AppConstants.margin.r),
         alignment: Alignment.centerLeft,
-        child: CenticBidsText.headingOne(title),
+        child: CenticBidsText.headingOne(title,),
       ),
     );
   }

@@ -1,5 +1,5 @@
-import 'package:centic_bids/app/core/widgets/app_bar_bottom_with_heading.dart';
 import 'package:centic_bids/app/core/widgets/auction_list_item.dart';
+import 'package:centic_bids/app/core/widgets/centic_bids_app_bar.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
 import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
 import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
@@ -36,10 +36,8 @@ class HomePage extends StatelessWidget {
             errorMsg: (model.state as PageStateError).message,
           );
         return Scaffold(
-          appBar: AppBar(
-            bottom: AppBarBottomWithHeading(
-              title: "Home",
-            ),
+          appBar: CenticBidsAppBar(
+            title: "Home",
           ),
           drawer: model.isUserLoggedIn()
               ? DrawerUserLogged()
@@ -65,8 +63,10 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
       child: ListView.separated(
         itemCount: list.length,
         separatorBuilder: (context, index) => Divider(),
-        itemBuilder: (context, index) =>
-            AuctionListItem(auctionEntity: list[index]),
+        itemBuilder: (context, index) => AuctionListItem(
+          auctionEntity: list[index],
+          onTap: () => model.goToAuctionPage(auctionEntity: list[index]),
+        ),
       ),
     );
   }
@@ -79,15 +79,17 @@ class _Loading extends StatelessWidget {
   }
 }
 
-class _Error extends StatelessWidget {
+class _Error extends ViewModelWidget<HomePageViewModel> {
   final String errorMsg;
 
   const _Error({Key? key, required this.errorMsg}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return PageErrorView(
+  Widget build(BuildContext context, HomePageViewModel model) {
+    return PageErrorView.withOptionalButton(
       errorMsg: errorMsg,
+      optionalButtonOnTap: model.getOngoingAuctions,
+      optionalButtonText: "Reload",
     );
   }
 }

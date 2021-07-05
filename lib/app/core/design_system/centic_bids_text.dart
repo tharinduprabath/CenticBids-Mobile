@@ -7,24 +7,26 @@ class CenticBidsText extends StatelessWidget {
   final String text;
   final TextStyle style;
   final TextAlign? align;
+  final TextOverflow? overflow;
 
-  CenticBidsText.headingOne(this.text, {this.align})
+  CenticBidsText.headingOne(this.text, {this.align, this.overflow})
       : style = TextStyles.heading1;
 
-  CenticBidsText.headingTwo(this.text, {this.align})
+  CenticBidsText.headingTwo(this.text, {this.align, this.overflow})
       : style = TextStyles.heading2;
 
-  CenticBidsText.headingThree(this.text, {this.align})
+  CenticBidsText.headingThree(this.text, {this.align, this.overflow})
       : style = TextStyles.heading3;
 
-  CenticBidsText.subheading(this.text, {this.align})
+  CenticBidsText.subheading(this.text, {this.align, this.overflow})
       : style = TextStyles.subheading;
 
   CenticBidsText.body(this.text,
-      {Color color = AppColors.main_text_color, this.align})
+      {Color color = AppColors.main_text_color, this.align, this.overflow})
       : style = TextStyles.body.copyWith(color: color);
 
-  CenticBidsText.caption(this.text, {this.align}) : style = TextStyles.caption;
+  CenticBidsText.caption(this.text, {this.align, this.overflow})
+      : style = TextStyles.caption;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class CenticBidsText extends StatelessWidget {
       text,
       style: style,
       textAlign: align ?? TextAlign.start,
+      overflow: overflow ?? TextOverflow.visible,
     );
   }
 }
