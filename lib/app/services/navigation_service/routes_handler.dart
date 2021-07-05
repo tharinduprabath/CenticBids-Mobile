@@ -22,6 +22,21 @@ abstract class RoutesHandler {
           screen: LoginRegistrationPage(),
         );
 
+      case Routes.home_page:
+        return _routeBuilder(
+          screen: HomePage(),
+        );
+
+      case Routes.auction_page:
+        return _routeBuilder(
+          screen: AuctionPage(),
+        );
+
+      case Routes.my_bids_page:
+        return _routeBuilder(
+          screen: MyBidsPage(),
+        );
+
       default:
         return _routeBuilder(
           screen: Scaffold(

@@ -23,7 +23,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return await function();
     } on FirebaseAuthException catch (ex) {
       try {
-        print(ex.code);
         final FirebaseErrorCodes firebaseCode = FirebaseErrorCodes.values
             .firstWhere((element) => element.toFirebaseString() == ex.code);
         throw ServerException(firebaseCode.getAppErrorCode());

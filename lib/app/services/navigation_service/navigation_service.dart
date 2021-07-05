@@ -1,3 +1,6 @@
+import 'package:centic_bids/app/features/auctions/presentation/auction/auction_page.dart';
+import 'package:centic_bids/app/features/auctions/presentation/home/home_page.dart';
+import 'package:centic_bids/app/features/auctions/presentation/my_bids/my_bids_page.dart';
 import 'package:centic_bids/app/features/auth/presentation/login_registration/login_registration_page.dart';
 import 'package:centic_bids/app/features/supprt/presentation/splash/splash_page.dart';
 import 'package:flutter/cupertino.dart';

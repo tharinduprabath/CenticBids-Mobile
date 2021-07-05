@@ -1,3 +1,11 @@
+import 'package:centic_bids/app/features/auctions/data/datasources/auth_remote_datasource/auction_remote_data_source.dart';
+import 'package:centic_bids/app/features/auctions/data/datasources/auth_remote_datasource/auction_remote_datasource_impl.dart';
+import 'package:centic_bids/app/features/auctions/data/repositories/auction_repository_impl.dart';
+import 'package:centic_bids/app/features/auctions/domain/repositories/auction_repository.dart';
+import 'package:centic_bids/app/features/auctions/domain/usecases/get_ongoing_auctions_usecase.dart';
+import 'package:centic_bids/app/features/auctions/presentation/auction/auction_page_view_model.dart';
+import 'package:centic_bids/app/features/auctions/presentation/home/home_page_view_model.dart';
+import 'package:centic_bids/app/features/auctions/presentation/my_bids/my_bids_page_view_model.dart';
 import 'package:centic_bids/app/features/auth/data/datasources/auth_remote_datasource/auth_remote_data_source.dart';
 import 'package:centic_bids/app/features/auth/data/datasources/auth_remote_datasource/auth_remote_datasource_impl.dart';
 import 'package:centic_bids/app/features/auth/data/repositories/auth_repository_impl.dart';
@@ -29,10 +37,19 @@ class AppDIContainer {
               firebaseAuth: FirebaseAuth.instance,
               firebaseFirestore: FirebaseFirestore.instance,
             ));
+    sl.registerLazySingleton<AuctionRemoteDataSource>(
+        () => AuctionRemoteDataSourceImpl(
+              firebaseAuth: FirebaseAuth.instance,
+              firebaseFirestore: FirebaseFirestore.instance,
+            ));
 
     //! repositories
     sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
           authRemoteDataSource: sl(),
+          networkInfo: sl(),
+        ));
+    sl.registerLazySingleton<AuctionRepository>(() => AuctionRepositoryImpl(
+          auctionRemoteDataSource: sl(),
           networkInfo: sl(),
         ));
 
@@ -44,6 +61,11 @@ class AppDIContainer {
           repository: sl(),
         ));
 
+    sl.registerLazySingleton<GetOngoingAuctionsUsecase>(
+        () => GetOngoingAuctionsUsecase(
+              repository: sl(),
+            ));
+
     //! view models
     sl.registerFactory<SplashPageViewModel>(() => SplashPageViewModel());
     sl.registerFactory<LoginRegistrationPageViewModel>(
@@ -52,6 +74,17 @@ class AppDIContainer {
               signInUsecase: sl(),
               dialogService: sl(),
             ));
+
+    sl.registerFactory<HomePageViewModel>(() => HomePageViewModel(
+          getOngoingAuctionsUsecase: sl(),
+          dialogService: sl(),
+        ));
+    sl.registerFactory<AuctionPageViewModel>(() => AuctionPageViewModel(
+          dialogService: sl(),
+        ));
+    sl.registerFactory<MyBidsPageViewModel>(() => MyBidsPageViewModel(
+          dialogService: sl(),
+        ));
 
     //! services
     sl.registerLazySingleton<NetworkService>(() => NetworkServiceImpl(

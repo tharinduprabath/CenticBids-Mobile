@@ -1,3 +1,4 @@
+import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class PageLoadingView extends StatelessWidget {
@@ -8,7 +9,9 @@ class PageLoadingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CircularProgressIndicator(),
+      child: CircularProgressIndicator(
+        color: AppColors.primary_color,
+      ),
     );
   }
 }
