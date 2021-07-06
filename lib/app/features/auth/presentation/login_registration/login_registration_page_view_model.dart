@@ -4,7 +4,7 @@ import 'package:centic_bids/app/core/widgets/dialogs/busy_dialog.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_register_request_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_sign_in_request_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/register_usecase.dart'
-    as registerUsercase;
+    as registerUsecase;
 import 'package:centic_bids/app/features/auth/domain/usecases/register_usecase.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/sign_in_usecase.dart'
     as signInUsecase;
@@ -69,7 +69,7 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
       lastName: lastName!,
     );
 
-    final failureOrSuccess = await _registerUsecase(registerUsercase.Params(
+    final failureOrSuccess = await _registerUsecase(registerUsecase.Params(
         userRegisterRequestEntity: userRegisterRequestEntity));
 
     failureOrSuccess.fold(

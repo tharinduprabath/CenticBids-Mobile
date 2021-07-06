@@ -49,8 +49,25 @@ class AuctionModel extends AuctionEntity {
       startDate: (map["startDate"] as Timestamp).toDate(),
       endDate: (map["endDate"] as Timestamp).toDate(),
       imageList: List<String>.from(map["imageList"]),
-      bidList: map["bidList"],
+      bidList: map["bidList"] ?? <BidModel>[],
       state: auctionStateFromString(map["state"]),
+    );
+  }
+
+  factory AuctionModel.fromEntity(AuctionEntity auctionEntity) {
+    return AuctionModel(
+      id: auctionEntity.id,
+      title: auctionEntity.title,
+      description: auctionEntity.description,
+      latestBidUserID: auctionEntity.latestBidUserID,
+      basePrice: auctionEntity.basePrice,
+      latestBid: auctionEntity.latestBid,
+      startDate: auctionEntity.startDate,
+      endDate: auctionEntity.endDate,
+      imageList: auctionEntity.imageList,
+      bidList:
+          auctionEntity.bidList.map((e) => BidModel.fromEntity(e)).toList(),
+      state: auctionEntity.state,
     );
   }
 }

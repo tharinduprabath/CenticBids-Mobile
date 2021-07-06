@@ -1,3 +1,4 @@
+import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/app_constants.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_button.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
@@ -63,34 +64,40 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
   @override
   Widget build(BuildContext context, HomePageViewModel model) {
     final list = [...auctionList, ...auctionList];
-    return Container(
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CenticBidsText.body("Auctions"),
-                CenticBidsButton.icon(
-                  icon: Icons.filter_list_rounded,
-                  onTap: () {},
-                  buttonType: CenticBidsButtonType.secondary,
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView.separated(
-              itemCount: list.length,
-              separatorBuilder: (context, index) => Divider(),
-              itemBuilder: (context, index) => AuctionListItem(
-                auctionEntity: list[index],
-                onTap: () => model.goToAuctionPage(auctionEntity: list[index]),
+    return RefreshIndicator(
+      key: model.refreshIndicatorKey,
+      onRefresh: model.getOngoingAuctions,
+      color: AppColors.primary_color,
+      child: Container(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CenticBidsText.body("Auctions"),
+                  CenticBidsButton.icon(
+                    icon: Icons.filter_list_rounded,
+                    onTap: () {},
+                    buttonType: CenticBidsButtonType.secondary,
+                  )
+                ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: ListView.separated(
+                itemCount: list.length,
+                separatorBuilder: (context, index) => Divider(),
+                itemBuilder: (context, index) => AuctionListItem(
+                  auctionEntity: list[index],
+                  onTap: () =>
+                      model.goToAuctionPage(auctionEntity: list[index]),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

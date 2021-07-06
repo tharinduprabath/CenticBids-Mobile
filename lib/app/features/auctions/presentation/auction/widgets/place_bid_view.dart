@@ -34,9 +34,9 @@ class PlaceBidView extends StatelessWidget {
             Align(
                 alignment: Alignment.center,
                 child: CenticBidsText.headingOne("New Bid")),
+            Divider(),
             VerticalSpace(),
-            VerticalSpace(),
-            LatestBidView(latestBid: model.auctionEntity.latestBid),
+            LatestBidView(latestBid: model.auctionEntity.latestBid, isFromUser: model.isUserHasLatestBid(),),
             VerticalSpace(),
             VerticalSpace(),
             Row(
@@ -52,8 +52,7 @@ class PlaceBidView extends StatelessWidget {
               child: CenticBidsInputField.money(
                 moneyMaskedTextController: model.moneyTextController,
                 leadingIcon: Icons.attach_money_rounded,
-                validator: (value) => model.validateBid(
-                    bidValue: model.moneyTextController.numberValue),
+                validator: model.validateBid,
                 onSaved: (value) {
                   model.bidValue = model.moneyTextController.numberValue;
                 },

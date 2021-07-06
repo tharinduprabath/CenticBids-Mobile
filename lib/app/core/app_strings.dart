@@ -74,6 +74,10 @@ extension ErrorCodeExtension on ErrorCode {
         return "Seems like you have entered bad password.";
       case ErrorCode.e_1590:
         return "Seems like you have entered wrong password or email.";
+      case ErrorCode.e_2010:
+        return "Bid place failed. Auction over.";
+      case ErrorCode.e_2020:
+        return "Bid place failed. There is a new bid placed higher than your bid. Please increase your bid.";
     }
   }
 }

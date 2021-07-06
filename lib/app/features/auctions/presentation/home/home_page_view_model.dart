@@ -12,6 +12,7 @@ import 'package:centic_bids/app/services/dialog_service/dialog_service.dart';
 import 'package:centic_bids/app/services/navigation_service/navigation_service.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
 import 'package:centic_bids/app/utils/usecase.dart';
+import 'package:flutter/material.dart';
 
 class HomePageViewModel extends BaseStateViewModel {
   final GetOngoingAuctionsUsecase _getOngoingAuctionsUsecase;
@@ -32,6 +33,9 @@ class HomePageViewModel extends BaseStateViewModel {
         this._dialogService = dialogService,
         this._navigationService = navigationService,
         super(initialState: PageStateLoading());
+
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   Future<void> getOngoingAuctions() async {
     state = PageStateLoading();
@@ -125,12 +129,11 @@ class HomePageViewModel extends BaseStateViewModel {
     _navigationService.push(Routes.my_bids_page);
   }
 
-  void goToAuctionPage({required AuctionEntity auctionEntity}) {
-    _navigationService.push(Routes.auction_page,
+  void goToAuctionPage({required AuctionEntity auctionEntity}) async {
+    final result = await _navigationService.push(Routes.auction_page,
         args: AuctionPageArgs(auctionEntity: auctionEntity));
+    if (result as bool) refreshIndicatorKey.currentState?.show();
   }
 
-  void showAuctionFilter(){
-
-  }
+  void showAuctionFilter() {}
 }

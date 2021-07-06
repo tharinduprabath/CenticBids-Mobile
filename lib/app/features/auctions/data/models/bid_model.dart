@@ -27,4 +27,19 @@ class BidModel extends BidEntity {
       createdDate: (map["createdDate"] as Timestamp).toDate(),
     );
   }
+
+  factory BidModel.fromEntity(BidEntity bidEntity) {
+    return BidModel(
+      id: bidEntity.id,
+      bidUserID: bidEntity.bidUserID,
+      bid: bidEntity.bid,
+      createdDate: bidEntity.createdDate,
+    );
+  }
+
+  Map<String, dynamic> toMap() => {
+        'bidUserID': bidUserID,
+        'bid': bid,
+        'createdDate': createdDate,
+      };
 }
