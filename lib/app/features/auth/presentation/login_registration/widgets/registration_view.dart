@@ -26,15 +26,12 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
           key: model.signUpFormKey,
           child: Column(
             children: [
-              // CenticBidsText.headingOne("Welcome!"),
-              // VerticalSpace(),
-              // CenticBidsText.subheading("Please enter your account here"),
               VerticalSpace(),
               VerticalSpace(),
               Row(
                 children: [
                   Expanded(
-                    child: CenticBidsInputField(
+                    child: CenticBidsInputField.personName(
                       placeholder: "First Name",
                       leadingIcon: Icons.account_circle_outlined,
                       validator: Validator.personNameValidator,
@@ -45,7 +42,7 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                   ),
                   HorizontalSpace(),
                   Expanded(
-                    child: CenticBidsInputField(
+                    child: CenticBidsInputField.personName(
                       placeholder: "Last Name",
                       leadingIcon: Icons.account_circle_outlined,
                       validator: Validator.personNameValidator,
@@ -57,7 +54,7 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                 ],
               ),
               VerticalSpace(),
-              CenticBidsInputField(
+              CenticBidsInputField.email(
                 placeholder: "Email",
                 leadingIcon: Icons.email_outlined,
                 validator: Validator.emailValidator,
@@ -66,7 +63,7 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                 },
               ),
               VerticalSpace(),
-              CenticBidsInputField(
+              CenticBidsInputField.password(
                 placeholder: "Password",
                 leadingIcon: Icons.lock_outline_rounded,
                 validator: (value) {
@@ -76,7 +73,6 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                   });
                   return result;
                 },
-                isPassword: true,
                 onSaved: (value) {
                   model.signUpPassword = value;
                 },

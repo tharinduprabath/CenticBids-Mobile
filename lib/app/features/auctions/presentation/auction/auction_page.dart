@@ -1,9 +1,9 @@
-import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/app_constants.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_button.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/auction_countdown_timer.dart';
 import 'package:centic_bids/app/core/widgets/back_circle.dart';
+import 'package:centic_bids/app/core/widgets/bid_count_chip.dart';
 import 'package:centic_bids/app/core/widgets/horizontal_space.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
 import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
@@ -11,6 +11,8 @@ import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:centic_bids/app/features/auctions/domain/entities/auction_entity.dart';
 import 'package:centic_bids/app/features/auctions/presentation/auction/widgets/image_slider.dart';
+import 'package:centic_bids/app/features/auctions/presentation/auction/widgets/latest_bid_view.dart';
+import 'package:centic_bids/app/features/auctions/presentation/auction/widgets/place_bid_view.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
 import 'package:centic_bids/app/utils/text_formatter.dart';
 import 'package:centic_bids/app_configurations/app_di_container.dart';
@@ -39,7 +41,8 @@ class AuctionPage extends StatelessWidget {
       value: args.auctionEntity,
       child: ViewModelBuilder<AuctionPageViewModel>.reactive(
         viewModelBuilder: () => sl<AuctionPageViewModel>(),
-        onModelReady: (model){
+        onModelReady: (model) {
+          model.auctionEntity = args.auctionEntity;
           model.startAuctionOverNotifierTimer();
         },
         builder: (context, model, child) {
@@ -66,8 +69,7 @@ class AuctionPage extends StatelessWidget {
 class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
   @override
   Widget build(BuildContext context, AuctionPageViewModel model) {
-    final AuctionEntity auctionEntity =
-        Provider.of<AuctionEntity>(context, listen: false);
+    final AuctionEntity auctionEntity = context.read<AuctionEntity>();
 
     return Column(
       children: [
@@ -109,10 +111,8 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Chip(
-                          backgroundColor: AppColors.form_color,
-                          label: CenticBidsText.body(
-                              "${auctionEntity.bidList.length} Bids"),
+                        child: BidCountChip(
+                          count: auctionEntity.bidList.length,
                         ),
                       ),
                       VerticalSpace(),
@@ -125,14 +125,8 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
                       ),
                       VerticalSpace(),
                       VerticalSpace(),
-                      Row(
-                        children: [
-                          CenticBidsText.body("Latest Bid: "),
-                          CenticBidsText.body(
-                            TextFormatter.toCurrency(auctionEntity.latestBid),
-                            color: AppColors.accent_color,
-                          ),
-                        ],
+                      LatestBidView(
+                        latestBid: auctionEntity.latestBid,
                       ),
                     ],
                   ),
@@ -143,14 +137,19 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
         ),
         ValueListenableBuilder<void>(
           valueListenable: model.auctionOverNotifier,
-          builder: (context, _, child) => DateTime.now().isAfter(auctionEntity.endDate)
-              ? SizedBox()
-              : Padding(
-                  padding: EdgeInsets.all(AppConstants.margin.r),
-                  child: CenticBidsButton(
-                    text: "Bid Now",
-                  ),
-                ),
+          builder: (context, _, child) =>
+              DateTime.now().isAfter(auctionEntity.endDate)
+                  ? SizedBox()
+                  : Padding(
+                      padding: EdgeInsets.all(AppConstants.margin.r),
+                      child: CenticBidsButton(
+                        text: "Bid Now",
+                        onTap: () => _showPlaceBidView(
+                          context: context,
+                          model: model,
+                        ),
+                      ),
+                    ),
         )
       ],
     );
@@ -166,6 +165,20 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
             isDisabled: onTap == null,
           ),
         ));
+  }
+
+  void _showPlaceBidView({
+    required BuildContext context,
+    required AuctionPageViewModel model,
+  }) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) => PlaceBidView(
+              model: model,
+            ),
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConstants.radius.r)));
   }
 }
 

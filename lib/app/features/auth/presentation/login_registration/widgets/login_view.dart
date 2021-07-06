@@ -23,12 +23,9 @@ class LoginView extends ViewModelWidget<LoginRegistrationPageViewModel> {
           key: model.signInFormKey,
           child: Column(
             children: [
-              // CenticBidsText.headingOne("Welcome Back!"),
-              // VerticalSpace(),
-              // CenticBidsText.subheading("Please enter your account here"),
               VerticalSpace(),
               VerticalSpace(),
-              CenticBidsInputField(
+              CenticBidsInputField.email(
                 placeholder: "Email",
                 leadingIcon: Icons.email_outlined,
                 validator: Validator.emailValidator,
@@ -37,10 +34,9 @@ class LoginView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                 },
               ),
               VerticalSpace(),
-              CenticBidsInputField(
+              CenticBidsInputField.password(
                 placeholder: "Password",
                 leadingIcon: Icons.lock_outline_rounded,
-                isPassword: true,
                 validator: Validator.textValidator,
                 onSaved: (value) {
                   model.signInPassword = value;

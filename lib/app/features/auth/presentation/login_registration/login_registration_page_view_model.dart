@@ -85,13 +85,6 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
       },
       (success) {
         _navigationService.restart();
-        // _dialogService.show(
-        //   dialog: ActionDialog.success(
-        //       heading: AppStrings.dialog_default_heading_success_text,
-        //       text: "Register Success",
-        //       actionButtonText: AppStrings.dialog_default_action_button_text,
-        //       action: () => _dialogService.close()),
-        // );
       },
     );
   }

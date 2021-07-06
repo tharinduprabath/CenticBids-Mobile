@@ -10,7 +10,7 @@ class CenticBidsDrawerBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppInfo appInfo = Provider.of<AppInfo>(context, listen: false);
+    final AppInfo appInfo = context.read<AppInfo>();
     return Padding(
       padding: EdgeInsets.all(AppConstants.margin.r),
       child: CenticBidsText.caption("${appInfo.name} v${appInfo.version}"),

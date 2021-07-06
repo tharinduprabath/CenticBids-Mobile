@@ -1,7 +1,6 @@
-import 'package:centic_bids/app/core/app_colors.dart';
-import 'package:centic_bids/app/core/app_constants.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/auction_countdown_timer.dart';
+import 'package:centic_bids/app/core/widgets/bid_count_chip.dart';
 import 'package:centic_bids/app/core/widgets/fade_network_image.dart';
 import 'package:centic_bids/app/core/widgets/horizontal_space.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
@@ -42,11 +41,7 @@ class AuctionListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CenticBidsText.headingTwo(auctionEntity.title),
-                  Chip(
-                    backgroundColor: AppColors.form_color,
-                    label: CenticBidsText.body(
-                        "${auctionEntity.bidList.length} Bids"),
-                  ),
+                  BidCountChip(count: auctionEntity.bidList.length),
                   CenticBidsText.headingOne(
                       "${TextFormatter.toCurrency(auctionEntity.basePrice)}"),
                   VerticalSpace(),
