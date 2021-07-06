@@ -50,12 +50,7 @@ class AuctionListItem extends StatelessWidget {
                   CenticBidsText.headingOne(
                       "${TextFormatter.toCurrency(auctionEntity.basePrice)}"),
                   VerticalSpace(),
-                  Row(
-                    children: [
-                      AuctionCountdownTimer(endDate: auctionEntity.endDate),
-
-                    ],
-                  ),
+                  AuctionCountdownTimer(endDate: auctionEntity.endDate),
                 ],
               ),
             ),

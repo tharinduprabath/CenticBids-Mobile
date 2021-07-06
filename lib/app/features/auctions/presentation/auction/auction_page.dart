@@ -39,6 +39,9 @@ class AuctionPage extends StatelessWidget {
       value: args.auctionEntity,
       child: ViewModelBuilder<AuctionPageViewModel>.reactive(
         viewModelBuilder: () => sl<AuctionPageViewModel>(),
+        onModelReady: (model){
+          model.startAuctionOverNotifierTimer();
+        },
         builder: (context, model, child) {
           final Widget stateUI;
           if (model.state is PageStateLoading)
@@ -66,61 +69,88 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
     final AuctionEntity auctionEntity =
         Provider.of<AuctionEntity>(context, listen: false);
 
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          expandedHeight: 192.h,
-          leading: _buildBackButton(onTap: model.pageBack),
-          flexibleSpace: FlexibleSpaceBar(
-            background: ImageSlider(
-              imageUrlList: auctionEntity.imageList,
-            ),
+    return Column(
+      children: [
+        Expanded(
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: 192.h,
+                leading: _buildBackButton(onTap: model.pageBack),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: ImageSlider(
+                    imageUrlList: auctionEntity.imageList,
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.all(AppConstants.margin.r),
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      Row(
+                        children: [
+                          Expanded(
+                              flex: 4,
+                              child: CenticBidsText.headingTwo(
+                                  auctionEntity.title)),
+                          HorizontalSpace(
+                            size: 10.w,
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: CenticBidsText.headingTwo(
+                                    TextFormatter.toCurrency(
+                                        auctionEntity.basePrice)),
+                              )),
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Chip(
+                          backgroundColor: AppColors.form_color,
+                          label: CenticBidsText.body(
+                              "${auctionEntity.bidList.length} Bids"),
+                        ),
+                      ),
+                      VerticalSpace(),
+                      AuctionCountdownTimer(endDate: auctionEntity.endDate),
+                      VerticalSpace(),
+                      VerticalSpace(),
+                      CenticBidsText.body(
+                        auctionEntity.description,
+                        align: TextAlign.justify,
+                      ),
+                      VerticalSpace(),
+                      VerticalSpace(),
+                      Row(
+                        children: [
+                          CenticBidsText.body("Latest Bid: "),
+                          CenticBidsText.body(
+                            TextFormatter.toCurrency(auctionEntity.latestBid),
+                            color: AppColors.accent_color,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        SliverPadding(
-          padding: EdgeInsets.all(AppConstants.margin.r),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate([
-              Row(
-                children: [
-                  Expanded(
-                      flex: 4,
-                      child: CenticBidsText.headingTwo(auctionEntity.title)),
-                  HorizontalSpace(
-                    size: 10.w,
+        ValueListenableBuilder<void>(
+          valueListenable: model.auctionOverNotifier,
+          builder: (context, _, child) => DateTime.now().isAfter(auctionEntity.endDate)
+              ? SizedBox()
+              : Padding(
+                  padding: EdgeInsets.all(AppConstants.margin.r),
+                  child: CenticBidsButton(
+                    text: "Bid Now",
                   ),
-                  Expanded(
-                      flex: 2,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: CenticBidsText.headingTwo(
-                            TextFormatter.toCurrency(auctionEntity.basePrice)),
-                      )),
-                ],
-              ),
-              VerticalSpace(),
-              AuctionCountdownTimer(endDate: auctionEntity.endDate),
-              VerticalSpace(),
-              VerticalSpace(),
-              CenticBidsText.body(auctionEntity.description, align: TextAlign.justify,),
-              VerticalSpace(),
-              VerticalSpace(),
-              Row(
-                children: [
-                  CenticBidsText.body("Latest Bid: "),
-                  CenticBidsText.body(
-                    TextFormatter.toCurrency(auctionEntity.latestBid),
-                    color: AppColors.accent_color,
-                  ),
-                ],
-              ),
-            ]),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: CenticBidsButton(
-            text: "Bid Now",
-          ),
+                ),
         )
       ],
     );

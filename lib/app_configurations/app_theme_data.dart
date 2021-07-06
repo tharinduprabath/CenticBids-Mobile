@@ -26,7 +26,7 @@ abstract class AppThemeData {
           selectionColor: AppColors.primary_color.withOpacity(0.3)),
       appBarTheme: AppBarTheme(
         color: AppColors.white,
-        elevation: 2,
+        elevation: 0,
         iconTheme: IconThemeData(color: AppColors.main_text_color)
       ),
       scaffoldBackgroundColor: AppColors.white,

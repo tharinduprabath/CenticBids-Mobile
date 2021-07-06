@@ -129,4 +129,8 @@ class HomePageViewModel extends BaseStateViewModel {
     _navigationService.push(Routes.auction_page,
         args: AuctionPageArgs(auctionEntity: auctionEntity));
   }
+
+  void showAuctionFilter(){
+
+  }
 }

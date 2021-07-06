@@ -14,14 +14,14 @@ class CenticBidsDrawerHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return DrawerHeader(
         decoration: BoxDecoration(
-          color: AppColors.form_color.withOpacity(1),
+          color: AppColors.form_color,
         ),
         child: Row(
           children: [
             Expanded(
               child: CircleAvatar(
                 radius: 30.r,
-                backgroundColor: AppColors.outline_color,
+                backgroundColor: AppColors.white,
                 child: Icon(
                   Icons.account_circle,
                   color: AppColors.main_text_color,
@@ -36,9 +36,12 @@ class CenticBidsDrawerHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CenticBidsText.headingOne(title),
+                    CenticBidsText.headingOne(
+                      title,
+                    ),
                     CenticBidsText.subheading(
-                        "Welcome to ${AppStrings.app_name}"),
+                      "Welcome to ${AppStrings.app_name}",
+                    ),
                   ],
                 )),
           ],

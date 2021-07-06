@@ -9,24 +9,29 @@ class CenticBidsText extends StatelessWidget {
   final TextAlign? align;
   final TextOverflow? overflow;
 
-  CenticBidsText.headingOne(this.text, {this.align, this.overflow})
-      : style = TextStyles.heading1;
+  CenticBidsText.headingOne(this.text,
+      {Color color = AppColors.main_text_color, this.align, this.overflow})
+      : style = TextStyles.heading1.copyWith(color: color);
 
-  CenticBidsText.headingTwo(this.text, {this.align, this.overflow})
-      : style = TextStyles.heading2;
+  CenticBidsText.headingTwo(this.text,
+      {Color color = AppColors.main_text_color, this.align, this.overflow})
+      : style = TextStyles.heading2.copyWith(color: color);
 
-  CenticBidsText.headingThree(this.text, {this.align, this.overflow})
-      : style = TextStyles.heading3;
+  CenticBidsText.headingThree(this.text,
+      {Color color = AppColors.main_text_color, this.align, this.overflow})
+      : style = TextStyles.heading3.copyWith(color: color);
 
-  CenticBidsText.subheading(this.text, {this.align, this.overflow})
-      : style = TextStyles.subheading;
+  CenticBidsText.subheading(this.text,
+      {Color color = AppColors.secondary_text_color, this.align, this.overflow})
+      : style = TextStyles.subheading.copyWith(color: color);
 
   CenticBidsText.body(this.text,
       {Color color = AppColors.main_text_color, this.align, this.overflow})
       : style = TextStyles.body.copyWith(color: color);
 
-  CenticBidsText.caption(this.text, {this.align, this.overflow})
-      : style = TextStyles.caption;
+  CenticBidsText.caption(this.text,
+      {Color color = AppColors.secondary_text_color, this.align, this.overflow})
+      : style = TextStyles.caption.copyWith(color: color);
 
   @override
   Widget build(BuildContext context) {

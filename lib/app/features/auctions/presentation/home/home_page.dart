@@ -1,3 +1,6 @@
+import 'package:centic_bids/app/core/app_constants.dart';
+import 'package:centic_bids/app/core/design_system/centic_bids_button.dart';
+import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/auction_list_item.dart';
 import 'package:centic_bids/app/core/widgets/centic_bids_app_bar.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
@@ -10,6 +13,7 @@ import 'package:centic_bids/app/utils/base_state_view_model.dart';
 import 'package:centic_bids/app_configurations/app_di_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 
 import 'home_page_view_model.dart';
@@ -60,13 +64,33 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
   Widget build(BuildContext context, HomePageViewModel model) {
     final list = [...auctionList, ...auctionList];
     return Container(
-      child: ListView.separated(
-        itemCount: list.length,
-        separatorBuilder: (context, index) => Divider(),
-        itemBuilder: (context, index) => AuctionListItem(
-          auctionEntity: list[index],
-          onTap: () => model.goToAuctionPage(auctionEntity: list[index]),
-        ),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CenticBidsText.body("Auctions"),
+                CenticBidsButton.icon(
+                  icon: Icons.filter_list_rounded,
+                  onTap: () {},
+                  buttonType: CenticBidsButtonType.secondary,
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              itemCount: list.length,
+              separatorBuilder: (context, index) => Divider(),
+              itemBuilder: (context, index) => AuctionListItem(
+                auctionEntity: list[index],
+                onTap: () => model.goToAuctionPage(auctionEntity: list[index]),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -126,19 +126,19 @@ class CenticBidsButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buttonVariant == CenticBidsButtonVariant.icon
-                ? Icon(
-                    _icon,
-                    color: childColor,
-                  )
-                : Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
-                  child: CenticBidsText.body(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
+              child: _buttonVariant == CenticBidsButtonVariant.icon
+                  ? Icon(
+                      _icon,
+                      color: childColor,
+                    )
+                  : CenticBidsText.body(
                       _text!,
                       color: childColor,
                       align: TextAlign.center,
                     ),
-                ),
+            ),
           ],
         ),
       ),

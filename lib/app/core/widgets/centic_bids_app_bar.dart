@@ -22,5 +22,5 @@ class CenticBidsAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 2.5);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 2);
 }

@@ -21,10 +21,10 @@ class AuctionCountdownTimer extends StatelessWidget {
       widgetBuilder: (_, time) {
         Widget timeWidget;
         if (time == null) {
-          timeWidget = CenticBidsText.subheading("Auction Over");
+          timeWidget = CenticBidsText.subheading("Auction Over", color: AppColors.accent_color,);
         } else
           timeWidget = CenticBidsText.subheading(
-              "${time.days}d ${time.hours}h ${time.min}m ${time.sec}s");
+              "${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}m ${time.sec ?? 0}s");
         return Row(
           children: [
             timeWidget,
@@ -34,7 +34,7 @@ class AuctionCountdownTimer extends StatelessWidget {
             Icon(
               Icons.timer_rounded,
               size: AppConstants.iconSize / 1.5,
-              color: AppColors.secondary_text_color,
+              color: time == null ? AppColors.accent_color : AppColors.secondary_text_color,
             )
           ],
         );
