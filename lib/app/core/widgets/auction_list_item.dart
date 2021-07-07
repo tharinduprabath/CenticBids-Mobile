@@ -5,7 +5,7 @@ import 'package:centic_bids/app/core/widgets/bid_count_chip.dart';
 import 'package:centic_bids/app/core/widgets/fade_network_image.dart';
 import 'package:centic_bids/app/core/widgets/horizontal_space.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
-import 'package:centic_bids/app/features/auctions/domain/entities/auction_entity.dart';
+import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
 import 'package:centic_bids/app/utils/text_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -21,7 +21,8 @@ class BusyDialog extends StatelessWidget {
         child: FittedBox(
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(AppConstants.radius.r / 2)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(AppConstants.radius.r / 2)),
               color: Colors.white,
             ),
             alignment: Alignment.center,
@@ -29,7 +30,9 @@ class BusyDialog extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CircularProgressIndicator(color: AppColors.primary_color,),
+                CircularProgressIndicator(
+                  color: AppColors.primary_color,
+                ),
                 VerticalSpace(),
                 VerticalSpace(),
                 CenticBidsText.headingThree(text),
@@ -37,20 +40,6 @@ class BusyDialog extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    ); SimpleDialog(
-      insetPadding: EdgeInsets.all(0),
-      contentPadding: const EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.all(Radius.circular(AppConstants.radius.r))),
-      title: Column(
-        children: [
-          CircularProgressIndicator(),
-          VerticalSpace(),
-          VerticalSpace(),
-          CenticBidsText.headingThree(text),
-        ],
       ),
     );
   }

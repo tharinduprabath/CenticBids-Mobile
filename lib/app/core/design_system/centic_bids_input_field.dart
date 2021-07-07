@@ -9,7 +9,7 @@ class CenticBidsInputField extends StatefulWidget {
   final TextEditingController? controller;
   final String placeholder;
   final IconData? leadingIcon, trailingIcon;
-  final bool _isPassword, _isMoneyField;
+  final bool _isPassword;
   final void Function()? trailingOnTap;
   final String? Function(String?)? validator;
   final void Function(String)? onSaved;
@@ -24,8 +24,7 @@ class CenticBidsInputField extends StatefulWidget {
     this.trailingOnTap,
     this.validator,
     this.onSaved,
-  })  : this._isMoneyField = false,
-        this._inputType = TextInputType.text,
+  })  : this._inputType = TextInputType.text,
         this._isPassword = false,
         super(key: key);
 
@@ -38,8 +37,7 @@ class CenticBidsInputField extends StatefulWidget {
     this.trailingOnTap,
     this.validator,
     this.onSaved,
-  })  : this._isMoneyField = false,
-        this._isPassword = false,
+  })  : this._isPassword = false,
         this._inputType = TextInputType.emailAddress,
         super(key: key);
 
@@ -52,8 +50,7 @@ class CenticBidsInputField extends StatefulWidget {
     this.trailingOnTap,
     this.validator,
     this.onSaved,
-  })  : this._isMoneyField = false,
-        this._isPassword = false,
+  })  : this._isPassword = false,
         this._inputType = TextInputType.name,
         super(key: key);
 
@@ -66,8 +63,7 @@ class CenticBidsInputField extends StatefulWidget {
     this.trailingOnTap,
     this.validator,
     this.onSaved,
-  })  : this._isMoneyField = false,
-        this._isPassword = true,
+  })  : this._isPassword = true,
         this._inputType = TextInputType.visiblePassword,
         super(key: key);
 
@@ -81,7 +77,6 @@ class CenticBidsInputField extends StatefulWidget {
     this.validator,
     this.onSaved,
   })  : this.controller = moneyMaskedTextController,
-        this._isMoneyField = true,
         this._isPassword = false,
         this._inputType = TextInputType.number,
         super(key: key);

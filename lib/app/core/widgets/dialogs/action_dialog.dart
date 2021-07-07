@@ -1,5 +1,4 @@
 import 'package:centic_bids/app/core/app_constants.dart';
-import 'package:centic_bids/app/core/app_images.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_button.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/check_circle.dart';
@@ -64,8 +63,7 @@ class ActionDialog extends StatelessWidget {
           borderRadius:
               BorderRadius.all(Radius.circular(AppConstants.radius.r / 2))),
       content: Padding(
-        padding: EdgeInsets.all(AppConstants.margin.r * 2
-        ),
+        padding: EdgeInsets.all(AppConstants.margin.r * 2),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
