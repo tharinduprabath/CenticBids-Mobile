@@ -1,13 +1,15 @@
-import 'package:centic_bids/app/features/auction/data/models/bid_model.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+///
+///  Has firebase dependency for converters
+///
 class AuctionModel extends AuctionEntity {
   final String id, title, description, latestBidUserID;
   final double basePrice, latestBid;
+  final int bidCount;
   final DateTime startDate, endDate;
   final List<String> imageList;
-  final List<BidModel> bidList;
 
   AuctionModel({
     required this.id,
@@ -16,10 +18,10 @@ class AuctionModel extends AuctionEntity {
     required this.latestBidUserID,
     required this.basePrice,
     required this.latestBid,
+    required this.bidCount,
     required this.startDate,
     required this.endDate,
     required this.imageList,
-    required this.bidList,
   }) : super(
           id: id,
           title: title,
@@ -27,25 +29,25 @@ class AuctionModel extends AuctionEntity {
           latestBidUserID: latestBidUserID,
           basePrice: basePrice,
           latestBid: latestBid,
+          bidCount: bidCount,
           startDate: startDate,
           endDate: endDate,
           imageList: imageList,
-          bidList: bidList,
         );
 
-  // Has firebase dependency for datetime
-  factory AuctionModel.fromMap(Map<String, dynamic> map) {
+  factory AuctionModel.fromDocument(DocumentSnapshot doc) {
+    final map = doc.data() as Map<String, dynamic>;
     return AuctionModel(
-      id: map["id"],
+      id: doc.id,
       title: map["title"],
       description: map["description"],
-      latestBidUserID: map["latestBidUserID"],
+      latestBidUserID: map["latestBidUserID"] ?? "",
       basePrice: (map["basePrice"] as num).toDouble(),
-      latestBid: (map["latestBid"] as num).toDouble(),
+      latestBid: ((map["latestBid"] ?? 0) as num).toDouble(),
+      bidCount: ((map["bidCount"] ?? 0) as num).toInt(),
       startDate: (map["startDate"] as Timestamp).toDate(),
       endDate: (map["endDate"] as Timestamp).toDate(),
       imageList: List<String>.from(map["imageList"]),
-      bidList: map["bidList"] ?? <BidModel>[],
     );
   }
 
@@ -57,11 +59,10 @@ class AuctionModel extends AuctionEntity {
       latestBidUserID: auctionEntity.latestBidUserID,
       basePrice: auctionEntity.basePrice,
       latestBid: auctionEntity.latestBid,
+      bidCount: auctionEntity.bidCount,
       startDate: auctionEntity.startDate,
       endDate: auctionEntity.endDate,
       imageList: auctionEntity.imageList,
-      bidList:
-          auctionEntity.bidList.map((e) => BidModel.fromEntity(e)).toList(),
     );
   }
 }

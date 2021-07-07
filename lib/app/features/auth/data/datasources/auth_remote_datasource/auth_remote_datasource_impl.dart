@@ -132,7 +132,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           email: firebaseUser.email!,
           firstName: firebaseUser.displayName!,
           lastName: "",
-          registeredDate: firebaseUser.metadata.creationTime!);
+          registeredDate: firebaseUser.metadata.creationTime!,
+          watchList: <String>[]);
 
       return user;
     });

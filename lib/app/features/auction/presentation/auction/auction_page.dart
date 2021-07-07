@@ -132,7 +132,7 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
             Align(
               alignment: Alignment.centerLeft,
               child: BidCountChip(
-                count: auctionEntity.bidList.length,
+                count: auctionEntity.bidCount,
               ),
             ),
             VerticalSpace(),

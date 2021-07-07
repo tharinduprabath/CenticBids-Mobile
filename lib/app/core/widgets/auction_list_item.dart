@@ -43,7 +43,7 @@ class AuctionListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CenticBidsText.headingTwo(auctionEntity.title),
-                  BidCountChip(count: auctionEntity.bidList.length),
+                  BidCountChip(count: auctionEntity.bidCount),
                   CenticBidsText.headingOne(
                       "${TextFormatter.toCurrency(auctionEntity.basePrice)}"),
                   VerticalSpace(),

@@ -10,6 +10,8 @@ abstract class AuctionRepository {
   Future<Either<Failure, List<AuctionEntity>>> getOngoingAuctionsNextList(
       {required String startAfterAuctionId});
 
+  Future<Either<Failure, List<AuctionEntity>>> getMyBids();
+
   Future<Either<Failure, Success>> placeBid(
       {required PlaceBidRequestEntity placeBidRequestEntity});
 

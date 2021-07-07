@@ -9,6 +9,7 @@ import 'package:centic_bids/app/core/widgets/load_more_button.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
 import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
 import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
+import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:centic_bids/app/features/auction/presentation/home/widgets/drawer_user_logged.dart';
 import 'package:centic_bids/app/features/auction/presentation/home/widgets/drawer_user_not_logged.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
@@ -98,10 +99,9 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
               itemCount: model.auctionList.length + 1,
               separatorBuilder: (context, index) =>
                   index != model.auctionList.length - 1
-                      ? Divider(
-                          height: AppConstants.margin.h * 2,
-                        )
+                      ? VerticalSpace()
                       : SizedBox(),
+              padding: EdgeInsets.all(AppConstants.margin.r),
               itemBuilder: (context, index) => index == model.auctionList.length
                   ? _buildLoadMoreButton(model)
                   : AuctionListItem(

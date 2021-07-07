@@ -1,12 +1,11 @@
-import 'package:centic_bids/app/features/auction/domain/entities/bid_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class AuctionEntity extends Equatable {
   final String id, title, description, latestBidUserID;
   final double basePrice, latestBid;
+  final int bidCount;
   final DateTime startDate, endDate;
   final List<String> imageList;
-  final List<BidEntity> bidList;
 
   AuctionEntity({
     required this.id,
@@ -15,10 +14,10 @@ class AuctionEntity extends Equatable {
     required this.latestBidUserID,
     required this.basePrice,
     required this.latestBid,
+    required this.bidCount,
     required this.startDate,
     required this.endDate,
     required this.imageList,
-    required this.bidList,
   });
 
   @override
@@ -29,9 +28,9 @@ class AuctionEntity extends Equatable {
         latestBidUserID,
         basePrice,
         latestBid,
+        bidCount,
         startDate,
         endDate,
         imageList,
-        bidList,
       ];
 }

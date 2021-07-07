@@ -95,4 +95,21 @@ class AuctionRepositoryImpl implements AuctionRepository {
       return Left(UnknownFailure(ex.code));
     }
   }
+
+  @override
+  Future<Either<Failure, List<AuctionEntity>>> getMyBids() async {
+    try {
+      if (await networkInfo.isConnected) {
+        return Right(await auctionRemoteDataSource.getMyBids());
+      } else {
+        throw NetworkException(ErrorCode.e_1200);
+      }
+    } on ServerException catch (ex) {
+      return Left(ServerFailure(ex.code));
+    } on NetworkException catch (ex) {
+      return Left(NetworkFailure(ex.code));
+    } on UnknownException catch (ex) {
+      return Left(UnknownFailure(ex.code));
+    }
+  }
 }

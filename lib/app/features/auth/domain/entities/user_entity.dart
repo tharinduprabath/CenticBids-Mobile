@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class UserEntity extends Equatable {
   final String id, email, firstName, lastName;
+  final List<String> watchList;
   final DateTime registeredDate;
 
   UserEntity({
@@ -9,6 +10,7 @@ class UserEntity extends Equatable {
     required this.email,
     required this.firstName,
     required this.lastName,
+    required this.watchList,
     required this.registeredDate,
   });
 
@@ -18,6 +20,7 @@ class UserEntity extends Equatable {
         email,
         firstName,
         lastName,
+        watchList,
         registeredDate,
       ];
 }

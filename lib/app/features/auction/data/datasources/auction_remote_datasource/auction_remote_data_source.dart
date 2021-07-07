@@ -8,6 +8,8 @@ abstract class AuctionRemoteDataSource {
   Future<List<AuctionModel>> getOngoingAuctionsNextList(
       {required String startAfterAuctionId});
 
+  Future<List<AuctionModel>> getMyBids();
+
   Future<Success> placeBid(
       {required PlaceBidRequestModel placeBidRequestModel});
 

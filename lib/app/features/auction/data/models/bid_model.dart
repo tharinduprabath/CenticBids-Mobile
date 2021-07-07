@@ -18,25 +18,6 @@ class BidModel extends BidEntity {
           createdDate: createdDate,
         );
 
-  // Has firebase dependency for datetime
-  factory BidModel.fromMap(Map<String, dynamic> map) {
-    return BidModel(
-      id: map["id"],
-      bidUserID: map["bidUserID"],
-      bid: (map["bid"] as num).toDouble(),
-      createdDate: (map["createdDate"] as Timestamp).toDate(),
-    );
-  }
-
-  factory BidModel.fromEntity(BidEntity bidEntity) {
-    return BidModel(
-      id: bidEntity.id,
-      bidUserID: bidEntity.bidUserID,
-      bid: bidEntity.bid,
-      createdDate: bidEntity.createdDate,
-    );
-  }
-
   Map<String, dynamic> toMap() => {
         'bidUserID': bidUserID,
         'bid': bid,
