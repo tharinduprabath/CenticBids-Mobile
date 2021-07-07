@@ -1,4 +1,3 @@
-import 'package:centic_bids/app/core/app_enums.dart';
 import 'package:centic_bids/app/core/app_firebase_helper.dart';
 import 'package:centic_bids/app/features/auctions/data/models/auction_model.dart';
 import 'package:centic_bids/app/features/auctions/data/models/bid_model.dart';
@@ -8,7 +7,6 @@ import 'package:centic_bids/app/utils/exception.dart';
 import 'package:centic_bids/app/utils/success.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 
 import 'auction_remote_data_source.dart';
 
@@ -53,7 +51,7 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
       // Get auction docs
       final QuerySnapshot auctionDocs = await firebaseFirestore
           .collection(FirestoreName.auctions_collection)
-          .where("state", isEqualTo: describeEnum(AuctionState.ongoing))
+          .where("endDate", isGreaterThan: DateTime.now())
           .get();
 
       // Check empty

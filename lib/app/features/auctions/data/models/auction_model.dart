@@ -1,4 +1,3 @@
-import 'package:centic_bids/app/core/app_enums.dart';
 import 'package:centic_bids/app/features/auctions/data/models/bid_model.dart';
 import 'package:centic_bids/app/features/auctions/domain/entities/auction_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +8,6 @@ class AuctionModel extends AuctionEntity {
   final DateTime startDate, endDate;
   final List<String> imageList;
   final List<BidModel> bidList;
-  final AuctionState state;
 
   AuctionModel({
     required this.id,
@@ -22,7 +20,6 @@ class AuctionModel extends AuctionEntity {
     required this.endDate,
     required this.imageList,
     required this.bidList,
-    required this.state,
   }) : super(
           id: id,
           title: title,
@@ -34,7 +31,6 @@ class AuctionModel extends AuctionEntity {
           endDate: endDate,
           imageList: imageList,
           bidList: bidList,
-          state: state,
         );
 
   // Has firebase dependency for datetime
@@ -50,7 +46,6 @@ class AuctionModel extends AuctionEntity {
       endDate: (map["endDate"] as Timestamp).toDate(),
       imageList: List<String>.from(map["imageList"]),
       bidList: map["bidList"] ?? <BidModel>[],
-      state: auctionStateFromString(map["state"]),
     );
   }
 
@@ -67,7 +62,6 @@ class AuctionModel extends AuctionEntity {
       imageList: auctionEntity.imageList,
       bidList:
           auctionEntity.bidList.map((e) => BidModel.fromEntity(e)).toList(),
-      state: auctionEntity.state,
     );
   }
 }

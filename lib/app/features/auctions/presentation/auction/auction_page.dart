@@ -126,16 +126,17 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
                         AuctionCountdownTimer(endDate: auctionEntity.endDate),
                         VerticalSpace(),
                         VerticalSpace(),
+                        LatestBidView(
+                          latestBid: auctionEntity.latestBid,
+                          isFromUser: model.isUserHasLatestBid(),
+                        ),
+                        VerticalSpace(),
+                        VerticalSpace(),
                         CenticBidsText.body(
                           auctionEntity.description,
                           align: TextAlign.justify,
                         ),
                         VerticalSpace(),
-                        VerticalSpace(),
-                        LatestBidView(
-                          latestBid: auctionEntity.latestBid,
-                          isFromUser: model.isUserHasLatestBid(),
-                        ),
                       ],
                     ),
                   ),

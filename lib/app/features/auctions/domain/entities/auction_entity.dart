@@ -8,7 +8,6 @@ class AuctionEntity extends Equatable {
   final DateTime startDate, endDate;
   final List<String> imageList;
   final List<BidEntity> bidList;
-  final AuctionState state;
 
   AuctionEntity({
     required this.id,
@@ -21,7 +20,6 @@ class AuctionEntity extends Equatable {
     required this.endDate,
     required this.imageList,
     required this.bidList,
-    required this.state,
   });
 
   @override
@@ -36,6 +34,5 @@ class AuctionEntity extends Equatable {
     endDate,
     imageList,
     bidList,
-    state,
   ];
 }

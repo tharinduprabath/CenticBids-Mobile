@@ -1,3 +1,4 @@
+import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/auction_countdown_timer.dart';
 import 'package:centic_bids/app/core/widgets/bid_count_chip.dart';
@@ -26,6 +27,7 @@ class AuctionListItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: size,
+        color: AppColors.transparent,
         child: Row(
           children: [
             Container(
