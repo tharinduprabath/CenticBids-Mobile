@@ -14,7 +14,7 @@ class DrawerUserLogged extends ViewModelWidget<HomePageViewModel> {
       child: Column(
         children: [
           CenticBidsDrawerHeader(
-            title: model.getLocalUser()!.firstName,
+            title: "Hi," + model.getLocalUser()!.firstName,
           ),
           Expanded(
               child: ListView(

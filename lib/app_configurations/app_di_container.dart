@@ -3,6 +3,7 @@ import 'package:centic_bids/app/features/auction/data/datasources/auction_remote
 import 'package:centic_bids/app/features/auction/data/repositories/auction_repository_impl.dart';
 import 'package:centic_bids/app/features/auction/domain/repositories/auction_repository.dart';
 import 'package:centic_bids/app/features/auction/domain/usecases/get_auction_usecase.dart';
+import 'package:centic_bids/app/features/auction/domain/usecases/get_my_bids_usecase.dart';
 import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_first_list_usecase.dart';
 import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_next_list_usecase.dart';
 import 'package:centic_bids/app/features/auction/domain/usecases/place_bid_usecase.dart';
@@ -87,6 +88,9 @@ class AppDIContainer {
     sl.registerLazySingleton<GetAuctionUsecase>(() => GetAuctionUsecase(
           repository: sl(),
         ));
+    sl.registerLazySingleton<GetMyBidsUsecase>(() => GetMyBidsUsecase(
+          repository: sl(),
+        ));
 
     //! view models
     sl.registerFactory<SplashPageViewModel>(() => SplashPageViewModel());
@@ -114,6 +118,8 @@ class AppDIContainer {
           navigationService: sl(),
         ));
     sl.registerFactory<MyBidsPageViewModel>(() => MyBidsPageViewModel(
+          getMyBidsUsecase: sl(),
+          navigationService: sl(),
           dialogService: sl(),
         ));
 

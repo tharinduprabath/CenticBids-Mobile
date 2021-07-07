@@ -65,7 +65,7 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
       child: Container(
         child: Column(
           children: [
-            _buildHeadingBar(),
+            _buildHeadingBar(model),
             _buildList(model),
           ],
         ),
@@ -73,13 +73,13 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
     );
   }
 
-  Widget _buildHeadingBar() {
+  Widget _buildHeadingBar(model) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CenticBidsText.body("Auctions"),
+          CenticBidsText.body("Auctions (${model.auctionList.length})"),
           CenticBidsButton.icon(
             icon: Icons.filter_list_rounded,
             onTap: () {},

@@ -56,7 +56,7 @@ class LoginView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CenticBidsText.subheading("Don’t have any account?"),
-                  HorizontalSpace(),
+                  HorizontalSpace(size: 5.w,),
                   CenticBidsButton.text(
                     text: "Sign Up",
                     onTap: model.goToRegistrationView,

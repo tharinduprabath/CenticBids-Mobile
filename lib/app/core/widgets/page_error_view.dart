@@ -32,7 +32,7 @@ class PageErrorView extends StatelessWidget {
     return Container(
       child: Center(
         child: Padding(
-          padding: EdgeInsets.all(AppConstants.margin.r * 4),
+          padding: EdgeInsets.all(AppConstants.margin.r * 3),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

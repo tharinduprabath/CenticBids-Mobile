@@ -110,7 +110,7 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CenticBidsText.subheading("Already have an account?"),
-                  HorizontalSpace(),
+                  HorizontalSpace(size: 5.w,),
                   CenticBidsButton.text(
                     text: "Sign In",
                     onTap: model.goToSignInView,

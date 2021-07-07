@@ -86,7 +86,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           ?.updateDisplayName(userRegisterRequestModel.firstName);
       await firebaseAuth.currentUser?.reload();
 
-      // Save data in firestore
+      // Save user doc
       await firebaseFirestore
           .collection(FirestoreName.users_collection)
           .doc(result.user!.uid)
