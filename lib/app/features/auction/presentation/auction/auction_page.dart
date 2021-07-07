@@ -83,83 +83,76 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
             color: AppColors.primary_color,
             child: CustomScrollView(
               slivers: [
-                SliverAppBar(
-                  expandedHeight: 192.h,
-                  leading: _buildBackButton(onTap: model.pageBack),
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: ImageSlider(
-                      imageUrlList: auctionEntity.imageList,
-                    ),
-                  ),
-                ),
-                SliverPadding(
-                  padding: EdgeInsets.all(AppConstants.margin.r),
-                  sliver: SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        Row(
-                          children: [
-                            Expanded(
-                                flex: 4,
-                                child: CenticBidsText.headingTwo(
-                                    auctionEntity.title)),
-                            HorizontalSpace(
-                              size: 10.w,
-                            ),
-                            Expanded(
-                                flex: 2,
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: CenticBidsText.headingTwo(
-                                      TextFormatter.toCurrency(
-                                          auctionEntity.basePrice)),
-                                )),
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: BidCountChip(
-                            count: auctionEntity.bidList.length,
-                          ),
-                        ),
-                        VerticalSpace(),
-                        AuctionCountdownTimer(endDate: auctionEntity.endDate),
-                        VerticalSpace(),
-                        VerticalSpace(),
-                        LatestBidView(
-                          latestBid: auctionEntity.latestBid,
-                          isFromUser: model.isUserHasLatestBid(),
-                        ),
-                        VerticalSpace(),
-                        VerticalSpace(),
-                        CenticBidsText.body(
-                          auctionEntity.description,
-                          align: TextAlign.justify,
-                        ),
-                        VerticalSpace(),
-                      ],
-                    ),
-                  ),
-                ),
+                _buildSliverAppBar(model, auctionEntity),
+                _buildAuctionDetails(model, auctionEntity),
               ],
             ),
           ),
         ),
-        ValueListenableBuilder<void>(
-          valueListenable: model.auctionOverNotifier,
-          builder: (context, _, child) =>
-              DateTime.now().isAfter(auctionEntity.endDate)
-                  ? SizedBox()
-                  : Padding(
-                      padding: EdgeInsets.all(AppConstants.margin.r),
-                      child: CenticBidsButton(
-                        text: "Bid Now",
-                        onTap: () =>
-                            _bidNowButtonOnTap(context: context, model: model),
-                      ),
-                    ),
-        )
+        _buildBidNowButton(model, auctionEntity)
       ],
+    );
+  }
+
+  Widget _buildSliverAppBar(model, auctionEntity) {
+    return SliverAppBar(
+      expandedHeight: 192.h,
+      leading: _buildBackButton(onTap: model.pageBack),
+      flexibleSpace: FlexibleSpaceBar(
+        background: ImageSlider(
+          imageUrlList: auctionEntity.imageList,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAuctionDetails(model, auctionEntity) {
+    return SliverPadding(
+      padding: EdgeInsets.all(AppConstants.margin.r),
+      sliver: SliverList(
+        delegate: SliverChildListDelegate(
+          [
+            Row(
+              children: [
+                Expanded(
+                    flex: 4,
+                    child: CenticBidsText.headingTwo(auctionEntity.title)),
+                HorizontalSpace(
+                  size: 10.w,
+                ),
+                Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: CenticBidsText.headingTwo(
+                          TextFormatter.toCurrency(auctionEntity.basePrice)),
+                    )),
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: BidCountChip(
+                count: auctionEntity.bidList.length,
+              ),
+            ),
+            VerticalSpace(),
+            AuctionCountdownTimer(endDate: auctionEntity.endDate),
+            VerticalSpace(),
+            VerticalSpace(),
+            LatestBidView(
+              latestBid: auctionEntity.latestBid,
+              isFromUser: model.isUserHasLatestBid(),
+            ),
+            VerticalSpace(),
+            VerticalSpace(),
+            CenticBidsText.body(
+              auctionEntity.description,
+              align: TextAlign.justify,
+            ),
+            VerticalSpace(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -175,23 +168,42 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
         ));
   }
 
-  void _bidNowButtonOnTap({
-    required BuildContext context,
-    required AuctionPageViewModel model,
-  }) {
+  Widget _buildBidNowButton(model, auctionEntity) {
+    return ValueListenableBuilder<void>(
+      valueListenable: model.auctionOverNotifier,
+      builder: (context, _, child) =>
+          DateTime.now().isAfter(auctionEntity.endDate)
+              ? SizedBox()
+              : Padding(
+                  padding: EdgeInsets.all(AppConstants.margin.r),
+                  child: CenticBidsButton(
+                    text: "Bid Now",
+                    onTap: () => _bidNowButtonOnTap(
+                      context,
+                      model,
+                    ),
+                  ),
+                ),
+    );
+  }
+
+  void _bidNowButtonOnTap(
+    context,
+    model,
+  ) {
     if (model.isUserLoggedIn())
       _showPlaceBidView(
-        context: context,
-        model: model,
+        context,
+        model,
       );
     else
       model.showUserNotLoggedErrorDialog();
   }
 
-  void _showPlaceBidView({
-    required BuildContext context,
-    required AuctionPageViewModel model,
-  }) {
+  void _showPlaceBidView(
+    context,
+    model,
+  ) {
     showModalBottomSheet(
         context: context,
         builder: (context) => PlaceBidView(
