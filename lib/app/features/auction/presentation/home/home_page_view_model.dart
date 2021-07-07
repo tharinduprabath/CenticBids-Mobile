@@ -1,8 +1,11 @@
+import 'package:centic_bids/app/core/app_constants.dart';
+import 'package:centic_bids/app/core/app_enums.dart';
 import 'package:centic_bids/app/core/app_strings.dart';
 import 'package:centic_bids/app/core/widgets/dialogs/action_dialog.dart';
 import 'package:centic_bids/app/core/widgets/dialogs/busy_dialog.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
-import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_usecase.dart';
+import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_first_list_usecase.dart';
+import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_next_list_usecase.dart';
 import 'package:centic_bids/app/features/auction/presentation/auction/auction_page.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/get_local_user.dart';
@@ -15,39 +18,84 @@ import 'package:centic_bids/app/utils/usecase.dart';
 import 'package:flutter/material.dart';
 
 class HomePageViewModel extends BaseStateViewModel {
-  final GetOngoingAuctionsUsecase _getOngoingAuctionsUsecase;
+  final GetOngoingAuctionsFirstListUsecase _getOngoingAuctionsFirstListUsecase;
+  final GetOngoingAuctionsNextListUsecase _getOngoingAuctionsNextListUsecase;
   final GetLocalUserUsecase _getLocalUserUsecase;
   final LogoutUsecase _logoutUsecase;
   final DialogService _dialogService;
   final NavigationService _navigationService;
 
   HomePageViewModel({
-    required GetOngoingAuctionsUsecase getOngoingAuctionsUsecase,
+    required GetOngoingAuctionsFirstListUsecase
+        getOngoingAuctionsFirstListUsecase,
+    required GetOngoingAuctionsNextListUsecase
+        getOngoingAuctionsNextListUsecase,
     required GetLocalUserUsecase getLocalUserUsecase,
     required LogoutUsecase logoutUsecase,
     required DialogService dialogService,
     required NavigationService navigationService,
-  })  : this._getOngoingAuctionsUsecase = getOngoingAuctionsUsecase,
+  })  : this._getOngoingAuctionsFirstListUsecase =
+            getOngoingAuctionsFirstListUsecase,
+        this._getOngoingAuctionsNextListUsecase =
+            getOngoingAuctionsNextListUsecase,
         this._getLocalUserUsecase = getLocalUserUsecase,
         this._logoutUsecase = logoutUsecase,
         this._dialogService = dialogService,
         this._navigationService = navigationService,
         super(initialState: PageStateLoading());
 
+  final ValueNotifier<LoadMoreButtonState> loadMoreButtonStateNotifier =
+      ValueNotifier<LoadMoreButtonState>(LoadMoreButtonState.show);
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  Future<void> getOngoingAuctions() async {
+  List<AuctionEntity> auctionList = <AuctionEntity>[];
+
+  Future<void> getOngoingAuctionsFirstList() async {
     state = PageStateLoading();
 
-    final failureOrAuctionList = await _getOngoingAuctionsUsecase(NoParams());
+    final failureOrAuctionList =
+        await _getOngoingAuctionsFirstListUsecase(NoParams());
 
     failureOrAuctionList.fold(
       (failure) {
         state = PageStateError(message: failure.code.getMessage());
       },
       (auctionList) {
-        state = PageStateLoaded<List<AuctionEntity>>(data: auctionList);
+        this.auctionList = auctionList;
+        if (auctionList.length < AppConstants.pagination_limit)
+          loadMoreButtonStateNotifier.value = LoadMoreButtonState.hide;
+        else loadMoreButtonStateNotifier.value = LoadMoreButtonState.show;
+        state = PageStateLoaded();
+      },
+    );
+  }
+
+  Future<void> getOngoingAuctionsNextList() async {
+    loadMoreButtonStateNotifier.value = LoadMoreButtonState.loading;
+
+    final failureOrAuctionList = await _getOngoingAuctionsNextListUsecase(
+        Params(startAfterAuctionId: auctionList.last.id));
+
+    failureOrAuctionList.fold(
+      (failure) {
+        loadMoreButtonStateNotifier.value = LoadMoreButtonState.show;
+        _dialogService.show(
+          dialog: ActionDialog.error(
+            heading: AppStrings.dialog_default_heading_error_text,
+            text: failure.code.getMessage(),
+            actionButtonText: AppStrings.dialog_default_action_button_text,
+            action: () => _dialogService.close(),
+          ),
+        );
+      },
+      (auctionList) {
+        this.auctionList.addAll(auctionList);
+        if (auctionList.length < AppConstants.pagination_limit)
+          loadMoreButtonStateNotifier.value = LoadMoreButtonState.hide;
+        else
+          loadMoreButtonStateNotifier.value = LoadMoreButtonState.show;
+        notifyListeners();
       },
     );
   }
@@ -71,6 +119,11 @@ class HomePageViewModel extends BaseStateViewModel {
         return userEntity;
       },
     );
+  }
+
+  bool isUserLoggedIn() {
+    final localUser = getLocalUser();
+    return localUser != null;
   }
 
   Future<void> _logout() async {
@@ -107,11 +160,6 @@ class HomePageViewModel extends BaseStateViewModel {
         _logout();
       },
     ));
-  }
-
-  bool isUserLoggedIn() {
-    final localUser = getLocalUser();
-    return localUser != null;
   }
 
   void gotToLoginRegistrationPage({required bool isSignInFirst}) {

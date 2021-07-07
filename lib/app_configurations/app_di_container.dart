@@ -3,7 +3,8 @@ import 'package:centic_bids/app/features/auction/data/datasources/auction_remote
 import 'package:centic_bids/app/features/auction/data/repositories/auction_repository_impl.dart';
 import 'package:centic_bids/app/features/auction/domain/repositories/auction_repository.dart';
 import 'package:centic_bids/app/features/auction/domain/usecases/get_auction_usecase.dart';
-import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_usecase.dart';
+import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_first_list_usecase.dart';
+import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_next_list_usecase.dart';
 import 'package:centic_bids/app/features/auction/domain/usecases/place_bid_usecase.dart';
 import 'package:centic_bids/app/features/auction/presentation/auction/auction_page_view_model.dart';
 import 'package:centic_bids/app/features/auction/presentation/home/home_page_view_model.dart';
@@ -72,8 +73,12 @@ class AppDIContainer {
           repository: sl(),
         ));
 
-    sl.registerLazySingleton<GetOngoingAuctionsUsecase>(
-        () => GetOngoingAuctionsUsecase(
+    sl.registerLazySingleton<GetOngoingAuctionsFirstListUsecase>(
+        () => GetOngoingAuctionsFirstListUsecase(
+              repository: sl(),
+            ));
+    sl.registerLazySingleton<GetOngoingAuctionsNextListUsecase>(
+        () => GetOngoingAuctionsNextListUsecase(
               repository: sl(),
             ));
     sl.registerLazySingleton<PlaceBidUsecase>(() => PlaceBidUsecase(
@@ -94,7 +99,8 @@ class AppDIContainer {
             ));
 
     sl.registerFactory<HomePageViewModel>(() => HomePageViewModel(
-          getOngoingAuctionsUsecase: sl(),
+          getOngoingAuctionsFirstListUsecase: sl(),
+          getOngoingAuctionsNextListUsecase: sl(),
           getLocalUserUsecase: sl(),
           logoutUsecase: sl(),
           dialogService: sl(),

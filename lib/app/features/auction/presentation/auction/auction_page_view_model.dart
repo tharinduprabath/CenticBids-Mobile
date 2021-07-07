@@ -53,8 +53,8 @@ class AuctionPageViewModel extends BaseStateViewModel {
   final GlobalKey<FormState> bidFormKey = GlobalKey<FormState>();
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  final ValueNotifier<void> auctionOverNotifier = ValueNotifier<void>(null);
 
-  ValueNotifier<void> auctionOverNotifier = ValueNotifier<void>(null);
   Timer? _auctionOverNotifierTimer;
   double? bidValue;
   bool didUpdateAuction = false;

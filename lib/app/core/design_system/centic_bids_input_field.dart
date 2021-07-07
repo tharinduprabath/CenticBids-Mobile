@@ -98,7 +98,7 @@ class _CenticBidsInputFieldState extends State<CenticBidsInputField> {
     });
   }
 
-  final double iconSize = AppConstants.iconSize.r;
+  final double iconSize = AppConstants.icon_size.r;
 
   @override
   Widget build(BuildContext context) {

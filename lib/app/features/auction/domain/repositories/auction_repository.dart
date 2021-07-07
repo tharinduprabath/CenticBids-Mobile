@@ -5,7 +5,10 @@ import 'package:centic_bids/app/utils/success.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AuctionRepository {
-  Future<Either<Failure, List<AuctionEntity>>> getOngoingAuctions();
+  Future<Either<Failure, List<AuctionEntity>>> getOngoingAuctionsFirstList();
+
+  Future<Either<Failure, List<AuctionEntity>>> getOngoingAuctionsNextList(
+      {required String startAfterAuctionId});
 
   Future<Either<Failure, Success>> placeBid(
       {required PlaceBidRequestEntity placeBidRequestEntity});

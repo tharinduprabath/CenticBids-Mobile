@@ -20,10 +20,31 @@ class AuctionRepositoryImpl implements AuctionRepository {
   });
 
   @override
-  Future<Either<Failure, List<AuctionEntity>>> getOngoingAuctions() async {
+  Future<Either<Failure, List<AuctionEntity>>>
+      getOngoingAuctionsFirstList() async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(await auctionRemoteDataSource.getOngoingAuctions());
+        return Right(
+            await auctionRemoteDataSource.getOngoingAuctionsFirstList());
+      } else {
+        throw NetworkException(ErrorCode.e_1200);
+      }
+    } on ServerException catch (ex) {
+      return Left(ServerFailure(ex.code));
+    } on NetworkException catch (ex) {
+      return Left(NetworkFailure(ex.code));
+    } on UnknownException catch (ex) {
+      return Left(UnknownFailure(ex.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AuctionEntity>>> getOngoingAuctionsNextList(
+      {required String startAfterAuctionId}) async {
+    try {
+      if (await networkInfo.isConnected) {
+        return Right(await auctionRemoteDataSource.getOngoingAuctionsNextList(
+            startAfterAuctionId: startAfterAuctionId));
       } else {
         throw NetworkException(ErrorCode.e_1200);
       }

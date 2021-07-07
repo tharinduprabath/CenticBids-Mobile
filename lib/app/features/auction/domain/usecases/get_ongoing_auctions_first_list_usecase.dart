@@ -4,13 +4,13 @@ import 'package:centic_bids/app/utils/failure.dart';
 import 'package:centic_bids/app/utils/usecase.dart';
 import 'package:dartz/dartz.dart';
 
-class GetOngoingAuctionsUsecase extends UseCase<List<AuctionEntity>, NoParams> {
+class GetOngoingAuctionsFirstListUsecase extends UseCase<List<AuctionEntity>, NoParams> {
   final AuctionRepository repository;
 
-  GetOngoingAuctionsUsecase({required this.repository});
+  GetOngoingAuctionsFirstListUsecase({required this.repository});
 
   @override
   Future<Either<Failure, List<AuctionEntity>>> call(NoParams params) async {
-    return await repository.getOngoingAuctions();
+    return await repository.getOngoingAuctionsFirstList();
   }
 }

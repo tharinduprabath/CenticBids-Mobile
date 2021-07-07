@@ -21,7 +21,7 @@ class DrawerListItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: ListTile(
-        leading: Icon(icon,color: AppColors.main_text_color,size: AppConstants.iconSize.r,),
+        leading: Icon(icon,color: AppColors.main_text_color,size: AppConstants.icon_size.r,),
         title: CenticBidsText.headingTwo(text),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:centic_bids/app/core/app_constants.dart';
 import 'package:centic_bids/app/core/app_firebase_helper.dart';
 import 'package:centic_bids/app/features/auction/data/models/auction_model.dart';
 import 'package:centic_bids/app/features/auction/data/models/bid_model.dart';
@@ -46,12 +47,63 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
   }
 
   @override
-  Future<List<AuctionModel>> getOngoingAuctions() async {
+  Future<List<AuctionModel>> getOngoingAuctionsFirstList() async {
     return await tryWithException(() async {
       // Get auction docs
       final QuerySnapshot auctionDocs = await firebaseFirestore
           .collection(FirestoreName.auctions_collection)
           .where("endDate", isGreaterThan: DateTime.now())
+          .orderBy("endDate")
+          .limit(AppConstants.pagination_limit)
+          .get();
+
+      // for (final d in auctionDocs.docs) {
+      //   await firebaseFirestore
+      //       .collection(FirestoreName.auctions_collection)
+      //       .add(d.data() as Map<String, dynamic>);
+      // }
+
+      // Check empty
+      if (auctionDocs.size == 0) return <AuctionModel>[];
+
+      // declare empty auctionList
+      final List<AuctionModel> auctionList = [];
+
+      // Add items to auction list
+      for (final auctionDoc in auctionDocs.docs) {
+        // Get bid List
+        final bidList = await _getBidListByAuction(auctionId: auctionDoc.id);
+
+        // Create auction
+        final auctionData = (auctionDoc.data() as Map<String, dynamic>)
+          ..addAll({"id": auctionDoc.id, "bidList": bidList});
+        final AuctionModel auction = AuctionModel.fromMap(auctionData);
+
+        // Add auction to auction list
+        auctionList.add(auction);
+      }
+
+      return auctionList;
+    });
+  }
+
+  @override
+  Future<List<AuctionModel>> getOngoingAuctionsNextList(
+      {required String startAfterAuctionId}) async {
+    return await tryWithException(() async {
+      // Get last doc
+      final lastDoc = await firebaseFirestore
+          .collection(FirestoreName.auctions_collection)
+          .doc(startAfterAuctionId)
+          .get();
+
+      // Get auction docs
+      final QuerySnapshot auctionDocs = await firebaseFirestore
+          .collection(FirestoreName.auctions_collection)
+          .where("endDate", isGreaterThan: DateTime.now())
+          .orderBy("endDate")
+          .startAfterDocument(lastDoc)
+          .limit(AppConstants.pagination_limit)
           .get();
 
       // Check empty
@@ -63,7 +115,7 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
       // Add items to auction list
       for (final auctionDoc in auctionDocs.docs) {
         // Get bid List
-        final bidList = await getBidListByAuction(auctionId: auctionDoc.id);
+        final bidList = await _getBidListByAuction(auctionId: auctionDoc.id);
 
         // Create auction
         final auctionData = (auctionDoc.data() as Map<String, dynamic>)
@@ -127,7 +179,7 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
           .get();
 
       // Get bid List
-      final bidList = await getBidListByAuction(auctionId: auctionId);
+      final bidList = await _getBidListByAuction(auctionId: auctionId);
 
       // Create auction
       final auctionData = (auctionDoc.data() as Map<String, dynamic>)
@@ -137,7 +189,7 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
     });
   }
 
-  Future<List<BidModel>> getBidListByAuction(
+  Future<List<BidModel>> _getBidListByAuction(
       {required String auctionId}) async {
     // Get bid docs
     final bidListPath =

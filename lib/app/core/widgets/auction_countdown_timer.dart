@@ -33,7 +33,7 @@ class AuctionCountdownTimer extends StatelessWidget {
             ),
             Icon(
               Icons.timer_rounded,
-              size: AppConstants.iconSize / 1.5,
+              size: AppConstants.icon_size / 1.5,
               color: time == null ? AppColors.accent_color : AppColors.secondary_text_color,
             )
           ],

@@ -60,12 +60,8 @@ class LoginRegistrationPage extends StatelessWidget {
 
 class _Loaded extends ViewModelWidget<LoginRegistrationPageViewModel> {
   final List<Tab> _tabList = [
-    Tab(
-      text: "Sign In",
-    ),
-    Tab(
-      text: "Registration",
-    )
+    Tab(text: "Sign In"),
+    Tab(text: "Registration"),
   ];
 
   @override
@@ -73,35 +69,46 @@ class _Loaded extends ViewModelWidget<LoginRegistrationPageViewModel> {
     model.tabController = DefaultTabController.of(context)!;
     return Column(
       children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            width: double.maxFinite,
-            height: double.maxFinite,
-            color: AppColors.primary_color.withOpacity(0.25),
-            alignment: Alignment.centerLeft,
-            child: Image.asset(
-              AppImages.logo_transparent,
-            ),
-          ),
-        ),
-        TabBar(
-          tabs: _tabList,
-          labelStyle: TextStyles.heading2,
-          labelColor: AppColors.primary_color,
-          unselectedLabelColor: AppColors.secondary_text_color,
-          indicator: BoxDecoration(
-            color: AppColors.white,
-          ),
-        ),
-        Expanded(
-            flex: 6,
-            child: Container(
-                color: AppColors.white,
-                child:
-                    TabBarView(children: [LoginView(), RegistrationView()]))),
+        _buildBrandHeader(),
+        _buildTabBar(),
+        _buildTabView(),
       ],
     );
+  }
+
+  Widget _buildBrandHeader() {
+    return Expanded(
+      flex: 2,
+      child: Container(
+        width: double.maxFinite,
+        height: double.maxFinite,
+        color: AppColors.primary_color.withOpacity(0.25),
+        alignment: Alignment.centerLeft,
+        child: Image.asset(
+          AppImages.logo_transparent,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabBar() {
+    return TabBar(
+      tabs: _tabList,
+      labelStyle: TextStyles.heading2,
+      labelColor: AppColors.primary_color,
+      unselectedLabelColor: AppColors.secondary_text_color,
+      indicator: BoxDecoration(
+        color: AppColors.white,
+      ),
+    );
+  }
+
+  Widget _buildTabView() {
+    return Expanded(
+        flex: 6,
+        child: Container(
+            color: AppColors.white,
+            child: TabBarView(children: [LoginView(), RegistrationView()])));
   }
 }
 

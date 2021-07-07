@@ -3,7 +3,10 @@ import 'package:centic_bids/app/features/auction/data/models/place_bid_request_m
 import 'package:centic_bids/app/utils/success.dart';
 
 abstract class AuctionRemoteDataSource {
-  Future<List<AuctionModel>> getOngoingAuctions();
+  Future<List<AuctionModel>> getOngoingAuctionsFirstList();
+
+  Future<List<AuctionModel>> getOngoingAuctionsNextList(
+      {required String startAfterAuctionId});
 
   Future<Success> placeBid(
       {required PlaceBidRequestModel placeBidRequestModel});

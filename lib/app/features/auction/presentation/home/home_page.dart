@@ -1,13 +1,14 @@
 import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/app_constants.dart';
+import 'package:centic_bids/app/core/app_enums.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_button.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/auction_list_item.dart';
 import 'package:centic_bids/app/core/widgets/centic_bids_app_bar.dart';
+import 'package:centic_bids/app/core/widgets/load_more_button.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
 import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
 import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
-import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
 import 'package:centic_bids/app/features/auction/presentation/home/widgets/drawer_user_logged.dart';
 import 'package:centic_bids/app/features/auction/presentation/home/widgets/drawer_user_not_logged.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
@@ -25,17 +26,14 @@ class HomePage extends StatelessWidget {
     return ViewModelBuilder<HomePageViewModel>.reactive(
       viewModelBuilder: () => sl<HomePageViewModel>(),
       onModelReady: (model) {
-        model.getOngoingAuctions();
+        model.getOngoingAuctionsFirstList();
       },
       builder: (context, model, child) {
         final Widget stateUI;
         if (model.state is PageStateLoading)
           stateUI = _Loading();
-        else if (model.state is PageStateLoaded<List<AuctionEntity>>)
-          stateUI = _Loaded(
-            auctionList:
-                (model.state as PageStateLoaded<List<AuctionEntity>>).data!,
-          );
+        else if (model.state is PageStateLoaded)
+          stateUI = _Loaded();
         else
           stateUI = _Error(
             errorMsg: (model.state as PageStateError).message,
@@ -57,48 +55,95 @@ class HomePage extends StatelessWidget {
 }
 
 class _Loaded extends ViewModelWidget<HomePageViewModel> {
-  final List<AuctionEntity> auctionList;
-
-  const _Loaded({required this.auctionList});
-
   @override
   Widget build(BuildContext context, HomePageViewModel model) {
-    final list = [...auctionList, ...auctionList];
     return RefreshIndicator(
       key: model.refreshIndicatorKey,
-      onRefresh: model.getOngoingAuctions,
+      onRefresh: model.getOngoingAuctionsFirstList,
       color: AppColors.primary_color,
       child: Container(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CenticBidsText.body("Auctions"),
-                  CenticBidsButton.icon(
-                    icon: Icons.filter_list_rounded,
-                    onTap: () {},
-                    buttonType: CenticBidsButtonType.secondary,
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView.separated(
-                itemCount: list.length,
-                separatorBuilder: (context, index) => Divider(),
-                itemBuilder: (context, index) => AuctionListItem(
-                  auctionEntity: list[index],
-                  onTap: () =>
-                      model.goToAuctionPage(auctionEntity: list[index]),
-                ),
-              ),
-            ),
+            _buildHeadingBar(),
+            _buildList(model),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildHeadingBar() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CenticBidsText.body("Auctions"),
+          CenticBidsButton.icon(
+            icon: Icons.filter_list_rounded,
+            onTap: () {},
+            buttonType: CenticBidsButtonType.secondary,
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildList(model) {
+    return Expanded(
+      child: model.auctionList.length == 0
+          ? _buildEmptyListView(model)
+          : ListView.separated(
+              physics: BouncingScrollPhysics(),
+              itemCount: model.auctionList.length + 1,
+              separatorBuilder: (context, index) =>
+                  index != model.auctionList.length - 1
+                      ? Divider(
+                          height: AppConstants.margin.h * 2,
+                        )
+                      : SizedBox(),
+              itemBuilder: (context, index) => index == model.auctionList.length
+                  ? _buildLoadMoreButton(model)
+                  : AuctionListItem(
+                      auctionEntity: model.auctionList[index],
+                      onTap: () => model.goToAuctionPage(
+                          auctionEntity: model.auctionList[index]),
+                    ),
+            ),
+    );
+  }
+
+  Widget _buildLoadMoreButton(model) {
+    return ValueListenableBuilder<LoadMoreButtonState>(
+        valueListenable: model.loadMoreButtonStateNotifier,
+        builder: (context, state, child) {
+          switch (state) {
+            case LoadMoreButtonState.show:
+              return LoadMoreButton(onTap: model.getOngoingAuctionsNextList);
+            case LoadMoreButtonState.hide:
+              return SizedBox();
+            case LoadMoreButtonState.loading:
+              return _buildLoadMoreLoading();
+          }
+        });
+  }
+
+  Widget _buildLoadMoreLoading() {
+    return Center(
+        child: Padding(
+      padding: EdgeInsets.symmetric(vertical: AppConstants.margin.h),
+      child: CircularProgressIndicator(
+        color: AppColors.primary_color,
+      ),
+    ));
+  }
+
+  Widget _buildEmptyListView(model) {
+    return PageErrorView.withOptionalButton(
+      errorMsg:
+          "Currently there is no ongoing auctions. Check back at a later time.",
+      optionalButtonOnTap: model.getOngoingAuctionsFirstList,
+      optionalButtonText: "Refresh",
     );
   }
 }
@@ -119,8 +164,8 @@ class _Error extends ViewModelWidget<HomePageViewModel> {
   Widget build(BuildContext context, HomePageViewModel model) {
     return PageErrorView.withOptionalButton(
       errorMsg: errorMsg,
-      optionalButtonOnTap: model.getOngoingAuctions,
-      optionalButtonText: "Reload",
+      optionalButtonOnTap: model.getOngoingAuctionsFirstList,
+      optionalButtonText: "Refresh",
     );
   }
 }
