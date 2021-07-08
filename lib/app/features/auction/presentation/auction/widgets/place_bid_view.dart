@@ -35,7 +35,7 @@ class PlaceBidView extends StatelessWidget {
                 child: CenticBidsText.headingOne("New Bid")),
             Divider(),
             VerticalSpace(),
-            LatestBidView(latestBid: model.auctionEntity.latestBid, isFromUser: model.isUserHasLatestBid(),),
+            // LatestBidView(latestBid: model.auctionEntity.latestBid, isFromUser: model.isUserHasLatestBid(),),
             VerticalSpace(),
             VerticalSpace(),
             Row(
@@ -62,7 +62,7 @@ class PlaceBidView extends StatelessWidget {
             Divider(),
             VerticalSpace(),
             CenticBidsButton(
-              text: "Place New Bid",
+              text: "Place Bid",
               onTap: model.placeBid,
             )
           ],

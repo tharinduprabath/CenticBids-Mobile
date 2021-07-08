@@ -48,5 +48,6 @@ class MyBidsPageViewModel extends BaseStateViewModel {
 
   void gotToAuctions() {
     _navigationService.popUntil(Routes.initial_page);
+    _navigationService.pop();
   }
 }

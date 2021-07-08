@@ -32,7 +32,7 @@ class UserModel extends UserEntity {
       email: map["email"],
       firstName: map["firstName"],
       lastName: map["lastName"],
-      registeredDate: map["registeredDate"],
+      registeredDate: (map["registeredDate"] as Timestamp).toDate(),
       watchList: map["watchList"] == null
           ? <String>[]
           : List<String>.from(map["watchList"]),

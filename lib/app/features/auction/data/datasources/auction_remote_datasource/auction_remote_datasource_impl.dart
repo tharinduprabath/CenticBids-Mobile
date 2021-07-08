@@ -118,9 +118,14 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
         final latestAuction = AuctionModel.fromDocument(latestAuctionDoc);
 
         // Check pre conditions
+        final double price = latestAuction.latestBid == 0
+            ? latestAuction.basePrice
+            : latestAuction.latestBid;
         if (DateTime.now().isAfter(latestAuction.endDate))
           throw ServerException(ErrorCode.e_2010);
         if (latestAuction.latestBid != placeBidRequestModel.auction.latestBid)
+          throw ServerException(ErrorCode.e_2020);
+        if (placeBidRequestModel.bid > price)
           throw ServerException(ErrorCode.e_2020);
 
         // Place new bid

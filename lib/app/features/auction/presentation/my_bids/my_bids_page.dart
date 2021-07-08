@@ -112,7 +112,7 @@ class _Loaded extends ViewModelWidget<MyBidsPageViewModel> {
   Widget _buildEmptyListView(MyBidsPageViewModel model) {
     return PageErrorView.withOptionalButton(
       errorMsg:
-          "You haven't placed a bid yet. Place a bid now from our ongoing auctions",
+          "You haven't placed a bid yet. Place a bid now from our ongoing auctions.",
       optionalButtonOnTap: model.gotToAuctions,
       optionalButtonText: "Go to Auctions",
     );

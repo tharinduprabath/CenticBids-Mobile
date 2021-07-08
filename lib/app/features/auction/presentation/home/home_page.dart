@@ -95,7 +95,7 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
       child: model.auctionList.length == 0
           ? _buildEmptyListView(model)
           : ListView.separated(
-              physics: BouncingScrollPhysics(),
+              physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
               itemCount: model.auctionList.length + 1,
               separatorBuilder: (context, index) =>
                   index != model.auctionList.length - 1

@@ -5,11 +5,11 @@ import 'package:centic_bids/app/utils/text_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LatestBidView extends StatelessWidget {
+class LatestBidViews extends StatelessWidget {
   final double latestBid;
   final bool isFromUser;
 
-  const LatestBidView({
+  const LatestBidViews({
     Key? key,
     required this.latestBid,
     required this.isFromUser,

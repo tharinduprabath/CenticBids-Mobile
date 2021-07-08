@@ -23,6 +23,10 @@ class AuctionListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double size = 150.h;
+    final double displayPrice = auctionEntity.latestBid == 0
+        ? auctionEntity.basePrice
+        : auctionEntity.latestBid;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -42,10 +46,14 @@ class AuctionListItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CenticBidsText.headingTwo(auctionEntity.title),
+                  CenticBidsText.headingTwo(
+                    auctionEntity.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   BidCountChip(count: auctionEntity.bidCount),
                   CenticBidsText.headingOne(
-                      "${TextFormatter.toCurrency(auctionEntity.basePrice)}"),
+                      "${TextFormatter.toCurrency(displayPrice)}"),
                   VerticalSpace(),
                   AuctionCountdownTimer(endDate: auctionEntity.endDate),
                 ],

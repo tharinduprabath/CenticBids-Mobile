@@ -11,8 +11,8 @@ import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
 import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
+import 'package:centic_bids/app/features/auction/presentation/auction/widgets/base_price_view.dart';
 import 'package:centic_bids/app/features/auction/presentation/auction/widgets/image_slider.dart';
-import 'package:centic_bids/app/features/auction/presentation/auction/widgets/latest_bid_view.dart';
 import 'package:centic_bids/app/features/auction/presentation/auction/widgets/place_bid_view.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
 import 'package:centic_bids/app/utils/text_formatter.dart';
@@ -96,7 +96,7 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
 
   Widget _buildSliverAppBar(model, auctionEntity) {
     return SliverAppBar(
-      expandedHeight: 192.h,
+      expandedHeight: 250.h,
       leading: _buildBackButton(onTap: model.pageBack),
       flexibleSpace: FlexibleSpaceBar(
         background: ImageSlider(
@@ -106,7 +106,11 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
     );
   }
 
-  Widget _buildAuctionDetails(model, auctionEntity) {
+  Widget _buildAuctionDetails(
+      AuctionPageViewModel model, AuctionEntity auctionEntity) {
+    final double displayPrice = auctionEntity.latestBid == 0
+        ? auctionEntity.basePrice
+        : auctionEntity.latestBid;
     return SliverPadding(
       padding: EdgeInsets.all(AppConstants.margin.r),
       sliver: SliverList(
@@ -125,7 +129,7 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: CenticBidsText.headingTwo(
-                          TextFormatter.toCurrency(auctionEntity.basePrice)),
+                          TextFormatter.toCurrency(displayPrice)),
                     )),
               ],
             ),
@@ -139,9 +143,8 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
             AuctionCountdownTimer(endDate: auctionEntity.endDate),
             VerticalSpace(),
             VerticalSpace(),
-            LatestBidView(
-              latestBid: auctionEntity.latestBid,
-              isFromUser: model.isUserHasLatestBid(),
+            BasePriceView(
+              basePrice: auctionEntity.basePrice,
             ),
             VerticalSpace(),
             VerticalSpace(),
@@ -168,22 +171,26 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
         ));
   }
 
-  Widget _buildBidNowButton(model, auctionEntity) {
-    return ValueListenableBuilder<void>(
+  Widget _buildBidNowButton(
+      AuctionPageViewModel model, AuctionEntity auctionEntity) {
+    return ValueListenableBuilder<bool>(
       valueListenable: model.auctionOverNotifier,
-      builder: (context, _, child) =>
-          DateTime.now().isAfter(auctionEntity.endDate)
-              ? SizedBox()
-              : Padding(
-                  padding: EdgeInsets.all(AppConstants.margin.r),
-                  child: CenticBidsButton(
-                    text: "Bid Now",
-                    onTap: () => _bidNowButtonOnTap(
-                      context,
-                      model,
-                    ),
-                  ),
-                ),
+      builder: (context, _, child) {
+        final isActionOver = DateTime.now().isAfter(auctionEntity.endDate);
+        if (isActionOver)
+          return SizedBox();
+        else
+          return Padding(
+            padding: EdgeInsets.all(AppConstants.margin.r),
+            child: CenticBidsButton(
+              text: "Bid Now",
+              onTap: () => _bidNowButtonOnTap(
+                context,
+                model,
+              ),
+            ),
+          );
+      },
     );
   }
 

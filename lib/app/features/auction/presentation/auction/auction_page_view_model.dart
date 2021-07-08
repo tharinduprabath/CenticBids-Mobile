@@ -53,11 +53,11 @@ class AuctionPageViewModel extends BaseStateViewModel {
   final GlobalKey<FormState> bidFormKey = GlobalKey<FormState>();
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  final ValueNotifier<void> auctionOverNotifier = ValueNotifier<void>(null);
+  final ValueNotifier<bool> auctionOverNotifier = ValueNotifier<bool>(false);
 
   Timer? _auctionOverNotifierTimer;
   double? bidValue;
-  bool didUpdateAuction = false;
+  bool needToUpdateAuctionList = false;
 
   @override
   void dispose() {
@@ -67,13 +67,18 @@ class AuctionPageViewModel extends BaseStateViewModel {
   }
 
   void startAuctionOverNotifierTimer() {
+    if (DateTime.now().isAfter(auctionEntity.endDate)) return;
     _auctionOverNotifierTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      auctionOverNotifier.notifyListeners();
+      if (DateTime.now().isAfter(auctionEntity.endDate)) {
+        auctionOverNotifier.value = true;
+        needToUpdateAuctionList = true;
+        timer.cancel();
+      }
     });
   }
 
   void pageBack() {
-    _navigationService.pop(didUpdateAuction);
+    _navigationService.pop(needToUpdateAuctionList);
   }
 
   Future<void> placeBid() async {
@@ -102,7 +107,7 @@ class AuctionPageViewModel extends BaseStateViewModel {
         );
       },
       (success) {
-        didUpdateAuction = true;
+        needToUpdateAuctionList = true;
         _dialogService.show(
           dialog: ActionDialog.success(
             heading: AppStrings.dialog_default_heading_success_text,
@@ -122,7 +127,10 @@ class AuctionPageViewModel extends BaseStateViewModel {
   }
 
   String? validateBid(value) {
-    if (moneyTextController.numberValue > auctionEntity.latestBid)
+    final double price = auctionEntity.latestBid == 0
+        ? auctionEntity.basePrice
+        : auctionEntity.latestBid;
+    if (moneyTextController.numberValue > price)
       return null;
     else
       return "Invalid Bid";
