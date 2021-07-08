@@ -47,7 +47,7 @@ class AuctionModel extends AuctionEntity {
       bidCount: ((map["bidCount"] ?? 0) as num).toInt(),
       startDate: (map["startDate"] as Timestamp).toDate(),
       endDate: (map["endDate"] as Timestamp).toDate(),
-      imageList: List<String>.from(map["imageList"]),
+      imageList: List<String>.from(map["imageList"] ?? <String>[""]),
     );
   }
 

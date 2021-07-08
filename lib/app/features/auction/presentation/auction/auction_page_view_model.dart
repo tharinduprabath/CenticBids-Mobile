@@ -127,13 +127,18 @@ class AuctionPageViewModel extends BaseStateViewModel {
   }
 
   String? validateBid(value) {
-    final double price = auctionEntity.latestBid == 0
-        ? auctionEntity.basePrice
-        : auctionEntity.latestBid;
+    final double price = getPrice();
     if (moneyTextController.numberValue > price)
       return null;
     else
       return "Invalid Bid";
+  }
+
+  double getPrice() {
+    final double price = auctionEntity.latestBid == 0
+        ? auctionEntity.basePrice
+        : auctionEntity.latestBid;
+    return price;
   }
 
   UserEntity? getLocalUser() {

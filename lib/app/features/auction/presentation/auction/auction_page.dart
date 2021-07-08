@@ -9,11 +9,12 @@ import 'package:centic_bids/app/core/widgets/horizontal_space.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
 import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
 import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
+import 'package:centic_bids/app/core/widgets/user_has_latest_bid_view.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
-import 'package:centic_bids/app/features/auction/presentation/auction/widgets/base_price_view.dart';
 import 'package:centic_bids/app/features/auction/presentation/auction/widgets/image_slider.dart';
 import 'package:centic_bids/app/features/auction/presentation/auction/widgets/place_bid_view.dart';
+import 'package:centic_bids/app/features/auction/presentation/auction/widgets/price_view.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
 import 'package:centic_bids/app/utils/text_formatter.dart';
 import 'package:centic_bids/app_configurations/app_di_container.dart';
@@ -108,9 +109,6 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
 
   Widget _buildAuctionDetails(
       AuctionPageViewModel model, AuctionEntity auctionEntity) {
-    final double displayPrice = auctionEntity.latestBid == 0
-        ? auctionEntity.basePrice
-        : auctionEntity.latestBid;
     return SliverPadding(
       padding: EdgeInsets.all(AppConstants.margin.r),
       sliver: SliverList(
@@ -129,7 +127,11 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: CenticBidsText.headingTwo(
-                          TextFormatter.toCurrency(displayPrice)),
+                        TextFormatter.toCurrency(model.getPrice()),
+                        color: model.isUserHasLatestBid()
+                            ? AppColors.primary_color
+                            : AppColors.main_text_color,
+                      ),
                     )),
               ],
             ),
@@ -139,12 +141,17 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
                 count: auctionEntity.bidCount,
               ),
             ),
+            model.isUserHasLatestBid()
+                ? UserHasLatestBidView()
+                : SizedBox(),
+            VerticalSpace(),
             VerticalSpace(),
             AuctionCountdownTimer(endDate: auctionEntity.endDate),
             VerticalSpace(),
             VerticalSpace(),
-            BasePriceView(
-              basePrice: auctionEntity.basePrice,
+            PriceView(
+              price: auctionEntity.basePrice,
+              text: "Base Price",
             ),
             VerticalSpace(),
             VerticalSpace(),

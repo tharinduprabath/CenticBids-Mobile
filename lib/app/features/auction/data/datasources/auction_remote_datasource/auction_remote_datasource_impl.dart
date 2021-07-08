@@ -61,7 +61,7 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
       // for (final d in auctionDocs.docs) {
       //   await firebaseFirestore
       //       .collection(FirestoreName.auctions_collection)
-      //       .add(d.data() as Map<String, dynamic>);
+      //       .add(d.data());
       // }
 
       // Check precondition empty
@@ -125,7 +125,7 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
           throw ServerException(ErrorCode.e_2010);
         if (latestAuction.latestBid != placeBidRequestModel.auction.latestBid)
           throw ServerException(ErrorCode.e_2020);
-        if (placeBidRequestModel.bid > price)
+        if (placeBidRequestModel.bid <= price)
           throw ServerException(ErrorCode.e_2020);
 
         // Place new bid

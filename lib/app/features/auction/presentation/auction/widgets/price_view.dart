@@ -3,21 +3,25 @@ import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/utils/text_formatter.dart';
 import 'package:flutter/material.dart';
 
-class BasePriceView extends StatelessWidget {
-  final double basePrice;
+class PriceView extends StatelessWidget {
+  final String text;
+  final double price;
 
-  const BasePriceView({
+  const PriceView({
     Key? key,
-    required this.basePrice,
+    required this.text,
+    required this.price,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CenticBidsText.body("Base Price: "),
+        CenticBidsText.body("$text: "),
         CenticBidsText.body(
-          TextFormatter.toCurrency(basePrice,),
+          TextFormatter.toCurrency(
+            price,
+          ),
           color: AppColors.secondary_text_color,
         ),
       ],

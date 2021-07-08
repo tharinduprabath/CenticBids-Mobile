@@ -4,6 +4,7 @@ import 'package:centic_bids/app/core/widgets/auction_countdown_timer.dart';
 import 'package:centic_bids/app/core/widgets/bid_count_chip.dart';
 import 'package:centic_bids/app/core/widgets/fade_network_image.dart';
 import 'package:centic_bids/app/core/widgets/horizontal_space.dart';
+import 'package:centic_bids/app/core/widgets/user_has_latest_bid_view.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
 import 'package:centic_bids/app/utils/text_formatter.dart';
@@ -23,7 +24,7 @@ class AuctionListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double size = 150.h;
-    final double displayPrice = auctionEntity.latestBid == 0
+    final double price = auctionEntity.latestBid == 0
         ? auctionEntity.basePrice
         : auctionEntity.latestBid;
 
@@ -53,7 +54,7 @@ class AuctionListItem extends StatelessWidget {
                   ),
                   BidCountChip(count: auctionEntity.bidCount),
                   CenticBidsText.headingOne(
-                      "${TextFormatter.toCurrency(displayPrice)}"),
+                      "${TextFormatter.toCurrency(price)}"),
                   VerticalSpace(),
                   AuctionCountdownTimer(endDate: auctionEntity.endDate),
                 ],

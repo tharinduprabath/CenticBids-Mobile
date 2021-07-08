@@ -5,7 +5,7 @@ import 'package:centic_bids/app/core/design_system/centic_bids_input_field.dart'
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:centic_bids/app/features/auction/presentation/auction/auction_page_view_model.dart';
-import 'package:centic_bids/app/features/auction/presentation/auction/widgets/latest_bid_view.dart';
+import 'package:centic_bids/app/features/auction/presentation/auction/widgets/price_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -35,14 +35,14 @@ class PlaceBidView extends StatelessWidget {
                 child: CenticBidsText.headingOne("New Bid")),
             Divider(),
             VerticalSpace(),
-            // LatestBidView(latestBid: model.auctionEntity.latestBid, isFromUser: model.isUserHasLatestBid(),),
+            PriceView(text: "Price",price: model.getPrice(),),
             VerticalSpace(),
             VerticalSpace(),
             Row(
               children: [
-                CenticBidsText.body("New bid "),
+                CenticBidsText.body("Your Bid "),
                 CenticBidsText.caption(
-                    " (Your bid must greater than latest bid)"),
+                    " (Your bid must be greater than the price)"),
               ],
             ),
             VerticalSpace(),
@@ -71,7 +71,7 @@ class PlaceBidView extends StatelessWidget {
     );
   }
 
-  Widget _buildTopEdgeLine(){
+  Widget _buildTopEdgeLine() {
     return Align(
         alignment: Alignment.center,
         child: Container(
