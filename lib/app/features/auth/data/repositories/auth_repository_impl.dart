@@ -1,6 +1,8 @@
 import 'package:centic_bids/app/features/auth/data/datasources/auth_remote_datasource/auth_remote_data_source.dart';
+import 'package:centic_bids/app/features/auth/data/models/change_password_request_model.dart';
 import 'package:centic_bids/app/features/auth/data/models/user_register_request_model.dart';
 import 'package:centic_bids/app/features/auth/data/models/user_sign_in_request_model.dart';
+import 'package:centic_bids/app/features/auth/domain/entities/change_password_request_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_register_request_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_sign_in_request_entity.dart';
@@ -96,6 +98,28 @@ class AuthRepositoryImpl implements AuthRepository {
       if (await networkInfo.isConnected) {
         return Right(await authRemoteDataSource.sendPasswordResetEmail(
           email: email,
+        ));
+      } else {
+        throw NetworkException(ErrorCode.e_1200);
+      }
+    } on ServerException catch (ex) {
+      return Left(ServerFailure(ex.code));
+    } on NetworkException catch (ex) {
+      return Left(NetworkFailure(ex.code));
+    } on UnknownException catch (ex) {
+      return Left(UnknownFailure(ex.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Success>> changePassword(
+      {required ChangePasswordRequestEntity
+          changePasswordRequestEntity}) async {
+    try {
+      if (await networkInfo.isConnected) {
+        return Right(await authRemoteDataSource.changePassword(
+          changePasswordRequestModel: ChangePasswordRequestModel.fromEntity(
+              changePasswordRequestEntity),
         ));
       } else {
         throw NetworkException(ErrorCode.e_1200);

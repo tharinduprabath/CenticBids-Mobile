@@ -1,3 +1,4 @@
+import 'package:centic_bids/app/features/auth/domain/entities/change_password_request_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_register_request_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_sign_in_request_entity.dart';
@@ -18,4 +19,7 @@ abstract class AuthRepository {
 
   Future<Either<Failure, Success>> sendPasswordResetEmail(
       {required String email});
+
+  Future<Either<Failure, Success>> changePassword(
+      {required ChangePasswordRequestEntity changePasswordRequestEntity});
 }

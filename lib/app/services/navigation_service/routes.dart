@@ -8,6 +8,7 @@ abstract class Routes {
   static const String login_registration_page = "login_registration_page";
   static const String forgot_password_page = "forgot_password_page";
   static const String email_verification_page = "email_verification_page";
+  static const String change_password_page = "change_password_page";
 
   //! auction feature
   static const String home_page = "home_page";

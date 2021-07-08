@@ -76,6 +76,8 @@ extension ErrorCodeExtension on ErrorCode {
         return "Seems like you have entered wrong email or password.";
       case ErrorCode.e_1591:
         return "You haven't verified your email address yet. Please verify your email address.";
+      case ErrorCode.e_1592:
+        return "You have entered the wrong current password.";
       case ErrorCode.e_2010:
         return "Bid place failed. Auction over.";
       case ErrorCode.e_2020:

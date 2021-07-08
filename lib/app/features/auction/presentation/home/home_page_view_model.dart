@@ -65,7 +65,8 @@ class HomePageViewModel extends BaseStateViewModel {
         this.auctionList = auctionList;
         if (auctionList.length < AppConstants.pagination_limit)
           loadMoreButtonStateNotifier.value = LoadMoreButtonState.hide;
-        else loadMoreButtonStateNotifier.value = LoadMoreButtonState.show;
+        else
+          loadMoreButtonStateNotifier.value = LoadMoreButtonState.show;
         state = PageStateLoaded();
       },
     );
@@ -167,7 +168,9 @@ class HomePageViewModel extends BaseStateViewModel {
         args: LoginRegistrationPageArgs(isSignInFirst: isSignInFirst));
   }
 
-  void goToChangePasswordPage() {}
+  void goToChangePasswordPage() {
+    _navigationService.push(Routes.change_password_page);
+  }
 
   void goToAboutPage() {}
 

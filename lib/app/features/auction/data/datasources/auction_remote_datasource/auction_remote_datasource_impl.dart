@@ -195,7 +195,10 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
           .toList();
 
       // Auction list
-      return await Future.wait(getAuctionFutureList);
+      final auctionList = await Future.wait(getAuctionFutureList);
+      auctionList.sort((a, b) => a.endDate.compareTo(b.endDate));
+
+      return auctionList;
     });
   }
 }

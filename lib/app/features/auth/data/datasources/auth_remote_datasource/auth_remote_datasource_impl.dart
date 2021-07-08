@@ -1,4 +1,5 @@
 import 'package:centic_bids/app/core/app_firebase_helper.dart';
+import 'package:centic_bids/app/features/auth/data/models/change_password_request_model.dart';
 import 'package:centic_bids/app/features/auth/data/models/user_model.dart';
 import 'package:centic_bids/app/features/auth/data/models/user_register_request_model.dart';
 import 'package:centic_bids/app/features/auth/data/models/user_sign_in_request_model.dart';
@@ -153,6 +154,28 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     return await tryWithException(() async {
       // Send email
       await firebaseAuth.sendPasswordResetEmail(email: email);
+
+      return RemoteOperationSuccess();
+    });
+  }
+
+  @override
+  Future<Success> changePassword(
+      {required ChangePasswordRequestModel changePasswordRequestModel}) async {
+    return await tryWithException(() async {
+      final user = firebaseAuth.currentUser!;
+
+      // Check current password
+      final credential = EmailAuthProvider.credential(
+          email: user.email!,
+          password: changePasswordRequestModel.currentPassword);
+      await user.reauthenticateWithCredential(credential).then((result)async{
+        // Update password
+        await user.updatePassword(changePasswordRequestModel.newPassword);
+      }).catchError((error){
+        // Current password invalid
+        throw ServerException(ErrorCode.e_1592);
+      });
 
       return RemoteOperationSuccess();
     });

@@ -11,6 +11,7 @@ enum ErrorCode {
   e_1560,
   e_1590,
   e_1591,
+  e_1592,
   e_2010, // Bid place failed - auction Over
   e_2020, // Bid place failed - has new latest bid
 }

@@ -38,6 +38,11 @@ abstract class RoutesHandler {
               args: settings.arguments as EmailVerificationPageArgs),
         );
 
+      case Routes.change_password_page:
+        return _routeBuilder(
+          screen: ChangePasswordPage(),
+        );
+
       case Routes.home_page:
         return _routeBuilder(
           screen: HomePage(),
