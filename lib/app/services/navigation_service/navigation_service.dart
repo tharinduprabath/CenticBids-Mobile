@@ -5,6 +5,7 @@ import 'package:centic_bids/app/features/auth/presentation/change_password/chang
 import 'package:centic_bids/app/features/auth/presentation/email_verification/email_verification_page.dart';
 import 'package:centic_bids/app/features/auth/presentation/forgot_password/forgot_password_page.dart';
 import 'package:centic_bids/app/features/auth/presentation/login_registration/login_registration_page.dart';
+import 'package:centic_bids/app/features/supprt/presentation/about/about_page.dart';
 import 'package:centic_bids/app/features/supprt/presentation/splash/splash_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

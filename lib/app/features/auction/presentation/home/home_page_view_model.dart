@@ -16,6 +16,7 @@ import 'package:centic_bids/app/services/navigation_service/navigation_service.d
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
 import 'package:centic_bids/app/utils/usecase.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePageViewModel extends BaseStateViewModel {
   final GetOngoingAuctionsFirstListUsecase _getOngoingAuctionsFirstListUsecase;
@@ -172,9 +173,19 @@ class HomePageViewModel extends BaseStateViewModel {
     _navigationService.push(Routes.change_password_page);
   }
 
-  void goToAboutPage() {}
+  void goToAboutPage() {
+    _navigationService.push(Routes.about_page);
+  }
 
-  void goToPrivacyPolicyPage() {}
+  void goToPrivacyPolicyPage() async {
+    final url = AppConstants.privacy_policy_url;
+
+    if (await canLaunch(url))
+      await launch(
+        url,
+        forceWebView: true,
+      );
+  }
 
   void goToMyBidsPage() {
     _navigationService.push(Routes.my_bids_page);

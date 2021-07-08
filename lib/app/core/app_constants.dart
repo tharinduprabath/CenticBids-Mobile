@@ -6,7 +6,6 @@ abstract class AppConstants {
   static const double radius = 32.0;
   static const double icon_size = 25.0;
 
-  static const String privacy_policy_url = "";
-  static const String about_text =
-      "CenticBids is an online bidding platform which allow users to bid for online auctions.";
+  static const String privacy_policy_url =
+      "https://sites.google.com/view/centicbids";
 }

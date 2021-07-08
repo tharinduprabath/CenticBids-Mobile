@@ -50,7 +50,7 @@ class ForgotPasswordPageViewModel extends BaseStateViewModel {
       (success) {
         _dialogService.show(
           dialog: ActionDialog.success(
-            heading: "Check your mail",
+            heading: "Check your inbox",
             text:
                 "We have sent password recover instructions to your email.",
             actionButtonText: AppStrings.dialog_default_action_button_text,

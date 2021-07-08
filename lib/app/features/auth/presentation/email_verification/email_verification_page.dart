@@ -1,10 +1,15 @@
+import 'dart:io';
+
+import 'package:android_intent/android_intent.dart';
 import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/app_constants.dart';
+import 'package:centic_bids/app/core/design_system/centic_bids_button.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/centic_bids_app_bar.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EmailVerificationPageArgs {
   final String email, displayName;
@@ -22,7 +27,7 @@ class EmailVerificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CenticBidsAppBar(
-        title: "Verify Your Email Address",
+        title: "Verify your email address",
       ),
       body: Center(
         child: Padding(
@@ -40,13 +45,31 @@ class EmailVerificationPage extends StatelessWidget {
               CenticBidsText.headingTwo("You almost there..."),
               VerticalSpace(),
               CenticBidsText.body(
-                "Hi ${args.displayName}, we already send the link to ${args.email}. Please click the link to activate your account.",
+                "Hi ${args.displayName}, we already send the link to ${args.email}. Please check your inbox to activate your account.",
                 align: TextAlign.center,
+              ),
+              VerticalSpace(),
+              VerticalSpace(),
+              CenticBidsButton.text(
+                text: "Open Email App",
+                onTap: _openDefaultEmailApp,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _openDefaultEmailApp() {
+    if (Platform.isAndroid) {
+      AndroidIntent intent = AndroidIntent(
+        action: 'android.intent.action.MAIN',
+        category: 'android.intent.category.APP_EMAIL',
+      );
+      intent.launch().catchError((e) {});
+    } else if (Platform.isIOS) {
+      launch("message://").catchError((e) {});
+    }
   }
 }

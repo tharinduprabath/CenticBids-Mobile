@@ -19,6 +19,11 @@ abstract class RoutesHandler {
           screen: SplashPage(),
         );
 
+      case Routes.about_page:
+        return _routeBuilder(
+          screen: AboutPage(),
+        );
+
       case Routes.login_registration_page:
         return _routeBuilder(
           screen: LoginRegistrationPage(
