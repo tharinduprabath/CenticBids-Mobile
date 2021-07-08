@@ -26,9 +26,16 @@ abstract class RoutesHandler {
           ),
           isFullscreenDialog: true,
         );
+
       case Routes.forgot_password_page:
         return _routeBuilder(
           screen: ForgotPasswordPage(),
+        );
+
+      case Routes.email_verification_page:
+        return _routeBuilder(
+          screen: EmailVerificationPage(
+              args: settings.arguments as EmailVerificationPageArgs),
         );
 
       case Routes.home_page:

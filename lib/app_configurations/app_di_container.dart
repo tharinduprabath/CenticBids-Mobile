@@ -103,6 +103,8 @@ class AppDIContainer {
     sl.registerFactory<LoginRegistrationPageViewModel>(
         () => LoginRegistrationPageViewModel(
               registerUsecase: sl(),
+              getLocalUserUsecase: sl(),
+              logoutUsecase: sl(),
               navigationService: sl(),
               signInUsecase: sl(),
               dialogService: sl(),

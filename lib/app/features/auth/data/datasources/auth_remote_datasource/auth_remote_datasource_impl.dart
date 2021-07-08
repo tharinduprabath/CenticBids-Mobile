@@ -93,6 +93,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           .set(userRegisterRequestModel.toMap(
               registeredDate: result.user!.metadata.creationTime!));
 
+      // Send verification email
+      await firebaseAuth.currentUser?.sendEmailVerification();
+
       return RemoteOperationSuccess();
     });
   }
@@ -106,7 +109,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           email: userSignInRequestModel.email,
           password: userSignInRequestModel.password);
 
-      return RemoteOperationSuccess();
+      // Check email verification
+      if (firebaseAuth.currentUser!.emailVerified)
+        return RemoteOperationSuccess();
+      else {
+        await firebaseAuth.currentUser?.sendEmailVerification();
+        throw ServerException(ErrorCode.e_1591);
+      }
     });
   }
 

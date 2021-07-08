@@ -96,7 +96,7 @@ class _Loaded extends ViewModelWidget<MyBidsPageViewModel> {
       child: auctionList.length == 0
           ? _buildEmptyListView(model)
           : ListView.separated(
-              physics: BouncingScrollPhysics(),
+              physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
               itemCount: auctionList.length,
               separatorBuilder: (context, index) => VerticalSpace(),
               padding: EdgeInsets.all(AppConstants.margin.r),
