@@ -95,22 +95,24 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
     return Expanded(
       child: model.auctionList.length == 0
           ? _buildEmptyListView(model)
-          : ListView.separated(
-              physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
-              itemCount: model.auctionList.length + 1,
-              separatorBuilder: (context, index) =>
-                  index != model.auctionList.length - 1
-                      ? VerticalSpace()
-                      : SizedBox(),
-              padding: EdgeInsets.all(AppConstants.margin.r),
-              itemBuilder: (context, index) => index == model.auctionList.length
-                  ? _buildLoadMoreButton(model)
-                  : AuctionListItem(
-                      auctionEntity: model.auctionList[index],
-                      onTap: () => model.goToAuctionPage(
-                          auctionEntity: model.auctionList[index]),
-                    ),
-            ),
+          : Scrollbar(
+            child: ListView.separated(
+                physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+                itemCount: model.auctionList.length + 1,
+                separatorBuilder: (context, index) =>
+                    index != model.auctionList.length - 1
+                        ? VerticalSpace()
+                        : SizedBox(),
+                padding: EdgeInsets.all(AppConstants.margin.r),
+                itemBuilder: (context, index) => index == model.auctionList.length
+                    ? _buildLoadMoreButton(model)
+                    : AuctionListItem(
+                        auctionEntity: model.auctionList[index],
+                        onTap: () => model.goToAuctionPage(
+                            auctionEntity: model.auctionList[index]),
+                      ),
+              ),
+          ),
     );
   }
 

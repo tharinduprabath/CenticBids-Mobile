@@ -1,6 +1,6 @@
 enum ErrorCode {
   e_1000, // unknown_failure
-  e_1100, // server_failure
+  e_1100, // unknown_server_failure
   e_1200, // network_failure
   e_1500, // unknown_auth_failure
   e_1510, // user_not_found_auth_failure

@@ -95,17 +95,19 @@ class _Loaded extends ViewModelWidget<MyBidsPageViewModel> {
     return Expanded(
       child: auctionList.length == 0
           ? _buildEmptyListView(model)
-          : ListView.separated(
-              physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
-              itemCount: auctionList.length,
-              separatorBuilder: (context, index) => VerticalSpace(),
-              padding: EdgeInsets.all(AppConstants.margin.r),
-              itemBuilder: (context, index) => AuctionListItem(
-                auctionEntity: auctionList[index],
-                onTap: () =>
-                    model.goToAuctionPage(auctionEntity: auctionList[index]),
+          : Scrollbar(
+            child: ListView.separated(
+                physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+                itemCount: auctionList.length,
+                separatorBuilder: (context, index) => VerticalSpace(),
+                padding: EdgeInsets.all(AppConstants.margin.r),
+                itemBuilder: (context, index) => AuctionListItem(
+                  auctionEntity: auctionList[index],
+                  onTap: () =>
+                      model.goToAuctionPage(auctionEntity: auctionList[index]),
+                ),
               ),
-            ),
+          ),
     );
   }
 
