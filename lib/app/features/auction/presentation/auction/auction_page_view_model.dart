@@ -12,7 +12,7 @@ import 'package:centic_bids/app/features/auction/domain/usecases/place_bid_useca
 import 'package:centic_bids/app/features/auction/domain/usecases/place_bid_usecase.dart'
     as placeBidUsecase;
 import 'package:centic_bids/app/features/auth/domain/entities/user_entity.dart';
-import 'package:centic_bids/app/features/auth/domain/usecases/get_local_user.dart';
+import 'package:centic_bids/app/features/auth/domain/usecases/get_local_user_usecase.dart';
 import 'package:centic_bids/app/features/auth/presentation/login_registration/login_registration_page.dart';
 import 'package:centic_bids/app/services/dialog_service/dialog_service.dart';
 import 'package:centic_bids/app/services/navigation_service/navigation_service.dart';

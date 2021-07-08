@@ -8,7 +8,7 @@ import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auc
 import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_next_list_usecase.dart';
 import 'package:centic_bids/app/features/auction/presentation/auction/auction_page.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_entity.dart';
-import 'package:centic_bids/app/features/auth/domain/usecases/get_local_user.dart';
+import 'package:centic_bids/app/features/auth/domain/usecases/get_local_user_usecase.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:centic_bids/app/features/auth/presentation/login_registration/login_registration_page.dart';
 import 'package:centic_bids/app/services/dialog_service/dialog_service.dart';

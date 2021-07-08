@@ -15,4 +15,7 @@ abstract class AuthRepository {
   Either<Failure, UserEntity?> getLocalUser();
 
   Future<Either<Failure, Success>> logout();
+
+  Future<Either<Failure, Success>> sendPasswordResetEmail(
+      {required String email});
 }

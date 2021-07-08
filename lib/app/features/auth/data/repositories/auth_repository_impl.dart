@@ -63,7 +63,6 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-
   @override
   Future<Either<Failure, Success>> logout() async {
     try {
@@ -81,6 +80,26 @@ class AuthRepositoryImpl implements AuthRepository {
   Either<Failure, UserEntity?> getLocalUser() {
     try {
       return Right(authRemoteDataSource.getLocalUser());
+    } on ServerException catch (ex) {
+      return Left(ServerFailure(ex.code));
+    } on NetworkException catch (ex) {
+      return Left(NetworkFailure(ex.code));
+    } on UnknownException catch (ex) {
+      return Left(UnknownFailure(ex.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Success>> sendPasswordResetEmail(
+      {required String email}) async {
+    try {
+      if (await networkInfo.isConnected) {
+        return Right(await authRemoteDataSource.sendPasswordResetEmail(
+          email: email,
+        ));
+      } else {
+        throw NetworkException(ErrorCode.e_1200);
+      }
     } on ServerException catch (ex) {
       return Left(ServerFailure(ex.code));
     } on NetworkException catch (ex) {

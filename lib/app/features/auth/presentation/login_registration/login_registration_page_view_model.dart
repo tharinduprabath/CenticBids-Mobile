@@ -49,6 +49,10 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
     tabController.animateTo(1);
   }
 
+  void goToForgotPasswordPage() {
+    _navigationService.push(Routes.forgot_password_page);
+  }
+
   changePasswordHasMinLength(bool value) {
     passwordHasMinLengthNotifier.value = value;
   }
