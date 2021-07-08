@@ -1,6 +1,6 @@
-import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/app_constants.dart';
 import 'package:centic_bids/app/core/app_strings.dart';
+import 'package:centic_bids/app/core/design_system/centic_bids_loading_indicator.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,9 +30,7 @@ class BusyDialog extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CircularProgressIndicator(
-                  color: AppColors.primary_color,
-                ),
+                CenticBidsLoadingIndicator(),
                 VerticalSpace(),
                 VerticalSpace(),
                 CenticBidsText.headingThree(text),

@@ -2,6 +2,7 @@ import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/app_constants.dart';
 import 'package:centic_bids/app/core/app_enums.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_button.dart';
+import 'package:centic_bids/app/core/design_system/centic_bids_loading_indicator.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
 import 'package:centic_bids/app/core/widgets/auction_list_item.dart';
 import 'package:centic_bids/app/core/widgets/centic_bids_app_bar.dart';
@@ -132,9 +133,7 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
     return Center(
         child: Padding(
       padding: EdgeInsets.symmetric(vertical: AppConstants.margin.h),
-      child: CircularProgressIndicator(
-        color: AppColors.primary_color,
-      ),
+      child: CenticBidsLoadingIndicator(),
     ));
   }
 
