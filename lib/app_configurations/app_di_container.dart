@@ -24,6 +24,7 @@ import 'package:centic_bids/app/features/auth/presentation/change_password/chang
 import 'package:centic_bids/app/features/auth/presentation/forgot_password/forgot_password_page_view_model.dart';
 import 'package:centic_bids/app/features/auth/presentation/login_registration/login_registration_page_view_model.dart';
 import 'package:centic_bids/app/features/supprt/presentation/splash/splash_page_view_model.dart';
+import 'package:centic_bids/app/features/supprt/presentation/welcome/welcome_page_view_model.dart';
 import 'package:centic_bids/app/services/app_info/app_info_service.dart';
 import 'package:centic_bids/app/services/app_info/app_info_service_impl.dart';
 import 'package:centic_bids/app/services/dialog_service/dialog_service.dart';
@@ -34,6 +35,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
 
@@ -41,6 +43,9 @@ class AppDIContainer {
   AppDIContainer._();
 
   static Future<void> init() async {
+    //! async external
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
     //! data sources
     sl.registerLazySingleton<AuthRemoteDataSource>(
         () => AuthRemoteDataSourceImpl(
@@ -104,7 +109,13 @@ class AppDIContainer {
         ));
 
     //! view models
-    sl.registerFactory<SplashPageViewModel>(() => SplashPageViewModel());
+    sl.registerFactory<SplashPageViewModel>(() => SplashPageViewModel(
+          sharedPreferences: sl(),
+          navigationService: sl(),
+        ));
+    sl.registerFactory<WelcomePageViewModel>(() => WelcomePageViewModel(
+          navigationService: sl(),
+        ));
 
     sl.registerFactory<LoginRegistrationPageViewModel>(
         () => LoginRegistrationPageViewModel(
@@ -161,5 +172,6 @@ class AppDIContainer {
 
     //! external
     sl.registerLazySingleton<Connectivity>(() => Connectivity());
+    sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
   }
 }

@@ -165,13 +165,13 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
 
   Future<void> _handleEmailVerification() async {
     final user = _getLocalUser();
-    await _logoutUsecase(NoParams());
-    _navigationService.restart();
     if (user != null) {
-      Future.delayed(Duration.zero, () {
+      Future.delayed(Duration.zero, () async{
         final args = EmailVerificationPageArgs(
             email: user.email, displayName: user.firstName);
-        _navigationService.push(Routes.email_verification_page, args: args);
+        await _navigationService.push(Routes.email_verification_page, args: args);
+        await _logoutUsecase(NoParams());
+        _navigationService.restart();
       });
     }
   }

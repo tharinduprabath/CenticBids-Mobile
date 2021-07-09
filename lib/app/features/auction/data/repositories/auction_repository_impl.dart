@@ -1,3 +1,4 @@
+import 'package:centic_bids/app/core/app_enums.dart';
 import 'package:centic_bids/app/features/auction/data/datasources/auction_remote_datasource/auction_remote_data_source.dart';
 import 'package:centic_bids/app/features/auction/data/models/place_bid_request_model.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
@@ -20,12 +21,12 @@ class AuctionRepositoryImpl implements AuctionRepository {
   });
 
   @override
-  Future<Either<Failure, List<AuctionEntity>>>
-      getOngoingAuctionsFirstList() async {
+  Future<Either<Failure, List<AuctionEntity>>> getOngoingAuctionsFirstList(
+      {required AuctionListSortType auctionListSortType}) async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(
-            await auctionRemoteDataSource.getOngoingAuctionsFirstList());
+        return Right(await auctionRemoteDataSource.getOngoingAuctionsFirstList(
+            auctionListSortType: auctionListSortType));
       } else {
         throw NetworkException(ErrorCode.e_1200);
       }
@@ -40,11 +41,13 @@ class AuctionRepositoryImpl implements AuctionRepository {
 
   @override
   Future<Either<Failure, List<AuctionEntity>>> getOngoingAuctionsNextList(
-      {required String startAfterAuctionId}) async {
+      {required String startAfterAuctionId,
+      required AuctionListSortType auctionListSortType}) async {
     try {
       if (await networkInfo.isConnected) {
         return Right(await auctionRemoteDataSource.getOngoingAuctionsNextList(
-            startAfterAuctionId: startAfterAuctionId));
+            startAfterAuctionId: startAfterAuctionId,
+            auctionListSortType: auctionListSortType));
       } else {
         throw NetworkException(ErrorCode.e_1200);
       }

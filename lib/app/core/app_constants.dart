@@ -8,4 +8,5 @@ abstract class AppConstants {
 
   static const String privacy_policy_url =
       "https://sites.google.com/view/centicbids";
+  static const String is_user_first_time = "is_user_first_time";
 }

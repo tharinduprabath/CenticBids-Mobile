@@ -83,9 +83,9 @@ class _Loaded extends ViewModelWidget<LoginRegistrationPageViewModel> {
         width: double.maxFinite,
         height: double.maxFinite,
         color: AppColors.primary_color.withOpacity(0.25),
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.center,
         child: Image.asset(
-          AppImages.logo_transparent,
+          AppImages.app_icon,
         ),
       ),
     );

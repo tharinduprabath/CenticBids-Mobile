@@ -7,6 +7,7 @@ import 'package:centic_bids/app/core/widgets/centic_bids_app_bar.dart';
 import 'package:centic_bids/app/core/widgets/page_error_view.dart';
 import 'package:centic_bids/app/core/widgets/page_loading_view.dart';
 import 'package:centic_bids/app/core/widgets/page_state_switcher.dart';
+import 'package:centic_bids/app/core/widgets/sort_list_view.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
@@ -66,7 +67,7 @@ class _Loaded extends ViewModelWidget<MyBidsPageViewModel> {
       child: Container(
         child: Column(
           children: [
-            _buildHeadingBar(),
+            _buildHeadingBar(context, model),
             _buildList(model),
           ],
         ),
@@ -74,7 +75,7 @@ class _Loaded extends ViewModelWidget<MyBidsPageViewModel> {
     );
   }
 
-  Widget _buildHeadingBar() {
+  Widget _buildHeadingBar(context, model) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
       child: Row(
@@ -83,7 +84,7 @@ class _Loaded extends ViewModelWidget<MyBidsPageViewModel> {
           CenticBidsText.body("Items (${auctionList.length})"),
           CenticBidsButton.icon(
             icon: Icons.filter_list_rounded,
-            onTap: () {},
+            onTap: () => _showSortListView(context, model),
             buttonType: CenticBidsButtonType.secondary,
           )
         ],
@@ -96,8 +97,9 @@ class _Loaded extends ViewModelWidget<MyBidsPageViewModel> {
       child: auctionList.length == 0
           ? _buildEmptyListView(model)
           : Scrollbar(
-            child: ListView.separated(
-                physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+              child: ListView.separated(
+                physics: AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics()),
                 itemCount: auctionList.length,
                 separatorBuilder: (context, index) => VerticalSpace(),
                 padding: EdgeInsets.all(AppConstants.margin.r),
@@ -107,7 +109,7 @@ class _Loaded extends ViewModelWidget<MyBidsPageViewModel> {
                       model.goToAuctionPage(auctionEntity: auctionList[index]),
                 ),
               ),
-          ),
+            ),
     );
   }
 
@@ -118,6 +120,19 @@ class _Loaded extends ViewModelWidget<MyBidsPageViewModel> {
       optionalButtonOnTap: model.gotToAuctions,
       optionalButtonText: "Go to Auctions",
     );
+  }
+
+  void _showSortListView(
+      BuildContext context, MyBidsPageViewModel model) async {
+    final result = await showModalBottomSheet(
+        context: context,
+        builder: (context) => SortListView(
+              currentSortType: model.auctionListSortType,
+            ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+                top: Radius.circular(AppConstants.radius.r))));
+    if (result != null) model.handleSort(result, auctionList);
   }
 }
 

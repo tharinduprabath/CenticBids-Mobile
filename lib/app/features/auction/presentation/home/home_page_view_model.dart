@@ -5,7 +5,11 @@ import 'package:centic_bids/app/core/widgets/dialogs/action_dialog.dart';
 import 'package:centic_bids/app/core/widgets/dialogs/busy_dialog.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
 import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_first_list_usecase.dart';
+import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_first_list_usecase.dart'
+    as get_ongoing_auctions_first_list;
 import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_next_list_usecase.dart';
+import 'package:centic_bids/app/features/auction/domain/usecases/get_ongoing_auctions_next_list_usecase.dart'
+    as get_ongoing_auctions_Next_list;
 import 'package:centic_bids/app/features/auction/presentation/auction/auction_page.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/user_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/get_local_user_usecase.dart';
@@ -51,12 +55,15 @@ class HomePageViewModel extends BaseStateViewModel {
       GlobalKey<RefreshIndicatorState>();
 
   List<AuctionEntity> auctionList = <AuctionEntity>[];
+  AuctionListSortType auctionListSortType =
+      AuctionListSortType.remainingTimeDown;
 
   Future<void> getOngoingAuctionsFirstList() async {
     state = PageStateLoading();
 
-    final failureOrAuctionList =
-        await _getOngoingAuctionsFirstListUsecase(NoParams());
+    final failureOrAuctionList = await _getOngoingAuctionsFirstListUsecase(
+        get_ongoing_auctions_first_list.Params(
+            auctionListSortType: auctionListSortType));
 
     failureOrAuctionList.fold(
       (failure) {
@@ -77,7 +84,9 @@ class HomePageViewModel extends BaseStateViewModel {
     loadMoreButtonStateNotifier.value = LoadMoreButtonState.loading;
 
     final failureOrAuctionList = await _getOngoingAuctionsNextListUsecase(
-        Params(startAfterAuctionId: auctionList.last.id));
+        get_ongoing_auctions_Next_list.Params(
+            startAfterAuctionId: auctionList.last.id,
+            auctionListSortType: auctionListSortType));
 
     failureOrAuctionList.fold(
       (failure) {
@@ -198,5 +207,8 @@ class HomePageViewModel extends BaseStateViewModel {
       refreshIndicatorKey.currentState?.show();
   }
 
-  void showAuctionFilter() {}
+  void handleSort(AuctionListSortType type) {
+    auctionListSortType = type;
+    getOngoingAuctionsFirstList();
+  }
 }

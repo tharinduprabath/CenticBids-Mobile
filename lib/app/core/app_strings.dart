@@ -21,6 +21,8 @@ abstract class AppStrings {
 
   static const String about_text =
       "CenticBids is an online bidding platform which allow users to bid for online auctions.";
+  static const String welcome_text =
+      "CenticBids is an online bidding platform which allow users to bid for online auctions";
 }
 
 extension ErrorCodeExtension on ErrorCode {

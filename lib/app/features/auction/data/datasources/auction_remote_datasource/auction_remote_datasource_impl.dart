@@ -1,4 +1,5 @@
 import 'package:centic_bids/app/core/app_constants.dart';
+import 'package:centic_bids/app/core/app_enums.dart';
 import 'package:centic_bids/app/core/app_firebase_helper.dart';
 import 'package:centic_bids/app/features/auction/data/models/auction_model.dart';
 import 'package:centic_bids/app/features/auction/data/models/bid_model.dart';
@@ -48,13 +49,16 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
   }
 
   @override
-  Future<List<AuctionModel>> getOngoingAuctionsFirstList() async {
+  Future<List<AuctionModel>> getOngoingAuctionsFirstList(
+      {required AuctionListSortType auctionListSortType}) async {
     return await tryWithException(() async {
       // Get auction docs
       final auctionDocs = await firebaseFirestore
           .collection(FirestoreName.auctions_collection)
           .where("endDate", isGreaterThan: DateTime.now())
-          .orderBy("endDate")
+          .orderBy("endDate",
+              descending:
+                  auctionListSortType == AuctionListSortType.remainingTimeUp)
           .limit(AppConstants.pagination_limit)
           .get();
 
@@ -76,7 +80,8 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
 
   @override
   Future<List<AuctionModel>> getOngoingAuctionsNextList(
-      {required String startAfterAuctionId}) async {
+      {required String startAfterAuctionId,
+      required AuctionListSortType auctionListSortType}) async {
     return await tryWithException(() async {
       // Get last doc
       final lastDoc = await firebaseFirestore
@@ -88,7 +93,9 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
       final auctionDocs = await firebaseFirestore
           .collection(FirestoreName.auctions_collection)
           .where("endDate", isGreaterThan: DateTime.now())
-          .orderBy("endDate")
+          .orderBy("endDate",
+              descending:
+                  auctionListSortType == AuctionListSortType.remainingTimeUp)
           .startAfterDocument(lastDoc)
           .limit(AppConstants.pagination_limit)
           .get();

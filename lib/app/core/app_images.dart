@@ -8,15 +8,20 @@ const String JPG_TYPE = '.jpg';
 
 abstract class AppImages {
   //! PNG
-  static const String logo =
-      PNG_IMAGE_PATH + 'logo' + PNG_TYPE;
+  static const String app_icon = PNG_IMAGE_PATH + 'app_icon' + PNG_TYPE;
+
+  static const String logo = PNG_IMAGE_PATH + 'logo' + PNG_TYPE;
+
   static const String logo_transparent =
       PNG_IMAGE_PATH + 'logo_transparent' + PNG_TYPE;
 
+  static const String logo_inverted =
+      PNG_IMAGE_PATH + 'logo_inverted' + PNG_TYPE;
+
+  static const String welcome_image =
+      PNG_IMAGE_PATH + 'welcome_image' + PNG_TYPE;
+
   //! JPG
 
-
   //! SVG
-
-
 }

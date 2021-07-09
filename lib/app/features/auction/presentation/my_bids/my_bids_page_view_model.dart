@@ -1,3 +1,4 @@
+import 'package:centic_bids/app/core/app_enums.dart';
 import 'package:centic_bids/app/core/app_strings.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
 import 'package:centic_bids/app/features/auction/domain/usecases/get_my_bids_usecase.dart';
@@ -24,6 +25,8 @@ class MyBidsPageViewModel extends BaseStateViewModel {
 
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  AuctionListSortType auctionListSortType =
+      AuctionListSortType.remainingTimeDown;
 
   Future<void> getMyBids() async {
     state = PageStateLoading();
@@ -35,6 +38,7 @@ class MyBidsPageViewModel extends BaseStateViewModel {
         state = PageStateError(message: failure.code.getMessage());
       },
       (auctionList) {
+        _sort(auctionList);
         state = PageStateLoaded<List<AuctionEntity>>(data: auctionList);
       },
     );
@@ -50,5 +54,18 @@ class MyBidsPageViewModel extends BaseStateViewModel {
   void gotToAuctions() {
     _navigationService.popUntil(Routes.initial_page);
     _navigationService.pop();
+  }
+
+  void handleSort(AuctionListSortType type, List<AuctionEntity> auctionList) {
+    auctionListSortType = type;
+    _sort(auctionList);
+    notifyListeners();
+  }
+
+  void _sort(List<AuctionEntity> auctionList) {
+    if (auctionListSortType == AuctionListSortType.remainingTimeDown)
+      auctionList.sort((a, b) => a.endDate.compareTo(b.endDate));
+    else
+      auctionList.sort((a, b) => b.endDate.compareTo(a.endDate));
   }
 }
