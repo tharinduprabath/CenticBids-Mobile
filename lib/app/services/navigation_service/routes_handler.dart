@@ -41,6 +41,7 @@ abstract class RoutesHandler {
         return _routeBuilder(
           screen: EmailVerificationPage(
               args: settings.arguments as EmailVerificationPageArgs),
+          isFullscreenDialog: true,
         );
 
       case Routes.change_password_page:

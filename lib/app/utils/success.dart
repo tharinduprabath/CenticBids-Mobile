@@ -1,3 +1,8 @@
-abstract class Success {}
+import 'package:equatable/equatable.dart';
 
-class RemoteOperationSuccess extends Success{}
+abstract class Success extends Equatable {}
+
+class RemoteOperationSuccess extends Success {
+  @override
+  List<Object?> get props => [];
+}

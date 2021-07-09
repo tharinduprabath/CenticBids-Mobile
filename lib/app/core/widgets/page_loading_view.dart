@@ -1,4 +1,3 @@
-import 'package:centic_bids/app/core/app_colors.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_loading_indicator.dart';
 import 'package:flutter/material.dart';
 

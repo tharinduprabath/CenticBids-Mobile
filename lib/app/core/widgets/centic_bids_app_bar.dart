@@ -1,5 +1,6 @@
 import 'package:centic_bids/app/core/widgets/app_bar_bottom_with_heading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CenticBidsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -22,5 +23,5 @@ class CenticBidsAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 2);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight.h * 2);
 }

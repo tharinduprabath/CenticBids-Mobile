@@ -50,31 +50,33 @@ class ForgotPasswordPage extends StatelessWidget {
 class _Loaded extends ViewModelWidget<ForgotPasswordPageViewModel> {
   @override
   Widget build(BuildContext context, ForgotPasswordPageViewModel model) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
-      child: Column(
-        children: [
-          VerticalSpace(),
-          CenticBidsText.body(
-              "Enter the email associated with your account and we'll send and email with instructions to reset your password."),
-          VerticalSpace(),
-          Form(
-            key: model.formKey,
-            child: CenticBidsInputField.email(
-              validator: Validator.emailValidator,
-              placeholder: "Email",
-              leadingIcon: Icons.email_outlined,
-              onSaved: (value) {
-                model.email = value.trim();
-              },
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
+        child: Column(
+          children: [
+            VerticalSpace(),
+            CenticBidsText.body(
+                "Enter the email associated with your account and we'll send and email with instructions to reset your password."),
+            VerticalSpace(),
+            Form(
+              key: model.formKey,
+              child: CenticBidsInputField.email(
+                validator: Validator.emailValidator,
+                placeholder: "Email",
+                leadingIcon: Icons.email_outlined,
+                onSaved: (value) {
+                  model.email = value.trim();
+                },
+              ),
             ),
-          ),
-          VerticalSpace(),
-          CenticBidsButton(
-            text: "Send Instructions",
-            onTap: model.sendPasswordResetEmail,
-          ),
-        ],
+            VerticalSpace(),
+            CenticBidsButton(
+              text: "Send Instructions",
+              onTap: model.sendPasswordResetEmail,
+            ),
+          ],
+        ),
       ),
     );
   }

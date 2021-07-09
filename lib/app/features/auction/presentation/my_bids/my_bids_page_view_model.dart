@@ -43,7 +43,8 @@ class MyBidsPageViewModel extends BaseStateViewModel {
   void goToAuctionPage({required AuctionEntity auctionEntity}) async {
     final result = await _navigationService.push(Routes.auction_page,
         args: AuctionPageArgs(auctionEntity: auctionEntity));
-    if (result as bool) refreshIndicatorKey.currentState?.show();
+    if (result != null && result as bool)
+      refreshIndicatorKey.currentState?.show();
   }
 
   void gotToAuctions() {

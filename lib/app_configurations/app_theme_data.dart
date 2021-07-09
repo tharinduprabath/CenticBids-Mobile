@@ -1,5 +1,7 @@
 import 'package:centic_bids/app/core/app_colors.dart';
+import 'package:centic_bids/app/core/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class AppThemeData {
   // Light theme
@@ -25,10 +27,11 @@ abstract class AppThemeData {
           selectionHandleColor: AppColors.primary_color,
           selectionColor: AppColors.primary_color.withOpacity(0.3)),
       appBarTheme: AppBarTheme(
-        color: AppColors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: AppColors.main_text_color)
-      ),
+          color: AppColors.white,
+          elevation: 0,
+          iconTheme: IconThemeData(
+            color: AppColors.main_text_color,
+          )),
       scaffoldBackgroundColor: AppColors.white,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );

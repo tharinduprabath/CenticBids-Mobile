@@ -141,9 +141,7 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
                 count: auctionEntity.bidCount,
               ),
             ),
-            model.isUserHasLatestBid()
-                ? UserHasLatestBidView()
-                : SizedBox(),
+            model.isUserHasLatestBid() ? UserHasLatestBidView() : SizedBox(),
             VerticalSpace(),
             VerticalSpace(),
             AuctionCountdownTimer(endDate: auctionEntity.endDate),
@@ -167,15 +165,17 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
   }
 
   Widget _buildBackButton({void Function()? onTap}) {
-    return InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: EdgeInsets.all(8.0.r),
-          child: BackCircle(
-            size: 25.r,
-            isDisabled: onTap == null,
-          ),
-        ));
+    return FittedBox(
+      child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.all(8.0.r),
+            child: BackCircle(
+              size: 25.r,
+              isDisabled: onTap == null,
+            ),
+          )),
+    );
   }
 
   Widget _buildBidNowButton(
@@ -225,7 +225,8 @@ class _Loaded extends ViewModelWidget<AuctionPageViewModel> {
             ),
         isScrollControlled: true,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppConstants.radius.r)));
+            borderRadius: BorderRadius.vertical(
+                top: Radius.circular(AppConstants.radius.r))));
   }
 }
 

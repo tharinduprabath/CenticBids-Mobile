@@ -47,7 +47,7 @@ extension ErrorCodeExtension on ErrorCode {
       case ErrorCode.e_1560:
         return "Seems like you have entered bad password.";
       case ErrorCode.e_1590:
-        return "Seems like you have entered wrong email or password.";
+        return "Seems like you have entered wrong password.";
       case ErrorCode.e_1591:
         return "You haven't verified your email address yet. Please verify your email address.";
       case ErrorCode.e_1592:

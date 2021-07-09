@@ -33,9 +33,15 @@ class ImageSlider extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.only(right: AppConstants.margin.r / 2),
             alignment: Alignment.bottomRight,
-            child: Chip(
-              backgroundColor: AppColors.white,
-              label: ValueListenableBuilder<int>(
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: AppConstants.margin.r / 1.5),
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppConstants.margin.r / 1.5,
+                  vertical: AppConstants.margin.r / 1.5),
+              decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(AppConstants.radius.r)),
+              child: ValueListenableBuilder<int>(
                 valueListenable: currentIndex,
                 builder: (context, index, child) => Row(
                   mainAxisAlignment: MainAxisAlignment.end,

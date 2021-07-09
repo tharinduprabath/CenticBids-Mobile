@@ -50,57 +50,59 @@ class ChangePasswordPage extends StatelessWidget {
 class _Loaded extends ViewModelWidget<ChangePasswordPageViewModel> {
   @override
   Widget build(BuildContext context, ChangePasswordPageViewModel model) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          VerticalSpace(),
-          CenticBidsText.body(
-              "Your new password must be different from the current password."),
-          VerticalSpace(),
-          Form(
-            key: model.formKey,
-            child: Column(
-              children: [
-                CenticBidsInputField.password(
-                  validator: Validator.textValidator,
-                  placeholder: "Current Password",
-                  leadingIcon: Icons.lock_outline_rounded,
-                  onSaved: (value) {
-                    model.currentPassword = value;
-                  },
-                ),
-                VerticalSpace(),
-                CenticBidsInputField.password(
-                  validator: Validator.passwordValidator,
-                  placeholder: "New Password",
-                  leadingIcon: Icons.lock_outline_rounded,
-                  onSaved: (value) {
-                    model.newPassword = value;
-                  },
-                ),
-                VerticalSpace(),
-                CenticBidsInputField.password(
-                  validator: Validator.textValidator,
-                  placeholder: "Confirm New Password",
-                  leadingIcon: Icons.lock_outline_rounded,
-                  onSaved: (value) {
-                    model.confirmNewPassword = value;
-                  },
-                ),
-              ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppConstants.margin.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            VerticalSpace(),
+            CenticBidsText.body(
+                "Your new password must be different from the current password."),
+            VerticalSpace(),
+            Form(
+              key: model.formKey,
+              child: Column(
+                children: [
+                  CenticBidsInputField.password(
+                    validator: Validator.textValidator,
+                    placeholder: "Current Password",
+                    leadingIcon: Icons.lock_outline_rounded,
+                    onSaved: (value) {
+                      model.currentPassword = value;
+                    },
+                  ),
+                  VerticalSpace(),
+                  CenticBidsInputField.password(
+                    validator: Validator.passwordValidator,
+                    placeholder: "New Password",
+                    leadingIcon: Icons.lock_outline_rounded,
+                    onSaved: (value) {
+                      model.newPassword = value;
+                    },
+                  ),
+                  VerticalSpace(),
+                  CenticBidsInputField.password(
+                    validator: Validator.textValidator,
+                    placeholder: "Confirm New Password",
+                    leadingIcon: Icons.lock_outline_rounded,
+                    onSaved: (value) {
+                      model.confirmNewPassword = value;
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-          VerticalSpace(),
-          CenticBidsText.caption(
-              "*Your New Password must contain at least 8 characters"),
-          VerticalSpace(),
-          CenticBidsButton(
-            text: "Change Password",
-            onTap: model.changePassword,
-          ),
-        ],
+            VerticalSpace(),
+            CenticBidsText.caption(
+                "*Your New Password must contain at least 8 characters"),
+            VerticalSpace(),
+            CenticBidsButton(
+              text: "Change Password",
+              onTap: model.changePassword,
+            ),
+          ],
+        ),
       ),
     );
   }

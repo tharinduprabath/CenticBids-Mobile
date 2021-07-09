@@ -1,5 +1,4 @@
 import 'package:centic_bids/app/features/auction/domain/entities/bid_entity.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BidModel extends BidEntity {
   final String id, bidUserID;
