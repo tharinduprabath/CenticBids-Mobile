@@ -179,7 +179,10 @@ class AuctionPageViewModel extends BaseStateViewModel {
         text:
             "You must logged in before placing a bid. Do you want to log in now?",
         actionButtonText: "Yes, Log in",
-        action: gotToLoginRegistrationPage,
+        action: () {
+          _dialogService.close();
+          gotToLoginRegistrationPage();
+        },
         neutralButtonText: "No, Not now",
         neutral: () => _dialogService.close(),
       ),
