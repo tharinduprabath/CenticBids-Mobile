@@ -84,7 +84,9 @@ class _Loaded extends ViewModelWidget<HomePageViewModel> {
           CenticBidsText.body("Auctions (${model.auctionList.length})"),
           CenticBidsButton.icon(
             icon: Icons.filter_list_rounded,
-            onTap: () => _showSortListView(context, model),
+            onTap: model.auctionList.length == 0
+                ? null
+                : () => _showSortListView(context, model),
             buttonType: CenticBidsButtonType.secondary,
           )
         ],

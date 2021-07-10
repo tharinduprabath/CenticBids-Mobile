@@ -62,12 +62,6 @@ class AuctionRemoteDataSourceImpl implements AuctionRemoteDataSource {
           .limit(AppConstants.pagination_limit)
           .get();
 
-      // for (final d in auctionDocs.docs) {
-      //   await firebaseFirestore
-      //       .collection(FirestoreName.auctions_collection)
-      //       .add(d.data());
-      // }
-
       // Check precondition empty
       if (auctionDocs.size == 0) return <AuctionModel>[];
 
