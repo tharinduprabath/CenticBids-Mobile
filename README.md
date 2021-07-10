@@ -1,5 +1,5 @@
 # <img src="https://github.com/tharinduprabath/CenticBids-Mobile/blob/development/assets/images/pngs/app_icon.png?raw=true" alt="drawing" width="200" height="200"/>
-![GitHub](https://img.shields.io/github/license/tharinduprabath/CenticBids-Mobile) ![Lines of code](https://img.shields.io/tokei/lines/github/tharinduprabath/CenticBids-Mobile)
+![GitHub](https://img.shields.io/github/license/tharinduprabath/CenticBids-Mobile) ![Lines of code](https://img.shields.io/tokei/lines/github/tharinduprabath/CenticBids-Mobile) ![GitHub top language](https://img.shields.io/github/languages/top/tharinduprabath/CenticBids-Mobile) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/tharinduprabath/CenticBids-Mobile)
 # CenticBids
 CenticBids is an online bidding platform which allow users to bid for online auctions.
 
