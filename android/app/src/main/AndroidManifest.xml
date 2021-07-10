@@ -1,8 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ascentic_assignment.centic_bids">
+
+    <queries>
+        <!-- If your app opens https URLs -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
-        android:label="centic_bids"
-        android:icon="@mipmap/ic_launcher">
+        android:label="CenticBids"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
