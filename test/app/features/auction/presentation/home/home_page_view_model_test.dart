@@ -58,13 +58,19 @@ void main() {
       endDate: DateTime.now().add(Duration(days: 2)),
       imageList: [""]);
 
-  final auctionListFirst = List<AuctionEntity>.generate(
-      AppConstants.pagination_limit, (index) => auction);
+  final limit = AppConstants.pagination_limit; // 10
+  final secondListSize = limit - 4;
 
-  final auctionListSecond = List<AuctionEntity>.generate(
-      AppConstants.pagination_limit - 4, (index) => auction);
+  final auctionListFirst =
+      List<AuctionEntity>.generate(limit, (index) => auction);
+
+  final auctionListSecond =
+      List<AuctionEntity>.generate(secondListSize, (index) => auction);
 
   final auctionListAll = List.from([...auctionListFirst, ...auctionListSecond]);
+
+  final auctionListSorted = List<AuctionEntity>.from(auctionListAll)
+      ..sort((a, b) => a.endDate.compareTo(b.endDate));
 
   group("Auction list", () {
     test('On init auctions list should be empty', () async {
@@ -72,7 +78,7 @@ void main() {
     });
 
     test(
-        'Get getOngoingAuctionsFirstList should assign 10 items to auction list',
+        'getOngoingAuctionsFirstList should assign [limit] items to auction list',
         () async {
       when(mockGetOngoingAuctionsFirstListUsecase(any))
           .thenAnswer((_) async => Right(auctionListFirst));
@@ -83,7 +89,7 @@ void main() {
     });
 
     test(
-        'Get getOngoingAuctionsNextList should assign 10+6 items to auction list',
+        'getOngoingAuctionsNextList should add [secondListSize] items to auction list',
         () async {
       when(mockGetOngoingAuctionsFirstListUsecase(any))
           .thenAnswer((_) async => Right(auctionListFirst));
@@ -97,7 +103,7 @@ void main() {
     });
 
     test(
-        'When no network connection, GetOngoingAuctionsFirstList should set page state to PageStateError',
+        'When no network connection, getOngoingAuctionsFirstList should set page state to PageStateError',
         () async {
       when(mockGetOngoingAuctionsFirstListUsecase(any))
           .thenAnswer((_) async => Left(NetworkFailure(ErrorCode.e_1200)));
@@ -109,19 +115,14 @@ void main() {
     });
 
     test(
-        'When no network connection, GetOngoingAuctionsNextList should open error dialog',
+        'When first time, auctionList should sorted to [model.auctionListSortType]',
         () async {
       when(mockGetOngoingAuctionsFirstListUsecase(any))
           .thenAnswer((_) async => Right(auctionListFirst));
-      when(mockGetOngoingAuctionsNextListUsecase(any))
-          .thenAnswer((_) async => Left(NetworkFailure(ErrorCode.e_1200)));
 
       await model.getOngoingAuctionsFirstList();
-      await model.getOngoingAuctionsNextList();
 
-      verifyNever(mockDialogService.show(
-        dialog: any,
-      ));
+      expect(model.auctionList, auctionListSorted);
     });
   });
 }

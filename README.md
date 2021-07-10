@@ -119,7 +119,7 @@ services/
 
 ## Getting Started
 
-To build and run this project:
+### To build and run this project:
 
 **Step 1:**
 
@@ -148,6 +148,15 @@ To build and run the project execute the following command:
 ```
 flutter run
 ```
+
+### To test this project:
+
+This project uses `mockito` for generate mock classes. Execute the following command to generate files:
+
+```
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
 ### Note
 Project is configured only for android. Not configured or tested for iOS. To run the android application minimum requirement is Android 5.1 (API level 22).
 
