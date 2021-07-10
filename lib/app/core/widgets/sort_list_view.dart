@@ -3,6 +3,7 @@ import 'package:centic_bids/app/core/app_constants.dart';
 import 'package:centic_bids/app/core/app_enums.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_button.dart';
 import 'package:centic_bids/app/core/design_system/centic_bids_text.dart';
+import 'package:centic_bids/app/core/widgets/horizontal_space.dart';
 import 'package:centic_bids/app/core/widgets/vertical_space.dart';
 import 'package:centic_bids/app/services/navigation_service/navigation_service.dart';
 import 'package:centic_bids/app_configurations/app_di_container.dart';
@@ -57,7 +58,10 @@ class _SortListViewState extends State<SortListView> {
             CenticBidsButton(
               text: "Apply",
               onTap: () {
-                navigationService.pop(userSelectedSortType);
+                final result = widget.currentSortType == userSelectedSortType
+                    ? null
+                    : userSelectedSortType;
+                navigationService.pop(result);
               },
             )
           ],
@@ -91,15 +95,18 @@ class _SortListViewState extends State<SortListView> {
           userSelectedSortType = type;
         });
       },
-      child: ListTile(
-        title: isActive ? _buildActive(icon) : _buildNotActive(icon),
-        trailing: isActive
-            ? Icon(
-                Icons.check,
-                size: AppConstants.icon_size.r,
-                color: AppColors.primary_color,
-              )
-            : SizedBox(),
+      child: Container(
+        color: isActive ? AppColors.form_color : AppColors.transparent,
+        child: ListTile(
+          title: isActive ? _buildActive(icon) : _buildNotActive(icon),
+          trailing: isActive
+              ? Icon(
+                  Icons.check,
+                  size: AppConstants.icon_size.r,
+                  color: AppColors.primary_color,
+                )
+              : SizedBox(),
+        ),
       ),
     );
   }
@@ -108,11 +115,25 @@ class _SortListViewState extends State<SortListView> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CenticBidsText.headingTwo("Remaining Time"),
+        Icon(
+          Icons.timer_rounded,
+          color: AppColors.primary_color,
+          size: AppConstants.icon_size.r * 0.7,
+        ),
+        HorizontalSpace(
+          size: 5.w,
+        ),
+        CenticBidsText.body(
+          "Remaining Time",
+          color: AppColors.primary_color,
+        ),
+        HorizontalSpace(
+          size: 5.w,
+        ),
         Icon(
           icon,
-          color: AppColors.main_text_color,
-          size: AppConstants.icon_size.r,
+          color: AppColors.primary_color,
+          size: AppConstants.icon_size.r * 0.7,
         )
       ],
     );
@@ -122,14 +143,25 @@ class _SortListViewState extends State<SortListView> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CenticBidsText.headingTwo(
+        Icon(
+          Icons.timer_rounded,
+          color: AppColors.main_text_color,
+          size: AppConstants.icon_size.r * 0.7,
+        ),
+        HorizontalSpace(
+          size: 5.w,
+        ),
+        CenticBidsText.body(
           "Remaining Time",
-          color: AppColors.secondary_text_color,
+          color: AppColors.main_text_color,
+        ),
+        HorizontalSpace(
+          size: 5.w,
         ),
         Icon(
           icon,
-          color: AppColors.secondary_text_color,
-          size: AppConstants.icon_size.r,
+          color: AppColors.main_text_color,
+          size: AppConstants.icon_size.r * 0.7,
         )
       ],
     );

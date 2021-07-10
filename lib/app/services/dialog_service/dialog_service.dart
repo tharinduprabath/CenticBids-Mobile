@@ -18,6 +18,10 @@ class DialogService {
   Future<void> show(
       {required Widget dialog, bool canDismissible = true}) async {
     await close();
+    _completer = Completer();
+    Timer.run(() {
+      _forceCloseNotifier.value = false;
+    });
     await showAnimatedDialog(
         context: _navigationService.navigatorKey.currentContext!,
         barrierDismissible: canDismissible,
@@ -25,10 +29,6 @@ class DialogService {
         curve: Curves.easeInOutCubic,
         duration: Duration(milliseconds: AppConstants.animation_duration),
         builder: (context) {
-          _completer = Completer();
-          Timer.run(() {
-            _forceCloseNotifier.value = false;
-          });
           return ValueListenableBuilder(
             valueListenable: _forceCloseNotifier,
             builder: (context, bool forceClose, child) => WillPopScope(
@@ -43,14 +43,13 @@ class DialogService {
             child: dialog,
           );
         }).whenComplete(() {
-      _completer!.complete();
+      _completer?.complete();
       _completer = null;
     });
   }
 
   Future<void> close() async {
     if (_completer != null) {
-      await Future.delayed(Duration.zero);
       _forceCloseNotifier.value = true;
       _navigationService.pop();
     }
