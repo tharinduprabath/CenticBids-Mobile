@@ -27,7 +27,6 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
           child: Column(
             children: [
               VerticalSpace(),
-              VerticalSpace(),
               Row(
                 children: [
                   Expanded(
@@ -78,6 +77,15 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                 },
               ),
               VerticalSpace(),
+              CenticBidsInputField.password(
+                validator: Validator.textValidator,
+                placeholder: "Confirm Password",
+                leadingIcon: Icons.lock_outline_rounded,
+                onSaved: (value) {
+                  model.signUpConfirmPassword = value;
+                },
+              ),
+              VerticalSpace(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -110,7 +118,9 @@ class RegistrationView extends ViewModelWidget<LoginRegistrationPageViewModel> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CenticBidsText.subheading("Already have an account?"),
-                  HorizontalSpace(size: 5.w,),
+                  HorizontalSpace(
+                    size: 5.w,
+                  ),
                   CenticBidsButton.text(
                     text: "Sign In",
                     onTap: model.goToSignInView,

@@ -24,7 +24,6 @@ class LoginView extends ViewModelWidget<LoginRegistrationPageViewModel> {
           child: Column(
             children: [
               VerticalSpace(),
-              VerticalSpace(),
               CenticBidsInputField.email(
                 placeholder: "Email",
                 leadingIcon: Icons.email_outlined,

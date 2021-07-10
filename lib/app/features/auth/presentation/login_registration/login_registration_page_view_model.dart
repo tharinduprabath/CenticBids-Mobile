@@ -49,7 +49,7 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
 
   ValueNotifier<bool> passwordHasMinLengthNotifier = ValueNotifier<bool>(false);
 
-  String? signUpEmail, signUpPassword;
+  String? signUpEmail, signUpPassword, signUpConfirmPassword;
   String? signInEmail, signInPassword;
   String? firstName, lastName;
 
@@ -95,6 +95,10 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
     if (!isFormValid) return;
 
     signUpFormKey.currentState?.save();
+
+    // Check preconditions
+    final isPolicyValid = _handlePasswordPolicy();
+    if (!isPolicyValid) return;
 
     _dialogService.show(dialog: BusyDialog(), canDismissible: false);
 
@@ -166,13 +170,29 @@ class LoginRegistrationPageViewModel extends BaseStateViewModel {
   Future<void> _handleEmailVerification() async {
     final user = _getLocalUser();
     if (user != null) {
-      Future.delayed(Duration.zero, () async{
+      Future.delayed(Duration.zero, () async {
         final args = EmailVerificationPageArgs(
             email: user.email, displayName: user.firstName);
-        await _navigationService.push(Routes.email_verification_page, args: args);
+        await _navigationService.push(Routes.email_verification_page,
+            args: args);
         await _logoutUsecase(NoParams());
         _navigationService.restart();
       });
     }
+  }
+
+  bool _handlePasswordPolicy() {
+    if (signUpPassword != signUpConfirmPassword) {
+      _dialogService.show(
+        dialog: ActionDialog.error(
+          heading: AppStrings.dialog_default_heading_error_text,
+          text: "Your confirm password did not match.",
+          actionButtonText: AppStrings.dialog_default_action_button_text,
+          action: () => _dialogService.close(),
+        ),
+      );
+      return false;
+    }
+    return true;
   }
 }
