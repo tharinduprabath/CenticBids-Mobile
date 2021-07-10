@@ -4,21 +4,17 @@ import 'package:centic_bids/app/core/widgets/dialogs/busy_dialog.dart';
 import 'package:centic_bids/app/features/auth/domain/entities/change_password_request_entity.dart';
 import 'package:centic_bids/app/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:centic_bids/app/services/dialog_service/dialog_service.dart';
-import 'package:centic_bids/app/services/navigation_service/navigation_service.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordPageViewModel extends BaseStateViewModel {
   final ChangePasswordUsecase _changePasswordUsecase;
-  final NavigationService _navigationService;
   final DialogService _dialogService;
 
   ChangePasswordPageViewModel(
       {required ChangePasswordUsecase changePasswordUsecase,
-      required NavigationService navigationService,
       required DialogService dialogService})
       : this._changePasswordUsecase = changePasswordUsecase,
-        this._navigationService = navigationService,
         this._dialogService = dialogService,
         super(initialState: PageStateLoaded());
 

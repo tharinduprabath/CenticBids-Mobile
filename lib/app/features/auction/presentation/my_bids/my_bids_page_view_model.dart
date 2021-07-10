@@ -3,7 +3,6 @@ import 'package:centic_bids/app/core/app_strings.dart';
 import 'package:centic_bids/app/features/auction/domain/entities/auction_entity.dart';
 import 'package:centic_bids/app/features/auction/domain/usecases/get_my_bids_usecase.dart';
 import 'package:centic_bids/app/features/auction/presentation/auction/auction_page.dart';
-import 'package:centic_bids/app/services/dialog_service/dialog_service.dart';
 import 'package:centic_bids/app/services/navigation_service/navigation_service.dart';
 import 'package:centic_bids/app/utils/base_state_view_model.dart';
 import 'package:centic_bids/app/utils/usecase.dart';
@@ -11,15 +10,12 @@ import 'package:flutter/material.dart';
 
 class MyBidsPageViewModel extends BaseStateViewModel {
   final GetMyBidsUsecase _getMyBidsUsecase;
-  final DialogService _dialogService;
   final NavigationService _navigationService;
 
   MyBidsPageViewModel({
-    required DialogService dialogService,
     required NavigationService navigationService,
     required GetMyBidsUsecase getMyBidsUsecase,
-  })  : this._dialogService = dialogService,
-        this._navigationService = navigationService,
+  })  : this._navigationService = navigationService,
         this._getMyBidsUsecase = getMyBidsUsecase,
         super(initialState: PageStateLoading());
 

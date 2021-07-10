@@ -32,7 +32,6 @@ class SplashPageViewModel extends BaseStateViewModel {
       });
     } else {
       // New user
-      _sharedPreferences.setBool(AppConstants.is_user_first_time, true);
       Future.delayed(_duration, () {
         _goToWelcomePage();
       });

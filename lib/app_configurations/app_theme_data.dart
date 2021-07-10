@@ -1,7 +1,5 @@
 import 'package:centic_bids/app/core/app_colors.dart';
-import 'package:centic_bids/app/core/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class AppThemeData {
   // Light theme

@@ -114,6 +114,7 @@ class AppDIContainer {
           navigationService: sl(),
         ));
     sl.registerFactory<WelcomePageViewModel>(() => WelcomePageViewModel(
+          sharedPreferences: sl(),
           navigationService: sl(),
         ));
 
@@ -129,13 +130,11 @@ class AppDIContainer {
     sl.registerFactory<ForgotPasswordPageViewModel>(
         () => ForgotPasswordPageViewModel(
               sendPasswordResetEmailUsecase: sl(),
-              navigationService: sl(),
               dialogService: sl(),
             ));
     sl.registerFactory<ChangePasswordPageViewModel>(
         () => ChangePasswordPageViewModel(
               changePasswordUsecase: sl(),
-              navigationService: sl(),
               dialogService: sl(),
             ));
 
@@ -157,7 +156,6 @@ class AppDIContainer {
     sl.registerFactory<MyBidsPageViewModel>(() => MyBidsPageViewModel(
           getMyBidsUsecase: sl(),
           navigationService: sl(),
-          dialogService: sl(),
         ));
 
     //! services
